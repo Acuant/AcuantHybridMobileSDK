@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.acuant.plugin.AcuantMobileSDK"
+        version="2.0.0">
+
+  <name>AcuantMobileSDK</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.8.0"/>
+  </engines>
+
+  <asset src="www/AcuantMobileSDK.js" target="AcuantMobileSDK.js"/>
+
+  <js-module src="www/AcuantMobileSDK.js" name="AcuantMobileSDK">
+    <clobbers target="AcuantMobileSDK" />
+  </js-module>
+
+  <!-- Android -->
+  <platform name="android">
+    
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="AcuantMobileSDK">
+        <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <uses-permission android:name="android.permission.INTERNET" />
+      <uses-permission android:name="android.permission.FLASHLIGHT"/>
+   
+      <uses-feature android:name="android.hardware.camera" />
+      <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+      <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <activity
+              android:name="com.acuant.mobilesdk.detect.CameraCardDetectManual">
+      </activity>
+      <activity
+              android:name="com.acuant.mobilesdk.detect.CameraCardDetectAuto">
+      </activity>
+      <activity
+              android:name="com.acuant.mobilesdk.detect.PDF417.CameraPDF417">
+      </activity>
+    </config-file>
+
+    <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+    
+    <resource-file src="libs/acuantMobileSDK.aar" target="libs/acuantMobileSDK.aar" />
+    
+    <source-file src="src/android/res/values.xml" target-dir="res/values" />
+    <source-file src="src/android/res/colors.xml" target-dir="res/values" />
+    <source-file src="src/android/res/acuantstrings.xml" target-dir="res/values" />
+    <source-file src="src/android/res/hold_steady.xml" target-dir="res/layout" />
+    <source-file src="src/android/res/align_and_tap.xml" target-dir="res/layout" />
+    <source-file src="src/android/res/tap_to_focus.xml" target-dir="res/layout" />
+    <source-file src="src/android/raw/device_list.json" target-dir="res/raw" />
+    <source-file src="src/android/com/acuant/plugin/AcuantMobileSDK.java" target-dir="src/com/cssn/plugin/"/>
+  
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    
+    <config-file target="config.xml" parent="/widget">
+      <feature name="AcuantMobileSDK">
+        <param name="ios-package" value="AcuantMobileSDK" />
+      </feature>
+    </config-file>
+    
+    <framework src="src/ios/Libs/AcuantMobileSDK.embeddedframework/AcuantMobileSDK.framework" custom="true"/>
+    
+    <framework src="libc++.dylib" />
+    <framework src="libz.dylib" />
+    <framework src="libiconv.dylib" />
+    
+    <framework src="AssetsLibrary.framework" />
+    <framework src="SystemConfiguration.framework" />
+    <framework src="AudioToolbox.framework" />
+    <framework src="AVFoundation.framework" />
+    <framework src="CoreMedia.framework" />
+    <framework src="CoreVideo.framework" />
+    <framework src="CoreGraphics.framework" />
+    <framework src="QuartzCore.framework" />
+    
+    <header-file src="src/ios/AcuantMobileSDK.h"/>
+    <source-file src="src/ios/AcuantMobileSDK.m"/>
+ 
+  </platform>
+
+</plugin>

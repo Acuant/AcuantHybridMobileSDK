@@ -1,0 +1,25 @@
+repositories{
+  jcenter()
+  flatDir{
+    dirs "libs"
+   }
+}
+
+dependencies {
+    compile (name:'acuantMobileSDK', ext:'aar')
+    compile ('com.google.code.gson:gson:2.5')
+    compile ('org.apache.httpcomponents:httpclient:4.2.6')
+    compile ('org.apache.httpcomponents:httpmime:4.2.6')
+    compile ('org.apache.httpcomponents:httpcore:4.2.5')
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}

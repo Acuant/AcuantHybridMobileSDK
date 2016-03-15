@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/nsProgress.css">
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="webviewbounce" value="false" />
+
+    <title>AcuantHybridSampleSDK Sample</title>
+</head>
+<body>
+    <div id="page1">
+        <div class="div-top">
+            <label id="license-key-label">License key</label>
+            <input type="text" id="license-key" />
+            <input type="submit" id="activate-btn" value="Activate" />
+        </div>
+        <p>
+            <div class="div-buttons">
+                <label class="buttons" id="driver-license-btn" >Driver License</label>
+                <label class="buttons" id="passport-btn" >Passport</label>
+                <label class="buttons" id="medical-insurance-btn" >Medical Card</label>
+            </div>
+        </p>
+        <p>
+            <div class="div-center">
+                <div class="card-image bordered" id="front-image" style="display: none;">
+                    <span class="t1">Tap to capture front side</span>
+                </div>
+                <div class="card-image bordered" id="back-image" style="display: none;">
+                    <span class="t2">Tap to capture back side </br>(Optional)</span>
+                </div>
+            </div>
+        </p>
+        <p>
+            <div class="div-bottom">
+                <label class="buttons" id="process-btn" >Process</label>
+            </div>
+        </p>
+    </div>
+    <div id="progress_modal" class="hdn"></div>
+    <div id="page2" class="hdn">
+        <div class="div-back">
+            <label class="buttons" id="back-btn" >Back</label>
+        </div>
+        <p>
+            <div class="div-images">
+                <img class="card-image-result" id="front-image-result" alt=""/>
+                <img class="card-image-result" id="back-image-result" alt=""/>
+                <p class="p4"><img class="card-image-result" id="face-image-result" alt=""/></p>
+                <p class="p3"><img class="card-image-result" id="signature-image-result" alt=""/></p>
+            </div>
+        </p>
+        <p>
+            <div class="div-text-result">
+                <label class="result" id="result-label" >Result</label>
+            </div>
+        </p>
+    </div>
+    <div id="page3" class="hdn">
+        <div class="div-Countries">
+            <div>
+                <div class="button-region" id="0" >United States</div>
+            </div>
+            <div>
+                <div class="button-region" id="1" >Canada</div>
+            </div>
+            <div>
+                <div class="button-region" id="3" >Europe</div>
+            </div>
+            <div>
+                <div class="button-region" id="7" >Africa</div>
+            </div>
+            <div>
+                <div class="button-region" id="5" >Asia</div>
+            </div>
+            <div>
+                <div class="button-region" id="2" >Latin America</div>
+            </div>
+            <div>
+                <div class="button-region" id="4" >Australia</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/nsProgress.js"></script>
+</body>
+</html>

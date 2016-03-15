@@ -1,0 +1,12 @@
+{
+  "ios": {
+    "debug": {
+      "codeSignIdentitiy": "(THIS ONE!) iOS Team Development Profile",
+      "provisioningProfile": "f110ea12-a4d1-49e1-b7d9-634cd933cdc4"
+    },
+    "release": {
+      "codeSignIdentitiy": "CSSNSampleSDK App Store Distribution",
+      "provisioningProfile": "fe3dbf53-3140-4613-a100-d769537a36a8"
+    }
+  }
+}
