@@ -361,10 +361,10 @@
     float alpha = alphanumber.floatValue/255;
     UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 
-    NSNumber *durationnumber = [command.arguments objectAtIndex:7];
+    NSNumber *durationnumber = [command.arguments objectAtIndex:9];
     int duration = durationnumber.intValue;
 
-    NSNumber *orientationnumber = [command.arguments objectAtIndex:7];
+    NSNumber *orientationnumber = [command.arguments objectAtIndex:10];
     AcuantHUDOrientation orientation =orientationnumber.intValue;
 
     [_instance setCapturingMessage:capturingMessage frame:frame backgroundColor:color duration:duration orientation:orientation];
