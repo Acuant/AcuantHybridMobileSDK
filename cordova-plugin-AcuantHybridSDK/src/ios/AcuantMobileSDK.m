@@ -302,7 +302,7 @@
  -(void)setInitialMessage:(CDVInvokedUrlCommand*)command{
     _methodId = @"setInitialMessage";
     NSString *initialMessage = [command.arguments objectAtIndex:0];
-    
+
     NSNumber *xnumber = [command.arguments objectAtIndex:1];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:2];
@@ -312,7 +312,7 @@
     NSNumber *heightnumber = [command.arguments objectAtIndex:4];
     int height = heightnumber.intValue;
     CGRect frame = CGRectMake(x, y, width, height);
-    
+
     NSNumber *rednumber = [command.arguments objectAtIndex:5];
     float red = rednumber.intValue/255;
     NSNumber *greennumber = [command.arguments objectAtIndex:6];
@@ -322,13 +322,13 @@
     NSNumber *alphanumber = [command.arguments objectAtIndex:8];
     float alpha = alphanumber.floatValue/255;
     UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-    
-    NSNumber *durationnumber = [command.arguments objectAtIndex:7];
+
+    NSNumber *durationnumber = [command.arguments objectAtIndex:9];
     int duration = durationnumber.intValue;
-    
-    NSNumber *orientationnumber = [command.arguments objectAtIndex:7];
+
+    NSNumber *orientationnumber = [command.arguments objectAtIndex:10];
     AcuantHUDOrientation orientation =orientationnumber.intValue;
-    
+
     [_instance setInitialMessage:initialMessage frame:frame backgroundColor:color duration:duration orientation:orientation];
 }
 
@@ -340,7 +340,7 @@
  -(void)setCapturingMessage:(CDVInvokedUrlCommand*)command{
     _methodId = @"setCapturingMessage";
     NSString *capturingMessage = [command.arguments objectAtIndex:0];
-    
+
     NSNumber *xnumber = [command.arguments objectAtIndex:1];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:2];
@@ -350,7 +350,7 @@
     NSNumber *heightnumber = [command.arguments objectAtIndex:4];
     int height = heightnumber.intValue;
     CGRect frame = CGRectMake(x, y, width, height);
-    
+
     NSNumber *rednumber = [command.arguments objectAtIndex:5];
     float red = rednumber.intValue/255;
     NSNumber *greennumber = [command.arguments objectAtIndex:6];
@@ -360,13 +360,13 @@
     NSNumber *alphanumber = [command.arguments objectAtIndex:8];
     float alpha = alphanumber.floatValue/255;
     UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-    
+
     NSNumber *durationnumber = [command.arguments objectAtIndex:7];
     int duration = durationnumber.intValue;
-    
+
     NSNumber *orientationnumber = [command.arguments objectAtIndex:7];
     AcuantHUDOrientation orientation =orientationnumber.intValue;
-    
+
     [_instance setCapturingMessage:capturingMessage frame:frame backgroundColor:color duration:duration orientation:orientation];
 }
 
@@ -381,7 +381,7 @@
  */
  - (void)processCardImage:(CDVInvokedUrlCommand*)command{
     _methodId = @"processCardImage";
-    
+
     UIImage *frontImage;
     NSString *frontImageEcodedString = [command.arguments objectAtIndex:0];
     if (frontImageEcodedString && ![frontImageEcodedString isKindOfClass:[NSNull class]]) {
@@ -415,7 +415,7 @@
 
     //Obtain the default AcuantCardProcessRequestOptions object for the type of card you want to process (License card for this example)
     AcuantCardProcessRequestOptions *options = [AcuantCardProcessRequestOptions defaultRequestOptionsForCardType:_cardType];
-    
+
     //Optionally, configure the options to the desired value
     NSNumber *autoDetectState = [command.arguments objectAtIndex:3];
     NSNumber *stateID = [command.arguments objectAtIndex:4];
@@ -427,7 +427,7 @@
     NSNumber *signatureDetection = [command.arguments objectAtIndex:10];
     NSNumber *region = [command.arguments objectAtIndex:11];
     NSNumber *imageSource = [command.arguments objectAtIndex:12];
-    
+
     options.autoDetectState = autoDetectState.boolValue;
     options.stateID = stateID.intValue;
     options.reformatImage = reformatImage.boolValue;
@@ -438,14 +438,14 @@
     options.signatureDetection = signatureDetection.boolValue;
     options.region = region.intValue;
     options.imageSource = imageSource.intValue;
-    
+
     // Now, perform the request
     [_instance processFrontCardImage:frontImage
        BackCardImage:backImage
        andStringData:stringData
        withDelegate:self
        withOptions:options];
-    
+
 }
 
 
@@ -457,7 +457,7 @@
  - (void)cameraPrefersStatusBarHidden:(CDVInvokedUrlCommand*)command{
     NSNumber *cameraPrefersStatusBarHiddenNumber = [command.arguments objectAtIndex:0];
     _hiddenStatusBar = cameraPrefersStatusBarHiddenNumber.boolValue;
-    
+
 }
 - (BOOL)cameraPrefersStatusBarHidden{
     return _hiddenStatusBar;
@@ -591,10 +591,10 @@
             encodedString = [encodedString substringFromIndex:range.location ];
             encodedString = [encodedString stringByReplacingOccurrencesOfString:@"base64," withString:@""];
         }
-        
+
         NSData *data = [[NSData alloc]initWithBase64EncodedString:encodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
         _backButtonImage = [UIImage imageWithData:data];
-        
+
     }else{
         _backButtonImage = nil;
     }
@@ -837,20 +837,20 @@
  */
  - (void)didFinishProcessingCardWithResult:(AcuantCardResult*)result{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didFinishProcessingCardWithResult" forKey:@"id"];
-    
+
     NSMutableDictionary *cardResult = [NSMutableDictionary dictionary];
     if (_cardType == AcuantCardTypeDriversLicenseCard) {
-        cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantDriversLicenseCard *)result];        
+        cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantDriversLicenseCard *)result];
     }else if(_cardType == AcuantCardTypeMedicalInsuranceCard){
         cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantMedicalInsuranceCard *)result];
     }else{
         cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantPassaportCard *)result];
     }
-    
+
     [resultDictionary setObject:cardResult forKey:@"data"];
     CDVPluginResult* resultPlugin =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDictionary];
     [resultPlugin setKeepCallback:[NSNumber numberWithBool:YES]];
-    
+
     [self.commandDelegate sendPluginResult:resultPlugin callbackId:_callbackId];
 }
 
@@ -860,10 +860,10 @@
 -(NSMutableDictionary *) dictionaryWithPropertiesOfObject:(id)obj
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
+
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([obj class], &count);
-    
+
     for (int i = 0; i < count; i++) {
         NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
         if ([obj valueForKey:key] !=  nil) {
@@ -879,7 +879,7 @@
             [dict setObject:[NSNull null] forKey:key];
         }
     }
-    
+
     return [NSMutableDictionary dictionaryWithDictionary:dict];
 }
 
