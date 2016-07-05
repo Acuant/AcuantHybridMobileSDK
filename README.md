@@ -102,10 +102,18 @@ Example:
 
 ## Add AcuantMobileSDK Plugin on each project 
 
-In order to add the plugin to your project, execute the following
-command line:
+In order to add the plugin to your project, follow the below two steps:
 
-> cordova plugin add ../cordova-plugin-AcuantMobileSDK
+Step - 1 : After cloning the Git repository , find the path to cordova-plugin-AcuantMobileSDK 
+
+Step - 2 : Execute the following command
+
+> cordova plugin add < path to cordova-plugin-AcuantMobileSDK>
+
+For example :
+
+cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK
+
 
 # Activate the license key
 
