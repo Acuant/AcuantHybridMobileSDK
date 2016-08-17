@@ -102,6 +102,8 @@ Example:
 
 # Integration
 
+Note : GitHub has recently changed the versioning for large files. To be able to download large files while cloning from GitHub or CocoaPods repositories please make sure git-lfs is installed in the build machine. More information for git-lfs is available at https://git-lfs.github.com/. Please clone/update our SDK repository only after the git-lfs is installed.
+
 ## Add AcuantMobileSDK Plugin on each project 
 
 In order to add the plugin to your project, follow the below two steps:
@@ -117,9 +119,20 @@ Step - 2 : Execute the following command
 	cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK`
 
 
-*Note : In Windows please make sure the zcard.dll is present in “<Project folder>\platforms\windows\plugins\com.acuant.plugin.AcuantMobileSDK” in folder.Otherwise copy it from cordova-plugin-AcuantHybridSDK plugin folder.*Also make sure the following cordova plugins are installed. - cordova-plugin-compat- cordova-plugin-console- cordova-plugin-dialogs- cordova-plugin-network-information- cordova-plugin-whitelist
-For Windows platform the following plugin is also required.
-- cordova-plugin-camera
+*Note : In Windows please make sure the zcard.dll is present in “<Project folder>\platforms\windows\plugins\com.acuant.plugin.AcuantMobileSDK” in folder.Otherwise copy it from cordova-plugin-AcuantHybridSDK plugin folder.*
+
+Also make sure the following cordova plugins are installed. 
+
+- cordova-plugin-compat
+- cordova-plugin-console
+- cordova-plugin-dialogs
+- cordova-plugin-network-information
+- cordova-plugin-whitelist
+
+
+For Windows platform the following plugin is also required.
+
+- cordova-plugin-camera
 
 
 # Activate the license key
