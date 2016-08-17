@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="7" id="com.cssn.cssnsamplesdk" ios-CFBundleVersion="1.2.1" version="1.2" xmlns="http://www.w3.org/ns/widgets">
-    <preference name="loglevel" value="DEBUG" />
+<widget android-versionCode="7" id="com.cssn.cssnsamplesdk" ios-CFBundleVersion="1.2.5" version="1.2" xmlns="http://www.w3.org/ns/widgets">
+    <feature name="AcuantMobileSDK">
+        <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
+    </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
@@ -11,12 +16,12 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="AcuantMobileSDK">
-        <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
-    </feature>
-    <preference name="android-minSdkVersion" value="17" />
-    <preference name="android-targetSdkVersion" value="19" />
-    <preference name="android-compileSdkVersion" value="22" />
+    <name>AcuantHybridSampleSDK</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <content src="index.html" />
+    <access origin="*" />
     <splash density="land-hdpi" src="www/img/splash/screen-land-hdpi.png" />
     <splash density="land-ldpi" src="www/img/splash/screen-land-ldpi.png" />
     <splash density="land-mdpi" src="www/img/splash/screen-land-mdpi.png" />
@@ -26,13 +31,11 @@
     <splash density="port-mdpi" src="www/img/splash/screen-port-mdpi.png" />
     <splash density="port-xhdpi" src="www/img/splash/screen-port-xhdpi.png" />
     <allow-intent href="market:*" />
-    <name>AcuantHybridSampleSDK</name>
-    <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
+    <preference name="loglevel" value="DEBUG" />
     <preference name="orientation" value="default" />
     <preference name="webviewbounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-    <content src="index.html" />
-    <access origin="*" />
+    <preference name="android-minSdkVersion" value="17" />
+    <preference name="android-targetSdkVersion" value="19" />
+    <preference name="android-compileSdkVersion" value="22" />
 </widget>

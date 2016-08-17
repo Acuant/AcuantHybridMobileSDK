@@ -1,12 +1,14 @@
 {
-    "libc++.dylib": 1,
-    "libz.dylib": 1,
-    "libiconv.dylib": 1,
+    "libc++.dylib": 2,
+    "libz.dylib": 2,
+    "libiconv.dylib": 2,
     "SystemConfiguration.framework": 2,
     "AudioToolbox.framework": 2,
-    "AVFoundation.framework": 1,
-    "CoreMedia.framework": 1,
-    "CoreVideo.framework": 1,
-    "QuartzCore.framework": 1,
-    "CoreTelephony.framework": 1
+    "AVFoundation.framework": 2,
+    "CoreMedia.framework": 2,
+    "CoreVideo.framework": 2,
+    "QuartzCore.framework": 2,
+    "ImageIO.framework": 2,
+    "CoreLocation.framework": 2,
+    "CoreTelephony.framework": 2
 }

@@ -13,7 +13,7 @@
   <asset src="www/AcuantMobileSDK.js" target="AcuantMobileSDK.js"/>
 
   <js-module src="www/AcuantMobileSDK.js" name="AcuantMobileSDK">
-    <clobbers target="AcuantMobileSDK" />
+    <clobbers target="window.AcuantMobileSDK" />
   </js-module>
 
   <!-- Android -->
@@ -94,5 +94,15 @@
     <source-file src="src/ios/AcuantMobileSDK.m"/>
  
   </platform>
+
+  <!-- windows -->
+  <platform name="windows">
+	<!-- ARM based CPU-->
+    	<framework src="src/windows/ARM/AcuantWindowsMobileSDKWinRTComponent.winmd" custom="true"/>
+	<framework src="src/windows/ARM/zcard.winmd" custom="true"/>
+	<!-- x64 based CPU-->
+	<!--framework src="src/windows/x64/AcuantWindowsMobileSDKWinRTComponent.winmd" custom="true"/-->
+	<!--framework src="src/windows/x64/zcard.winmd" custom="true"/-->
+   </platform>
 
 </plugin>

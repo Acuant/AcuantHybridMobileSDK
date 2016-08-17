@@ -1,10 +1,6 @@
 package com.acuant.plugin;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
@@ -48,7 +44,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private boolean canShowStatusBar;
     private CallbackContext callbackId;
     private AcuantAndroidMobileSDKController acuantAndroidMobileSDKController = null;
-    private static ProgressDialog progressDialog;
 
     private String watermarkText = "Powered By Acuant";
     private int xWatermark = 0;
@@ -88,430 +83,430 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
 
         switch (actionMethods){
             case initAcuantMobileSDK:
-                methodId = "initAcuantMobileSDK";
-                callbackId = callbackContext;
-                if (data.getString(0) != null){
-                    key = data.getString(0);
-                }else{
-                    key = "";
-                }
-                if (data.getString(1) != null){
-                    cloudAddressString = data.getString(1);
-                }else{
-                    cloudAddressString = "cssnwebservices.com";
-                }
+            methodId = "initAcuantMobileSDK";
+            callbackId = callbackContext;
+            if (data.getString(0) != null){
+                key = data.getString(0);
+            }else{
+                key = "";
+            }
+            if (data.getString(1) != null){
+                cloudAddressString = data.getString(1);
+            }else{
+                cloudAddressString = "cssnwebservices.com";
+            }
 
-                // load the controller instance
-                acuantAndroidMobileSDKController = AcuantAndroidMobileSDKController.getInstance(cordova.getActivity(), cloudAddressString, key);
-                acuantAndroidMobileSDKController.setWebServiceListener(this);
-                acuantAndroidMobileSDKController.setCardCroppingListener(this);
-                acuantAndroidMobileSDKController.setAcuantErrorListener(this);
-                break;
+            // load the controller instance
+            acuantAndroidMobileSDKController = AcuantAndroidMobileSDKController.getInstance(cordova.getActivity(), cloudAddressString, key);
+            acuantAndroidMobileSDKController.setWebServiceListener(this);
+            acuantAndroidMobileSDKController.setCardCroppingListener(this);
+            acuantAndroidMobileSDKController.setAcuantErrorListener(this);
+            break;
             case initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController:
-                methodId = "initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController";
+            methodId = "initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController";
+            
+            callbackId = callbackContext;
+            if (data.getString(0) != null){
+                key = data.getString(0);
+            }else{
+                key = "";
+            }
 
-                callbackId = callbackContext;
-                if (data.getString(0) != null){
-                    key = data.getString(0);
-                }else{
-                    key = "";
-                }
-
-                if (data.getInt(1) == 1) {
-                    cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(1) == 2){
-                    cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(1) == 3){
-                    cardType = CardType.PASSPORT;
-                }
+            if (data.getInt(1) == 1) {
+                cardType = CardType.MEDICAL_INSURANCE;
+            }else if(data.getInt(1) == 2){
+                cardType = CardType.DRIVERS_LICENSE;
+            }else if(data.getInt(1) == 3){
+                cardType = CardType.PASSPORT;
+            }
 
 
-                if (cardType == CardType.DRIVERS_LICENSE) {
-                    cardRegion = data.getInt(2);
-                    isBarcodeSide = data.getBoolean(3);
-                }else{
-                    cardRegion = 0;
-                    isBarcodeSide = false;
-                }
+            if (cardType == CardType.DRIVERS_LICENSE) {
+                cardRegion = data.getInt(2);
+                isBarcodeSide = data.getBoolean(3);
+            }else{
+                cardRegion = 0;
+                isBarcodeSide = false;
+            }
 
                 // load the controller instance
-                acuantAndroidMobileSDKController = AcuantAndroidMobileSDKController.getInstanceAndShowCameraInterface(cordova.getActivity(), key, cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
-                break;
+            acuantAndroidMobileSDKController = AcuantAndroidMobileSDKController.getInstanceAndShowCameraInterface(cordova.getActivity(), key, cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
+            break;
             case showManualCameraInterfaceInViewController:
-                methodId = "showManualCameraInterfaceInViewController";
-                callbackId = callbackContext;
+            methodId = "showManualCameraInterfaceInViewController";
+            callbackId = callbackContext;
 
-                if (data.getInt(0) == 1) {
-                    cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(0) == 2){
-                    cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(0) == 3){
-                    cardType = CardType.PASSPORT;
-                }
+            if (data.getInt(0) == 1) {
+                cardType = CardType.MEDICAL_INSURANCE;
+            }else if(data.getInt(0) == 2){
+                cardType = CardType.DRIVERS_LICENSE;
+            }else if(data.getInt(0) == 3){
+                cardType = CardType.PASSPORT;
+            }
 
-                if (cardType == CardType.DRIVERS_LICENSE) {
-                    cardRegion = data.getInt(1);
-                    isBarcodeSide = data.getBoolean(2);
-                }else{
-                    cardRegion = 0;
-                    isBarcodeSide = false;
-                }
+            if (cardType == CardType.DRIVERS_LICENSE) {
+                cardRegion = data.getInt(1);
+                isBarcodeSide = data.getBoolean(2);
+            }else{
+                cardRegion = 0;
+                isBarcodeSide = false;
+            }
 
-                acuantAndroidMobileSDKController.showManualCameraInterface(cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
-                break;
+            acuantAndroidMobileSDKController.showManualCameraInterface(cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
+            break;
             case showAutoCameraInterfaceInViewController:
-                methodId = "showAutoCameraInterfaceInViewController";
-                callbackId = callbackContext;
+            methodId = "showAutoCameraInterfaceInViewController";
+            callbackId = callbackContext;
 
-                if (data.getInt(0) == 1) {
-                    cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(0) == 2){
-                    cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(0) == 3){
-                    cardType = CardType.PASSPORT;
-                }
+            if (data.getInt(0) == 1) {
+                cardType = CardType.MEDICAL_INSURANCE;
+            }else if(data.getInt(0) == 2){
+                cardType = CardType.DRIVERS_LICENSE;
+            }else if(data.getInt(0) == 3){
+                cardType = CardType.PASSPORT;
+            }
 
-                acuantAndroidMobileSDKController.showAutoCameraInterface(cordova.getActivity(), cardType);
-                break;
+            acuantAndroidMobileSDKController.showAutoCameraInterface(cordova.getActivity(), cardType);
+            break;
             case showBarcodeCameraInterfaceInViewController:
-                methodId = "showBarcodeCameraInterfaceInViewController";
-                callbackId = callbackContext;
+            methodId = "showBarcodeCameraInterfaceInViewController";
+            callbackId = callbackContext;
 
-                if (data.getInt(0) == 1) {
-                    cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(0) == 2){
-                    cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(0) == 3){
-                    cardType = CardType.PASSPORT;
-                }
+            if (data.getInt(0) == 1) {
+                cardType = CardType.MEDICAL_INSURANCE;
+            }else if(data.getInt(0) == 2){
+                cardType = CardType.DRIVERS_LICENSE;
+            }else if(data.getInt(0) == 3){
+                cardType = CardType.PASSPORT;
+            }
 
-                if (cardType == CardType.DRIVERS_LICENSE) {
-                    cardRegion = data.getInt(1);
-                }else{
-                    cardRegion = 0;
-                }
+            if (cardType == CardType.DRIVERS_LICENSE) {
+                cardRegion = data.getInt(1);
+            }else{
+                cardRegion = 0;
+            }
 
-                acuantAndroidMobileSDKController.showCameraInterfacePDF417(cordova.getActivity(), cardType, cardRegion);
-                break;
+            acuantAndroidMobileSDKController.showCameraInterfacePDF417(cordova.getActivity(), cardType, cardRegion);
+            break;
             case dismissCardCaptureInterface:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","dismissCardCaptureInterface");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","dismissCardCaptureInterface");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case startCamera:
-                methodId = "startCamera";
-                callbackId = callbackContext;
-                try {
-                    obj.put("id",methodId);
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            methodId = "startCamera";
+            callbackId = callbackContext;
+            try {
+                obj.put("id",methodId);
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case stopCamera:
-                methodId = "stopCamera";
-                callbackId = callbackContext;
-                try {
-                    obj.put("id",methodId);
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            methodId = "stopCamera";
+            callbackId = callbackContext;
+            try {
+                obj.put("id",methodId);
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case pauseScanningBarcodeCamera:
-                methodId = "pauseScanningBarcodeCamera";
-                callbackId = callbackContext;
-                acuantAndroidMobileSDKController.pauseScanningBarcodeCamera();
-                break;
+            methodId = "pauseScanningBarcodeCamera";
+            callbackId = callbackContext;
+            acuantAndroidMobileSDKController.pauseScanningBarcodeCamera();
+            break;
             case resumeScanningBarcodeCamera:
-                methodId = "resumeScanningBarcodeCamera";
-                callbackId = callbackContext;
-                acuantAndroidMobileSDKController.resumeScanningBarcodeCamera();
-                break;
+            methodId = "resumeScanningBarcodeCamera";
+            callbackId = callbackContext;
+            acuantAndroidMobileSDKController.resumeScanningBarcodeCamera();
+            break;
             case setLicenseKey:
-                methodId = "setLicenseKey";
-                callbackId = callbackContext;
-                if (data.getString(0) != null && data.getString(0).trim().length() > 0){
-                    key = data.getString(0);
-                }else{
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                if (key.contains(" ")){
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                acuantAndroidMobileSDKController.setLicensekey(key);
+            methodId = "setLicenseKey";
+            callbackId = callbackContext;
+            if (data.getString(0) != null && data.getString(0).trim().length() > 0){
+                key = data.getString(0);
+            }else{
+                obj.put("id", methodId);
+                obj.put("data", false);
+                obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
+                obj.put("errorMessage", "The license key cannot be empty.");
+                PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
                 break;
+            }
+            if (key.contains(" ")){
+                obj.put("id", methodId);
+                obj.put("data", false);
+                obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
+                obj.put("errorMessage", "The license key cannot be empty.");
+                PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+                break;
+            }
+            acuantAndroidMobileSDKController.setLicensekey(key);
+            break;
             case setCloudAddress:
-                methodId = "setCloudAddress";
-                callbackId = callbackContext;
-                if (data.getString(0) != null){
-                    cloudAddressString = data.getString(0);
-                }else{
-                    cloudAddressString = "cssnwebservices.com";
-                }
-                acuantAndroidMobileSDKController.setCloudUrl(cloudAddressString);
-                break;
+            methodId = "setCloudAddress";
+            callbackId = callbackContext;
+            if (data.getString(0) != null){
+                cloudAddressString = data.getString(0);
+            }else{
+                cloudAddressString = "cssnwebservices.com";
+            }
+            acuantAndroidMobileSDKController.setCloudUrl(cloudAddressString);
+            break;
             case activateLicenseKey:
-                methodId = "activateLicenseKey";
-                callbackId = callbackContext;
-                if (data.getString(0) != null && data.getString(0).trim().length() > 0){
-                    key = data.getString(0);
-                }else{
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                if (key.contains(" ")){
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                acuantAndroidMobileSDKController.callActivateLicenseKeyService(key);
+            methodId = "activateLicenseKey";
+            callbackId = callbackContext;
+            if (data.getString(0) != null && data.getString(0).trim().length() > 0){
+                key = data.getString(0);
+            }else{
+                obj.put("id", methodId);
+                obj.put("data", false);
+                obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
+                obj.put("errorMessage", "The license key cannot be empty.");
+                PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
                 break;
+            }
+            if (key.contains(" ")){
+                obj.put("id", methodId);
+                obj.put("data", false);
+                obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
+                obj.put("errorMessage", "The license key cannot be empty.");
+                PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+                break;
+            }
+            acuantAndroidMobileSDKController.callActivateLicenseKeyService(key);
+            break;
             case setWidth:
-                methodId = "setWidth";
-                callbackId = callbackContext;
-                int width = data.getInt(0);
-                if (width == 0){
-                    width = 637;
-                }
-                acuantAndroidMobileSDKController.setWidth(width);
-                break;
+            methodId = "setWidth";
+            callbackId = callbackContext;
+            int width = data.getInt(0);
+            if (width == 0){
+                width = 637;
+            }
+            acuantAndroidMobileSDKController.setWidth(width);
+            break;
             case setCanCropBarcode:
-                methodId = "setCanCropBarcode";
-                callbackId = callbackContext;
-                canCropBarcode = data.getBoolean(0);
-                acuantAndroidMobileSDKController.setCropBarcode(canCropBarcode);
-                break;
+            methodId = "setCanCropBarcode";
+            callbackId = callbackContext;
+            canCropBarcode = data.getBoolean(0);
+            acuantAndroidMobileSDKController.setCropBarcode(canCropBarcode);
+            break;
             case setCanShowMessage:
-                methodId = "setCanShowMessage";
-                callbackId = callbackContext;
-                canShowMessage = data.getBoolean(0);
-                acuantAndroidMobileSDKController.setShowInitialMessage(canShowMessage);
-                break;
+            methodId = "setCanShowMessage";
+            callbackId = callbackContext;
+            canShowMessage = data.getBoolean(0);
+            acuantAndroidMobileSDKController.setShowInitialMessage(canShowMessage);
+            break;
             case setInitialMessage:
-                methodId = "setInitialMessage";
-                callbackId = callbackContext;
-                String initialMessage = data.getString(0);
-                int initialMessageRed = data.getInt(5);
-                int initialMessageGreen = data.getInt(6);
-                int initialMessageBlue = data.getInt(7);
-                int initialMessageApha = data.getInt(8);
-                acuantAndroidMobileSDKController.setInitialMessageDescriptor(initialMessage, initialMessageRed, initialMessageGreen, initialMessageBlue, initialMessageApha);
-                break;
+            methodId = "setInitialMessage";
+            callbackId = callbackContext;
+            String initialMessage = data.getString(0);
+            int initialMessageRed = data.getInt(5);
+            int initialMessageGreen = data.getInt(6);
+            int initialMessageBlue = data.getInt(7);
+            int initialMessageApha = data.getInt(8);
+            acuantAndroidMobileSDKController.setInitialMessageDescriptor(initialMessage, initialMessageRed, initialMessageGreen, initialMessageBlue, initialMessageApha);
+            break;
             case setCapturingMessage:
-                methodId = "setCapturingMessage";
-                callbackId = callbackContext;
-                String capturingMessage = data.getString(0);
-                int capturingMessageRed = data.getInt(5);
-                int capturingMessageGreen = data.getInt(6);
-                int capturingMessageBlue = data.getInt(7);
-                int capturingMessageApha = data.getInt(8);
-                acuantAndroidMobileSDKController.setFinalMessageDescriptor(capturingMessage, capturingMessageRed, capturingMessageGreen, capturingMessageBlue, capturingMessageApha);
-                break;
+            methodId = "setCapturingMessage";
+            callbackId = callbackContext;
+            String capturingMessage = data.getString(0);
+            int capturingMessageRed = data.getInt(5);
+            int capturingMessageGreen = data.getInt(6);
+            int capturingMessageBlue = data.getInt(7);
+            int capturingMessageApha = data.getInt(8);
+            acuantAndroidMobileSDKController.setFinalMessageDescriptor(capturingMessage, capturingMessageRed, capturingMessageGreen, capturingMessageBlue, capturingMessageApha);
+            break;
             case processCardImage:
-                methodId = "processCardImage";
-                callbackId = callbackContext;
+            methodId = "processCardImage";
+            callbackId = callbackContext;
 
-                String frontImageEcodedString = data.getString(0);
-                byte[] frontImageDecodedString = Base64.decode(frontImageEcodedString, Base64.DEFAULT);
-                Bitmap frontImageDecodedByte = BitmapFactory.decodeByteArray(frontImageDecodedString, 0, frontImageDecodedString.length);
-                Drawable frontImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), frontImageDecodedByte);
+            String frontImageEcodedString = data.getString(0);
+            byte[] frontImageDecodedString = Base64.decode(frontImageEcodedString, Base64.DEFAULT);
+            Bitmap frontImageDecodedByte = BitmapFactory.decodeByteArray(frontImageDecodedString, 0, frontImageDecodedString.length);
+            Drawable frontImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), frontImageDecodedByte);
 
-                String backImageEcodedString = data.getString(1);
-                byte[] backImageDecodedString = Base64.decode(backImageEcodedString, Base64.DEFAULT);
-                Bitmap backImageDecodedByte = BitmapFactory.decodeByteArray(backImageDecodedString, 0, backImageDecodedString.length);
-                Drawable backImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), backImageDecodedByte);
+            String backImageEcodedString = data.getString(1);
+            byte[] backImageDecodedString = Base64.decode(backImageEcodedString, Base64.DEFAULT);
+            Bitmap backImageDecodedByte = BitmapFactory.decodeByteArray(backImageDecodedString, 0, backImageDecodedString.length);
+            Drawable backImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), backImageDecodedByte);
 
-                String stringData = data.getString(2);
+            String stringData = data.getString(2);
 
-                ProcessImageRequestOptions options = ProcessImageRequestOptions.getInstance();
-                options.autoDetectState = data.getBoolean(3);
-                options.stateID = data.getInt(4);
-                options.reformatImage = data.getBoolean(5);
-                options.reformatImageColor = data.getInt(6);
-                options.DPI = data.getInt(7);
-                options.cropImage = data.getBoolean(8);
-                options.faceDetec = data.getBoolean(9);
-                options.signDetec = data.getBoolean(10);
-                if (cardType == CardType.DRIVERS_LICENSE) {
-                    options.iRegion = data.getInt(11);
-                }else{
-                    options.iRegion = 0;
-                }
-                options.imageSource = data.getInt(12);
-                options.acuantCardType = cardType;
-                acuantAndroidMobileSDKController.callProcessImageServices(frontImageDecodedByte, backImageDecodedByte, stringData, cordova.getActivity(), options);
-                break;
+            ProcessImageRequestOptions options = ProcessImageRequestOptions.getInstance();
+            options.autoDetectState = data.getBoolean(3);
+            options.stateID = data.getInt(4);
+            options.reformatImage = data.getBoolean(5);
+            options.reformatImageColor = data.getInt(6);
+            options.DPI = data.getInt(7);
+            options.cropImage = data.getBoolean(8);
+            options.faceDetec = data.getBoolean(9);
+            options.signDetec = data.getBoolean(10);
+            if (cardType == CardType.DRIVERS_LICENSE) {
+                options.iRegion = data.getInt(11);
+            }else{
+                options.iRegion = 0;
+            }   
+            options.imageSource = data.getInt(12);
+            options.acuantCardType = cardType;
+            acuantAndroidMobileSDKController.callProcessImageServices(frontImageDecodedByte, backImageDecodedByte, stringData, cordova.getActivity(), options);
+            break;
             case cameraPrefersStatusBarHidden:
-                methodId = "cameraPrefersStatusBarHidden";
-                callbackId = callbackContext;
-                canShowStatusBar = data.getBoolean(0);
-                acuantAndroidMobileSDKController.setShowStatusBar(canShowStatusBar);
-                break;
+            methodId = "cameraPrefersStatusBarHidden";
+            callbackId = callbackContext;
+            canShowStatusBar = data.getBoolean(0);
+            acuantAndroidMobileSDKController.setShowStatusBar(canShowStatusBar);
+            break;
             case frameForWatermarkView:
-                callbackId = callbackContext;
-                xWatermark = data.getInt(0);
-                yWatermark = data.getInt(1);
-                widthWatermark = data.getInt(2);
-                heightWatermark = data.getInt(3);
-                acuantAndroidMobileSDKController.setWatermarkText(watermarkText, xWatermark, yWatermark, widthWatermark, heightWatermark);
-                break;
+            callbackId = callbackContext;
+            xWatermark = data.getInt(0);
+            yWatermark = data.getInt(1);
+            widthWatermark = data.getInt(2);
+            heightWatermark = data.getInt(3);
+            acuantAndroidMobileSDKController.setWatermarkText(watermarkText, xWatermark, yWatermark, widthWatermark, heightWatermark);
+            break;
             case stringForWatermarkLabel:
-                callbackId = callbackContext;
-                watermarkText = data.getString(0);
-                acuantAndroidMobileSDKController.setWatermarkText(watermarkText, xWatermark, yWatermark, widthWatermark, heightWatermark);
-                break;
+            callbackId = callbackContext;
+            watermarkText = data.getString(0);
+            acuantAndroidMobileSDKController.setWatermarkText(watermarkText, xWatermark, yWatermark, widthWatermark, heightWatermark);
+            break;
             case frameForHelpImageView:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","frameForHelpImageView");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","frameForHelpImageView");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case imageForHelpImageView:
-                callbackId = callbackContext;
-                String encodedImage = data.getString(0);
-                if (encodedImage.contains("data:image/png;base64,")){
-                    encodedImage = encodedImage.replaceFirst("data:image/png;base64,", "");
-                }
-                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                Drawable pdf417BarcodeImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), decodedByte);
-                acuantAndroidMobileSDKController.setPdf417BarcodeImageDrawable(pdf417BarcodeImageDrawable);
-                break;
+            callbackId = callbackContext;
+            String encodedImage = data.getString(0);
+            if (encodedImage.contains("data:image/png;base64,")){
+                encodedImage = encodedImage.replaceFirst("data:image/png;base64,", "");
+            }
+            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Drawable pdf417BarcodeImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), decodedByte);
+            acuantAndroidMobileSDKController.setPdf417BarcodeImageDrawable(pdf417BarcodeImageDrawable);
+            break;
             case showBackButton:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","showBackButton");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","showBackButton");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case frameForBackButton:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","frameForBackButton");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","frameForBackButton");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case imageForBackButton:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","imageForBackButton");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                break;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","imageForBackButton");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            break;
             case showiPadBrackets:
-                methodId = "showiPadBrackets";
-                callbackId = callbackContext;
-                boolean showiPadBrackets = false;
-                showiPadBrackets = data.getBoolean(0);
-                acuantAndroidMobileSDKController.setCanShowBracketsOnTablet(showiPadBrackets);
-                break;
+            methodId = "showiPadBrackets";
+            callbackId = callbackContext;
+            boolean showiPadBrackets = false;
+            showiPadBrackets = data.getBoolean(0);
+            acuantAndroidMobileSDKController.setCanShowBracketsOnTablet(showiPadBrackets);
+            break;                
             case showFlashlightButton:
-                methodId = "showFlashlightButton";
-                callbackId = callbackContext;
-                boolean showFlashlight = false;
-                showFlashlight = data.getBoolean(0);
-                acuantAndroidMobileSDKController.setFlashlight(showFlashlight);
-                break;
+            methodId = "showFlashlightButton";
+            callbackId = callbackContext;
+            boolean showFlashlight = false;
+            showFlashlight = data.getBoolean(0);
+            acuantAndroidMobileSDKController.setFlashlight(showFlashlight);
+            break;                
             case frameForFlashlightButton:
-                methodId = "frameForFlashlightButton";
-                callbackId = callbackContext;
-                xFlashlight = data.getInt(0);
-                yFlashlight = data.getInt(1);
-                widthFlashlight = data.getInt(2);
-                heightFlashlight = data.getInt(3);
-                acuantAndroidMobileSDKController.setFlashlight(xFlashlight, yFlashlight, widthFlashlight, heightFlashlight);
-                break;
+            methodId = "frameForFlashlightButton";
+            callbackId = callbackContext;
+            xFlashlight = data.getInt(0);
+            yFlashlight = data.getInt(1);
+            widthFlashlight = data.getInt(2);
+            heightFlashlight = data.getInt(3);
+            acuantAndroidMobileSDKController.setFlashlight(xFlashlight, yFlashlight, widthFlashlight, heightFlashlight);
+            break; 
             case imageForFlashlightButton:
-                methodId = "imageForFlashlightButton";
-                callbackId = callbackContext;
-                String encodedImageOn = data.getString(0);
-                if (encodedImageOn.contains("data:image/png;base64,")){
-                    encodedImageOn = encodedImageOn.replaceFirst("data:image/png;base64,", "");
-                }
-                byte[] decodedStringOn = Base64.decode(encodedImageOn, Base64.DEFAULT);
-                Bitmap decodedByteOn = BitmapFactory.decodeByteArray(decodedStringOn, 0, decodedStringOn.length);
-                Drawable flashlightButtonImageDrawableOn = new BitmapDrawable(cordova.getActivity().getResources(), decodedByteOn);
-                String encodedImageOff = data.getString(1);
-                if (encodedImageOff.contains("data:image/png;base64,")){
-                    encodedImageOff = encodedImageOff.replaceFirst("data:image/png;base64,", "");
-                }
-                byte[] decodedStringOff = Base64.decode(encodedImageOff, Base64.DEFAULT);
-                Bitmap decodedByteOff = BitmapFactory.decodeByteArray(decodedStringOff, 0, decodedStringOff.length);
-                Drawable flashlightButtonImageDrawableOff = new BitmapDrawable(cordova.getActivity().getResources(), decodedByteOff);
-                acuantAndroidMobileSDKController.setFlashlightImageDrawable(flashlightButtonImageDrawableOn, flashlightButtonImageDrawableOff);
-                break;
+            methodId = "imageForFlashlightButton";
+            callbackId = callbackContext;
+            String encodedImageOn = data.getString(0);
+            if (encodedImageOn.contains("data:image/png;base64,")){
+                encodedImageOn = encodedImageOn.replaceFirst("data:image/png;base64,", "");
+            }
+            byte[] decodedStringOn = Base64.decode(encodedImageOn, Base64.DEFAULT);
+            Bitmap decodedByteOn = BitmapFactory.decodeByteArray(decodedStringOn, 0, decodedStringOn.length);
+            Drawable flashlightButtonImageDrawableOn = new BitmapDrawable(cordova.getActivity().getResources(), decodedByteOn);
+            String encodedImageOff = data.getString(1);
+            if (encodedImageOff.contains("data:image/png;base64,")){
+                encodedImageOff = encodedImageOff.replaceFirst("data:image/png;base64,", "");
+            }
+            byte[] decodedStringOff = Base64.decode(encodedImageOff, Base64.DEFAULT);
+            Bitmap decodedByteOff = BitmapFactory.decodeByteArray(decodedStringOff, 0, decodedStringOff.length);
+            Drawable flashlightButtonImageDrawableOff = new BitmapDrawable(cordova.getActivity().getResources(), decodedByteOff);
+            acuantAndroidMobileSDKController.setFlashlightImageDrawable(flashlightButtonImageDrawableOn, flashlightButtonImageDrawableOff);
+            break;
             default:
-                callbackId = callbackContext;
-                try {
-                    obj.put("id","default");
-                    obj.put("error","No " + action + " Method");
-                    PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return false;
+            callbackId = callbackContext;
+            try {
+                obj.put("id","default");
+                obj.put("error","No " + action + " Method");
+                PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
+                result.setKeepCallback(true);
+                callbackId.sendPluginResult(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
         return true;
     }
@@ -549,22 +544,22 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                         obj.put("id","didFinishProcessingCardWithResult");
                         switch (cardType) {
                             case CardType.DRIVERS_LICENSE:
-                                DriversLicenseCard driversLicenseCard = (DriversLicenseCard) card;
-                                obj.put("data", DLCardWithCard(driversLicenseCard));
-                                sendCardData(PluginResult.Status.OK, obj, handler);
-                                break;
+                            DriversLicenseCard driversLicenseCard = (DriversLicenseCard) card;
+                            obj.put("data", DLCardWithCard(driversLicenseCard));
+                            sendCardData(PluginResult.Status.OK, obj, handler);
+                            break;
                             case CardType.MEDICAL_INSURANCE:
-                                MedicalCard medicalCard = (MedicalCard) card;
-                                obj.put("data", MICardWithCard(medicalCard));
-                                sendCardData(PluginResult.Status.OK, obj, handler);
-                                break;
+                            MedicalCard medicalCard = (MedicalCard) card;
+                            obj.put("data", MICardWithCard(medicalCard));
+                            sendCardData(PluginResult.Status.OK, obj, handler);
+                            break;
                             case CardType.PASSPORT:
-                                PassportCard passportCard = (PassportCard) card;
-                                obj.put("data", PCardWithCard(passportCard));
-                                sendCardData(PluginResult.Status.OK, obj, handler);
-                                break;
+                            PassportCard passportCard = (PassportCard) card;
+                            obj.put("data", PCardWithCard(passportCard));
+                            sendCardData(PluginResult.Status.OK, obj, handler);
+                            break;
                             default:
-                                throw new IllegalStateException("There is not implementation for processing the card type");
+                            throw new IllegalStateException("There is not implementation for processing the card type");
                         }
                     }
                 } catch (Exception e) {
@@ -581,7 +576,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
         }).start();
     }
-
+    
     private void sendCardData(final PluginResult.Status statusCallback, final JSONObject objCallback, Handler handler){
         handler.post(new Runnable() {
             @Override
@@ -592,7 +587,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
         });
     }
-
+    
     @Override
     public void activateLicenseKeyCompleted(LicenseActivationDetails details) {
         JSONObject obj=new JSONObject();
@@ -642,12 +637,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onCardCroppingStart(Activity activity) {
         JSONObject obj=new JSONObject();
         try {
-            progressDialog = showProgessDialog(activity, "Cropping image...");
             obj.put("id","didCardCroppingStart");
             PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
             result.setKeepCallback(true);
@@ -656,12 +650,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onCardCroppingFinish(final Bitmap bitmap) {
         JSONObject obj=new JSONObject();
         try {
-            dismissDialog(progressDialog);
             if (bitmap != null){
                 obj.put("id", "didCaptureCropImage");
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -684,12 +677,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onCardCroppingFinish(final Bitmap bitmap, boolean scanBackSide) {
         JSONObject obj=new JSONObject();
         try {
-            dismissDialog(progressDialog);
             if (bitmap != null){
                 if ((cardRegion == 0 || cardRegion == 1) && isBarcodeSide) {
                     obj.put("id", "cropBarcode");
@@ -717,7 +709,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onOriginalCapture(Bitmap bitmap) {
         JSONObject obj=new JSONObject();
@@ -744,7 +736,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onPDF417Finish(String result) {
         JSONObject obj=new JSONObject();
@@ -758,33 +750,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onBarcodeTimeOut() {
         JSONObject obj=new JSONObject();
         try {
-            acuantAndroidMobileSDKController.pauseScanningBarcodeCamera();
-            AlertDialog.Builder builder = new AlertDialog.Builder(acuantAndroidMobileSDKController.getBarcodeCameraContext());
-            // barcode Dialog "ignore" option
-            builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
-                    acuantAndroidMobileSDKController.finishScanningBarcodeCamera();
-                    dialog.dismiss();
-                }
-            });
-            // barcode Dialog "retry" option
-            builder.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    acuantAndroidMobileSDKController.resumeScanningBarcodeCamera();
-                    dialog.dismiss();
-                }
-            });
-            //barcode Dialog title and main message
-            builder.setMessage("Unable to scan the barcode?");
-            builder.setTitle("AcuantMobileSDK");
-            builder.create().show();
-
             obj.put("id", "barcodeScanTimeOut");
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
             pluginResult.setKeepCallback(true);
@@ -950,7 +920,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             miCard.put("phoneNumber", sResult.getPhoneNumber());
             miCard.put("email", sResult.getEmail());
             miCard.put("webAddress", sResult.getWebAddress());
-
+            
             Bitmap reformatImageBitmap = sResult.getReformattedImage();
             if (reformatImageBitmap != null) {
                 ByteArrayOutputStream reformatImageByteArrayOutputStream = new ByteArrayOutputStream();
@@ -1000,7 +970,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             pCard.put("passportNumber", sResult.getPassportNumber());
             pCard.put("personalNumber", sResult.getPersonalNumber());
             pCard.put("sex", sResult.getSex());
-
+            
             Bitmap faceImageBitmap = sResult.getFaceImage();
             if (faceImageBitmap != null) {
                 ByteArrayOutputStream faceImageByteArrayOutputStream = new ByteArrayOutputStream();
@@ -1028,36 +998,4 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             return null;
         }
     }
-    /**
-     * @param context
-     * @param message
-     * @return
-     */
-    public static ProgressDialog showProgessDialog(Activity context, String message)
-    {
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage(message);
-        progressDialog.setIndeterminate(true);
-        progressDialog.show();
-
-        return progressDialog;
-    }
-    /**
-     * Encapsulated behavior for dismissing Dialogs, because of several android problems
-     * related.
-     */
-    public static void dismissDialog(Dialog dialog)
-    {
-        if (dialog != null && dialog.isShowing())
-        {
-            try
-            {
-                dialog.dismiss();
-            } catch (IllegalArgumentException e)
-            {
-                Log.i("Acuant", "Error when attempting to dismiss dialog, it is an android problem.", e);
-            }
-        }
-    }
-
 }

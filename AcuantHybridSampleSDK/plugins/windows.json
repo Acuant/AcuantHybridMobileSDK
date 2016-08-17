@@ -1,0 +1,33 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        }
+    },
+    "dependent_plugins": {}
+}

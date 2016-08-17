@@ -127,20 +127,6 @@
  @param command CDVInvokedUrlCommand
  @discussion a valid viewController is required
  */
- - (void)showAutoCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
-    _methodId = @"showAutoCameraInterfaceInViewController";
-    NSNumber *cardTypeNumber = [command.arguments objectAtIndex:0];
-    _cardType = cardTypeNumber.intValue;
-    _callbackId = [command callbackId];
-    UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [_instance showAutoCameraInterfaceInViewController:rootViewController delegate:self cardType:_cardType];
-}
-
-/**
- Use this method to present the card capture interface.
- @param command CDVInvokedUrlCommand
- @discussion a valid viewController is required
- */
  - (void)showBarcodeCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
     _methodId = @"showBarcodeCameraInterfaceInViewController";
     NSNumber *cardTypeNumber = [command.arguments objectAtIndex:0];
@@ -782,6 +768,10 @@
      messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
+
+-(void)didFailToCaptureCropImage{
+    
 }
 
 

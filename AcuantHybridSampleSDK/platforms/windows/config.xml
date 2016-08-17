@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="7" id="com.cssn.cssnsamplesdk" ios-CFBundleVersion="1.2.5" version="1.2" xmlns="http://www.w3.org/ns/widgets">
+    <name>AcuantHybridSampleSDK</name>
+    <description>
+        A sample Apache Cordova application that responds to the deviceready event.
+    </description>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="orientation" value="default" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+</widget>

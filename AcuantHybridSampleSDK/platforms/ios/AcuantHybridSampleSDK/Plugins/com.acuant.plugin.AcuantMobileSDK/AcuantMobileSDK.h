@@ -29,12 +29,6 @@ Use this method to present the card capture interface.
 @param command CDVInvokedUrlCommand
 @discussion a valid viewController is required
 */
-- (void)showAutoCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command;
-/**
-Use this method to present the card capture interface.
-@param command CDVInvokedUrlCommand
-@discussion a valid viewController is required
-*/
 - (void)showBarcodeCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command;
 
 /**
