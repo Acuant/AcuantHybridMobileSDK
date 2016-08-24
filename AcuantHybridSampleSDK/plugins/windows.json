@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "AcuantHybridSampleSDK"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
@@ -26,6 +23,9 @@
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
         "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         }
     },

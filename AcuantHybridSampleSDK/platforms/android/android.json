@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
@@ -26,6 +22,10 @@
                         },
                         {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -77,11 +77,11 @@
                     ],
                     "/manifest/application": [
                         {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.CameraCardDetectManual\"></activity>",
+                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2CardDetectManual\"></activity>",
                             "count": 1
                         },
                         {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.CameraCardDetectAuto\"></activity>",
+                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.CameraCardDetectManual\"></activity>",
                             "count": 1
                         },
                         {
@@ -104,9 +104,6 @@
         }
     },
     "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
@@ -124,18 +121,13 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },
     "dependent_plugins": {},
     "modules": [
-        {
-            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-            "clobbers": [
-                "AcuantMobileSDK"
-            ]
-        },
         {
             "id": "cordova-plugin-camera.Camera",
             "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
@@ -200,15 +192,23 @@
             "clobbers": [
                 "Connection"
             ]
+        },
+        {
+            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+            "clobbers": [
+                "AcuantMobileSDK"
+            ]
         }
     ],
     "plugin_metadata": {
-        "com.acuant.plugin.AcuantMobileSDK": "1.2.0",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-console": "1.0.3",
         "cordova-plugin-dialogs": "1.2.1",
         "cordova-plugin-network-information": "1.2.1",
-        "cordova-plugin-whitelist": "1.2.2"
+        "cordova-plugin-whitelist": "1.2.2",
+        "com.acuant.plugin.AcuantMobileSDK": "2.0"
     }
 }

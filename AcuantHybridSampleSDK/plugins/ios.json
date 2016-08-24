@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
@@ -26,6 +23,9 @@
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
+        "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },

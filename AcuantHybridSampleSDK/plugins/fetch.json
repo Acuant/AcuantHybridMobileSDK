@@ -39,18 +39,18 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.acuant.plugin.AcuantMobileSDK": {
-        "source": {
-            "type": "local",
-            "path": "C:\\Users\\tbehera\\Desktop\\WindowsMobile\\WindowsHybrid\\Releases\\2.0\\Hybrid-Github\\AcuantHybridMobileSDK\\cordova-plugin-AcuantHybridSDK"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-camera": {
         "source": {
             "type": "registry",
             "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.acuant.plugin.AcuantMobileSDK": {
+        "source": {
+            "type": "local",
+            "path": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK"
         },
         "is_top_level": true,
         "variables": {}

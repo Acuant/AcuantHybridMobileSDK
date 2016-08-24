@@ -1,7 +1,10 @@
 cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(require, exports, module) {
 /*global cordova, module*/
-    var AcuantWinRT = AcuantWindowsMobileSDKWinRTComponent;
     var isWindows = (cordova.platformId.localeCompare("windows") == 0);
+    var AcuantWinRT = null;
+    if(isWindows==true){
+        AcuantWinRT = AcuantWindowsMobileSDKWinRTComponent;
+    }
     function arrayBufferToBase64 (buffer) {
         if (buffer == null) {
             return null;

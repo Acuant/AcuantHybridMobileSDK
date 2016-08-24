@@ -57,7 +57,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private int heightFlashlight = 0;
 
     private enum Action {
-        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showAutoCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, activateLicenseKey, setWidth, setCanCropBarcode, setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton;
+        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, activateLicenseKey, setWidth, setCanCropBarcode, setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton;
     }
 
     @Override
@@ -153,20 +153,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
 
             acuantAndroidMobileSDKController.showManualCameraInterface(cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
-            break;
-            case showAutoCameraInterfaceInViewController:
-            methodId = "showAutoCameraInterfaceInViewController";
-            callbackId = callbackContext;
-
-            if (data.getInt(0) == 1) {
-                cardType = CardType.MEDICAL_INSURANCE;
-            }else if(data.getInt(0) == 2){
-                cardType = CardType.DRIVERS_LICENSE;
-            }else if(data.getInt(0) == 3){
-                cardType = CardType.PASSPORT;
-            }
-
-            acuantAndroidMobileSDKController.showAutoCameraInterface(cordova.getActivity(), cardType);
             break;
             case showBarcodeCameraInterfaceInViewController:
             methodId = "showBarcodeCameraInterfaceInViewController";
@@ -509,6 +495,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public void onCancelCapture(){
+        
     }
 
     @Override

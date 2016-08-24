@@ -7,7 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
         "cordova-plugin-compat": {
@@ -25,7 +25,7 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "cordova-plugin-camera": {
+        "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },

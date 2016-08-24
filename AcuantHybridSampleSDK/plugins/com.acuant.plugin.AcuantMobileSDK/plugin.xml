@@ -2,18 +2,18 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.acuant.plugin.AcuantMobileSDK"
-        version="1.2.0">
+        version="2.0">
 
   <name>AcuantMobileSDK</name>
 
   <engines>
-    <engine name="cordova" version=">=3.8.0"/>
+    <engine name="cordova" version=">=6.3.1"/>
   </engines>
 
   <asset src="www/AcuantMobileSDK.js" target="AcuantMobileSDK.js"/>
 
   <js-module src="www/AcuantMobileSDK.js" name="AcuantMobileSDK">
-    <clobbers target="window.AcuantMobileSDK" />
+    <clobbers target="AcuantMobileSDK" />
   </js-module>
 
   <!-- Android -->
@@ -41,10 +41,10 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity
-              android:name="com.acuant.mobilesdk.detect.CameraCardDetectManual">
+              android:name="com.acuant.mobilesdk.detect.Camera2CardDetectManual">
       </activity>
       <activity
-              android:name="com.acuant.mobilesdk.detect.CameraCardDetectAuto">
+          android:name="com.acuant.mobilesdk.detect.CameraCardDetectManual">
       </activity>
       <activity
               android:name="com.acuant.mobilesdk.detect.PDF417.CameraPDF417">

@@ -1,0 +1,207 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+ * {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+.div-top{
+    display: block;
+    padding-left: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+}
+.div-buttons{
+    margin-top: 20px;
+    text-align:center;
+}
+.div-center{
+    text-align:center;
+}
+.div-Countries {
+    text-align:center;
+    height : 100%
+}
+.div-Countries div div {
+    position : relative;
+    top : 50%;
+    margin-top: -7px;
+}
+.div-Countries div {
+    color: #247AFE;
+    height : 14%;
+}
+.t1{
+    position: relative;
+    top:50%;
+    margin-top: -7px;
+}
+.t2{
+    position: relative;
+    top:50%;
+    margin-top: -15px;
+}
+.div-bottom{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+.card-image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.hdn{
+    display:none;
+}
+.div-back{
+    text-align:right;
+}
+.div-images{
+    padding-left: 10px;
+    text-align:left;
+}
+.div-text-result{
+    padding-left: 10px;
+    text-align:left;
+}
+.bordered{
+    border-radius: 15px;
+    border: 1px solid #000000;
+}
+
+html{
+    height:100%;
+    margin:0px;
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#CDD5E1;
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    padding-top: 15px;
+    width:100%;
+}
+
+#license-key-label{
+    font-weight: bold;
+}
+#license-key{
+}
+#activate-btn{
+    font-weight: bold;
+}
+
+#front-image, #back-image{
+    margin-top: 30px;
+    display: inline-block;
+    width: 80%;
+    vertical-align: middle;
+}
+#front-image img,#back-image img{
+    width : auto;
+    height : auto;
+}
+#front-image > img, #back-image > img{
+    max-width:100%;
+    max-height:100%;
+}
+
+#driver-license-duplex-btn, #passport-btn, #medical-insurance-btn{
+    padding-left: 20px;
+}
+#driver-license-duplex-btn, #passport-btn, #medical-insurance-btn, #driver-license-btn{
+    color: #247AFE;  
+    font-weight: bold;
+}
+
+#progress_modal{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+    text-align:center;
+    z-index: 9999;
+}
+
+#process-btn{
+    color: #247AFE;  
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#front-image-result, #back-image-result{
+    border-radius: 15px;
+    display: inline-block;
+    width: 45%;
+    vertical-align: middle;
+}
+#front-image-result img,#back-image-result img{
+    width : auto;
+    height : auto;
+}
+#front-image-result > img, #back-image-result > img{
+    max-width:100%;
+    max-height:100%;
+}
+
+#face-image-result{
+    width:105px;
+    height:119px;
+}
+#signature-image-result{
+    width:122px;
+    height:56px;
+}
+
+#back-btn{
+    color: #247AFE;  
+    padding-right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+ 
+#page3 {
+    height : 100%
+}
+
+@media screen and (orientation: landscape) {
+    #front-image, #back-image{
+        margin-top: 30px;
+        display: inline-block;
+        width: 40%;
+        vertical-align: middle;
+    }
+
+    #driver-license-duplex-btn, #passport-btn, #medical-insurance-btn{
+        padding-left: 40px;
+    }
+
+}

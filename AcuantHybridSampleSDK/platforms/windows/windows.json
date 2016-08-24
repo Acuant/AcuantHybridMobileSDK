@@ -18,9 +18,6 @@
         }
     },
     "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "AcuantHybridSampleSDK"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
@@ -38,18 +35,13 @@
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
         }
     },
     "dependent_plugins": {},
     "modules": [
-        {
-            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-            "clobbers": [
-                "window.AcuantMobileSDK"
-            ]
-        },
         {
             "id": "cordova-plugin-network-information.network",
             "file": "plugins/cordova-plugin-network-information/www/network.js",
@@ -144,15 +136,23 @@
             "merges": [
                 ""
             ]
+        },
+        {
+            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+            "clobbers": [
+                "AcuantMobileSDK"
+            ]
         }
     ],
     "plugin_metadata": {
-        "com.acuant.plugin.AcuantMobileSDK": "1.2.0",
         "cordova-plugin-network-information": "1.2.1",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-console": "1.0.3",
-        "cordova-plugin-dialogs": "1.2.1"
+        "cordova-plugin-dialogs": "1.2.1",
+        "com.acuant.plugin.AcuantMobileSDK": "2.0"
     }
 }

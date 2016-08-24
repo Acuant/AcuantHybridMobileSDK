@@ -1,14 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-        "clobbers": [
-            "AcuantMobileSDK"
-        ]
-    },
-    {
         "id": "cordova-plugin-console.console",
         "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
         "pluginId": "cordova-plugin-console",
@@ -80,18 +72,26 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+        "clobbers": [
+            "AcuantMobileSDK"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.acuant.plugin.AcuantMobileSDK": "1.2.0",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-console": "1.0.3",
     "cordova-plugin-dialogs": "1.2.1",
     "cordova-plugin-network-information": "1.2.1",
     "cordova-plugin-whitelist": "1.2.2",
-    "cordova-plugin-camera": "2.2.0"
+    "cordova-plugin-camera": "2.2.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.0"
 };
 // BOTTOM OF METADATA
 });

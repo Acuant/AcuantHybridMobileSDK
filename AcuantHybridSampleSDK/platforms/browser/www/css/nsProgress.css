@@ -1,0 +1,39 @@
+body{ height:100% }
+
+.nsProgress_container {
+    background: rgba(0, 0, 0, 0.8);
+    width: 120px;
+    height: 60px;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    padding-top: 30px;
+    margin-left: -60px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display: none;
+
+    z-index: 2000;
+}
+
+.nsProgress_text {
+    display: none;
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: sans-serif;
+    margin-top: 10px;
+}
+
+.nsProgress_block {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    height:100%;
+
+    z-index: 1999;
+}

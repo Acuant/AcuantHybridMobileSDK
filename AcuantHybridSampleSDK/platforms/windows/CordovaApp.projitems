@@ -15,13 +15,13 @@
     <Import Condition="Exists('$(MSBuildThisFileDirectory)CordovaAppRelease.projitems') And '$(Configuration)'!='Debug'" Project="CordovaAppRelease.projitems" />
     <ItemGroup>
         <Reference Include="AcuantWindowsMobileSDKWinRTComponent">
-            <HintPath>plugins\com.acuant.plugin.AcuantMobileSDK\AcuantWindowsMobileSDKWinRTComponent.winmd</HintPath>
+            <HintPath>plugins/com.acuant.plugin.AcuantMobileSDK/AcuantWindowsMobileSDKWinRTComponent.winmd</HintPath>
             <IsWinMDFile>true</IsWinMDFile>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="zcard">
-            <HintPath>plugins\com.acuant.plugin.AcuantMobileSDK\zcard.winmd</HintPath>
+            <HintPath>plugins/com.acuant.plugin.AcuantMobileSDK/zcard.winmd</HintPath>
             <IsWinMDFile>true</IsWinMDFile>
         </Reference>
     </ItemGroup>

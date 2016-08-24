@@ -1,5 +1,6 @@
 repositories{
   jcenter()
+  maven { url 'http://maven.microblink.com' }
   flatDir{
     dirs "libs"
    }
@@ -7,10 +8,12 @@ repositories{
 
 dependencies {
     compile (name:'acuantMobileSDK', ext:'aar')
-    compile ('com.google.code.gson:gson:2.5')
-    compile ('org.apache.httpcomponents:httpclient:4.2.6')
-    compile ('org.apache.httpcomponents:httpmime:4.2.6')
-    compile ('org.apache.httpcomponents:httpcore:4.2.5')
+    compile('com.microblink:pdf417.mobi:5.5.2@aar') {
+        transitive = true
+    }
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.google.code.gson:gson:2.5'
 }
 
 android {
