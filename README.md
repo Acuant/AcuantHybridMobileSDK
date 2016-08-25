@@ -735,3 +735,4 @@ Mobile Angular UI
 - Improved cropping in Android platform
 - libpng version updated to resolve security vulnerabilities issue in Android platform 
 - Memory optimization to fix memory out of bound crashes in low memory devices
+- Added DocumentDetectNameShort field for Android platform
