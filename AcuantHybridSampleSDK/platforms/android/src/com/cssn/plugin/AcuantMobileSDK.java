@@ -882,6 +882,7 @@
                         dlCard.put("nameMiddle_NonMRZ", sResult.getNameMiddle_NonMRZ());
                         dlCard.put("nameSuffix_NonMRZ", sResult.getNameSuffix_NonMRZ());
                         dlCard.put("documentDetectedName", sResult.getDocumentDetectedName());
+                        dlCard.put("documentDetectedNameShort", sResult.getDocumentDetectedNameShort());
                         dlCard.put("templateType", sResult.getTemplateType());
                         dlCard.put("isBarcodeRead", sResult.getIsBarcodeRead());
                         dlCard.put("isIDVerified", sResult.getIsIDVerified());

@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 08/17/2016
+Last updated on – 08/25/2016
 
 # Introduction
 
@@ -732,6 +732,6 @@ Mobile Angular UI
 
 # Change Log
 
-- Added windows 10 mobile platform support.
-- Improved cropping in iOS platform
-- Removed Auto camera capture feature
+- Improved cropping in Android platform
+- libpng version updated to resolve security vulnerabilities issue in Android platform 
+- Memory optimization to fix memory out of bound crashes in low memory devices
