@@ -1,35 +1,36 @@
             package com.acuant.plugin;
 
             import android.app.Activity;
+            import android.graphics.Bitmap;
+            import android.graphics.BitmapFactory;
+            import android.graphics.drawable.BitmapDrawable;
+            import android.graphics.drawable.Drawable;
             import android.os.Handler;
             import android.os.Looper;
             import android.util.Base64;
-            import android.graphics.Bitmap;
-            import android.graphics.BitmapFactory;
-            import android.graphics.drawable.Drawable;
-            import android.graphics.drawable.BitmapDrawable;
-            import android.util.Log;
 
-            import com.acuant.mobilesdk.*;
             import com.acuant.mobilesdk.AcuantAndroidMobileSDKController;
+            import com.acuant.mobilesdk.AcuantErrorListener;
             import com.acuant.mobilesdk.Card;
             import com.acuant.mobilesdk.CardCroppingListener;
+            import com.acuant.mobilesdk.CardType;
+            import com.acuant.mobilesdk.DriversLicenseCard;
             import com.acuant.mobilesdk.ErrorType;
             import com.acuant.mobilesdk.LicenseActivationDetails;
             import com.acuant.mobilesdk.LicenseDetails;
+            import com.acuant.mobilesdk.MedicalCard;
+            import com.acuant.mobilesdk.PassportCard;
+            import com.acuant.mobilesdk.ProcessImageRequestOptions;
             import com.acuant.mobilesdk.WebServiceListener;
-            import com.acuant.mobilesdk.exceptions.AuthorizationException;
-            import com.acuant.mobilesdk.exceptions.ConnectionException;
 
-            import com.google.gson.Gson;
-            import org.apache.cordova.*;
+            import org.apache.cordova.CallbackContext;
+            import org.apache.cordova.CordovaPlugin;
+            import org.apache.cordova.PluginResult;
             import org.json.JSONArray;
             import org.json.JSONException;
             import org.json.JSONObject;
 
             import java.io.ByteArrayOutputStream;
-            import java.lang.reflect.Array;
-            import java.sql.Types;
 
             public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener, CardCroppingListener, AcuantErrorListener {
 
