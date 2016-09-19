@@ -104,6 +104,11 @@ Example:
 
 Note : GitHub has recently changed the versioning for large files. To be able to download large files while cloning from GitHub repositories please make sure git-lfs is installed in the build machine. More information for git-lfs is available at https://git-lfs.github.com/. Please clone/update our SDK repository only after the git-lfs is installed.
 
+
+After cloning the repository execute the following command to make sure all files are pulled.
+
+	git lfs pull
+	
 ## Add AcuantMobileSDK Plugin on each project 
 
 In order to add the plugin to your project, follow the below two steps:
