@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="7" id="com.cssn.cssnsamplesdk" ios-CFBundleVersion="1.2.5" version="1.2" xmlns="http://www.w3.org/ns/widgets">
+    <feature name="AcuantMobileSDK">
+        <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
+    </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
@@ -12,9 +15,6 @@
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
-    </feature>
-    <feature name="AcuantMobileSDK">
-        <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
     </feature>
     <name>AcuantHybridSampleSDK</name>
     <description>
@@ -36,6 +36,6 @@
     <preference name="webviewbounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="17" />
-    <preference name="android-targetSdkVersion" value="19" />
-    <preference name="android-compileSdkVersion" value="22" />
+    <preference name="android-targetSdkVersion" value="25" />
+    <preference name="android-compileSdkVersion" value="25" />
 </widget>

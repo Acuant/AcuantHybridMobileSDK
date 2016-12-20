@@ -234,6 +234,11 @@
     [_instance activateLicenseKey:_key];
 }
 
+-(void)enableLocationTracking:(CDVInvokedUrlCommand*)command{
+    _methodId = @"enableLocationTracking";
+    [_instance enableLocationTracking];
+}
+
 /**
  Use this method to set the width of the cropped image
  @param command CDVInvokedUrlCommand
@@ -781,6 +786,7 @@
  -(void)mobileSDKWasValidated:(BOOL)wasValidated{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"mobileSDKWasValidated" forKey:@"id"];
     NSNumber *wasValidatedNumber = [NSNumber numberWithBool:wasValidated];
+    [resultDictionary setObject:[NSNumber numberWithBool:_instance.isAssureIDAllowed] forKey:@"isAssureIDAllowed"];
     [resultDictionary setObject:wasValidatedNumber forKey:@"data"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
      messageAsDictionary:resultDictionary];
@@ -848,29 +854,54 @@
 #pragma mark Pivate Methods
 
 -(NSMutableDictionary *) dictionaryWithPropertiesOfObject:(id)obj
-{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-    unsigned count;
-    objc_property_t *properties = class_copyPropertyList([obj class], &count);
-    
-    for (int i = 0; i < count; i++) {
-        NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
-        if ([obj valueForKey:key] !=  nil) {
-            if ([[obj valueForKey:key] isKindOfClass:[NSData class]]) {
-                UIImage *image = [UIImage imageWithData:[obj valueForKey:key]];
-                NSData *data = UIImagePNGRepresentation(image);
-                NSString *encodedString = [data base64EncodedStringWithOptions:0];
-                [dict setObject:encodedString forKey:key];
+    {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        
+        unsigned count;
+        objc_property_t *properties = class_copyPropertyList([obj class], &count);
+        
+        
+        for (int i = 0; i < count; i++) {
+            NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
+            if ([obj valueForKey:key] !=  nil) {
+                if ([[obj valueForKey:key] isKindOfClass:[NSData class]]) {
+                    UIImage *image = [UIImage imageWithData:[obj valueForKey:key]];
+                    NSData *data = UIImagePNGRepresentation(image);
+                    NSString *encodedString = [data base64EncodedStringWithOptions:0];
+                    [dict setObject:encodedString forKey:key];
+                }else{
+                    [dict setObject:[obj valueForKey:key] forKey:key];
+                }
             }else{
-                [dict setObject:[obj valueForKey:key] forKey:key];
+                [dict setObject:[NSNull null] forKey:key];
             }
-        }else{
-            [dict setObject:[NSNull null] forKey:key];
         }
+        
+        if([obj valueForKey:@"_idLocationCountryTestResult"]){
+            [dict setObject:[obj valueForKey:@"_idLocationCountryTestResult"] forKey:@"idLocationCountryTestResult"];
+        }
+        if([obj valueForKey:@"_idLocationCountryTestResult"]){
+            [dict setObject:[obj valueForKey:@"_idLocationStateTestResult"] forKey:@"idLocationStateTestResult"];
+        }
+        
+        if([obj valueForKey:@"_idLocationCountryTestResult"]){
+            [dict setObject:[obj valueForKey:@"_idLocationCityTestResult"] forKey:@"idLocationCityTestResult"];
+        }
+        
+        if([obj valueForKey:@"_idLocationZipcodeTestResult"]){
+            [dict setObject:[obj valueForKey:@"_idLocationZipcodeTestResult"] forKey:@"idLocationZipcodeTestResult"];
+        }
+        
+        [dict setValue:[_instance getDeviceCity] forKey:@"DeviceCity"];
+        [dict setValue:[_instance getDeviceArea] forKey:@"DeviceArea"];
+        [dict setValue:[_instance getDeviceState] forKey:@"DeviceState"];
+        [dict setValue:[_instance getDeviceCountry] forKey:@"DeviceCountry"];
+        [dict setValue:[_instance getDeviceZipCode] forKey:@"DeviceZipcode"];
+        [dict setValue:[_instance getDeviceCountryCode] forKey:@"DeviceCountryCode"];
+        [dict setValue:[_instance getDeviceStreetAddress] forKey:@"DeviceStreetAddress"];
+        
+        
+        return [NSMutableDictionary dictionaryWithDictionary:dict];
     }
-    
-    return [NSMutableDictionary dictionaryWithDictionary:dict];
-}
 
 @end

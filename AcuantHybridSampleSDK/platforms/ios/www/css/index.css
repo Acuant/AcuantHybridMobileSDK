@@ -80,7 +80,14 @@
 }
 .div-text-result{
     padding-left: 10px;
-    text-align:left;
+    max-height: 300px;
+    width: 300px;
+    overflow-y:scroll;
+    word-wrap:break-word;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .bordered{
     border-radius: 15px;

@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.acuant.plugin.AcuantMobileSDK"
-        version="2.0">
+        version="2.2">
 
   <name>AcuantMobileSDK</name>
 
@@ -26,15 +26,17 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest">
-      <uses-permission android:name="android.permission.CAMERA" />
-      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-      <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-      <uses-permission android:name="android.permission.INTERNET" />
-      <uses-permission android:name="android.permission.FLASHLIGHT"/>
-   
-      <uses-feature android:name="android.hardware.camera" />
+        <uses-permission android:name="android.permission.NFC" />
+        <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.FLASHLIGHT" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        
+        <uses-feature android:name="android.hardware.camera" />
       <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
       <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
     </config-file>
@@ -89,6 +91,11 @@
     <framework src="CoreVideo.framework" />
     <framework src="CoreGraphics.framework" />
     <framework src="QuartzCore.framework" />
+    <framework src="CoreMotion.framework" />
+    <framework src="Accelerate.framework" />
+    <framework src="CoreText.framework" />
+    <framework src="CoreLocation.framework" />
+    <framework src="ImageIO.framework" />
     
     <header-file src="src/ios/AcuantMobileSDK.h"/>
     <source-file src="src/ios/AcuantMobileSDK.m"/>

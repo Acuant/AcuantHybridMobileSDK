@@ -1,5 +1,7 @@
 /*global cordova, module*/
     var isWindows = (cordova.platformId.localeCompare("windows") == 0);
+    var isAndroid = (agent.indexOf("Android") > 0);
+    var isIOS = (agent.indexOf("iPhone") > 0 || agent.indexOf("iPod") > 0 || agent.indexOf("iPad") > 0);
     var AcuantWinRT = null;
     if(isWindows==true){
         AcuantWinRT = AcuantWindowsMobileSDKWinRTComponent;
@@ -257,6 +259,13 @@
             licenseKey = "";
         }
         cordova.exec(successCallback, failure, "AcuantMobileSDK", "setLicenseKey", [licenseKey]);
+    },
+    enableLocationTracking: function (successCallback, failure) {
+    	if(isAndroid){
+    		cordova.exec(successCallback, failure, "AcuantMobileSDK", "enableLocationAuthentication");
+    	}else if(isIOS){
+        	cordova.exec(successCallback, failure, "AcuantMobileSDK", "enableLocationTracking");
+        }
     },
     setCloudAddress: function (successCallback, failure, cloudAddress) {
         if (cloudAddress === null) {

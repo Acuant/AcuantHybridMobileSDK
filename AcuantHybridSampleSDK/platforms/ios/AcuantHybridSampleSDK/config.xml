@@ -18,6 +18,9 @@
     <feature name="AcuantMobileSDK">
         <param name="ios-package" value="AcuantMobileSDK" />
     </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
@@ -26,9 +29,6 @@
     </feature>
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
-    </feature>
-    <feature name="Camera">
-        <param name="ios-package" value="CDVCamera" />
     </feature>
     <name>AcuantHybridSampleSDK</name>
     <description>

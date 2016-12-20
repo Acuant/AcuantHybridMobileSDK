@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 08/25/2016
+Last updated on – 12/21/2016
 
 # Introduction
 
@@ -28,10 +28,9 @@ other govt issued IDs, custom IDs, driver’s license barcodes, passports,
 medical insurance cards etc. It also supports address verification,
 identity verification and personal verification.
 
-For IDs from Asia, Australia, Europe, South America, Africa – we are
-support dd-mm-yyyy date format.
+For IDs from Asia, Australia, Europe, South America, Africa – we return dd-mm-yyyy date format.
 
-For IDs from Canada, USA – we are support mm-dd-yyyy date format.
+For IDs from Canada, USA – we return mm-dd-yyyy date format.
 
 For a complete list of regions, states, and countries supported for ID
 processing, please see Appendix F of ScanW document -
@@ -72,33 +71,20 @@ NOTE: All methods require a success and failure callback. You can know which met
 
 Example:
 
-> var success = function (data) {
-> 
-> log("success: " + data.id);
-> 
-> if (typeof data === 'object') {
-> 
-> if (data.id == 'mobileSDKWasValidated') {
-> 
-> \$("\#progress\_modal").toggleClass("hdn");
-> 
-> \$('\#progress\_modal').nsProgress('dismiss');
-> 
-> if (data.data === true) {
-> 
-> log('Framework validated');
-> 
-> } else {
-> 
-> log('Framework is not validated');
-> 
-> }
-> 
-> }
-> 
-> }
-> 
-> }
+		var success = function(data) {
+    	log("success: " + data.id);
+    		if (typeof data === 'object') {
+        		if (data.id == 'mobileSDKWasValidated') {
+            		$("\#progress\_modal").toggleClass("hdn");
+            		$('\#progress\_modal').nsProgress('dismiss');
+            		if(data.data === true) {
+                		log('Framework validated');
+            		}else {
+                		log('Framework is not validated');
+            		}
+        		}
+    		}
+		}
 
 # Integration
 
@@ -198,13 +184,11 @@ Note: This method verifies if the license key is valid and it returns an instanc
 In order to know if the license key validation has finished or to know if it was successful, catch the id type below on the success callback. 
 This id is sent after the instance of the MobileSDK has been created.
 
-> var success = function (data) {
-> 
-> if (data.id == 'mobileSDKWasValidated'){
-> 
-> }
-> 
-> }
+		var success = function (data) {
+			if (data.id == 'mobileSDKWasValidated'){
+			
+			}
+		}
 
 # Capturing a card
 
@@ -234,7 +218,7 @@ For AcuantCardTypePassportCard you can only use manual capture interface.
 
 In order to initialize the SDK and show the camera interface in the same step you must use the following method:
 
-> AcuantMobileSDK.initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController(successCallback, failure, licenseKey, cardType, region, isBackSide);
+	AcuantMobileSDK.initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController(successCallback, failure, licenseKey, cardType, region, isBackSide);
 
 Note: if you are going to use any customization method, then you should create a previous instance of the SDK in order to set the camera customization.
 
@@ -242,13 +226,13 @@ Note: if you are going to use any customization method, then you should create a
 
 In order to call this function, you will need to initialize the SDK first and create an instance of the SDK to call the function (see point 5)
 
-> AcuantMobileSDK.showManualCameraInterfaceInViewController(successCallback, failure, cardType, region, isBackSide);
+	AcuantMobileSDK.showManualCameraInterfaceInViewController(successCallback, failure, cardType, region, isBackSide);
 
 ### Barcode capture interface without initialization
 
 In order to call this function, you will need to initialize the SDK first and create an instance of the SDK to call the function (see point 5)
 
-> AcuantMobileSDK.showBarcodeCameraInterfaceInViewController(successCallback, failure, cardType, region, isBackSide);
+	AcuantMobileSDK.showBarcodeCameraInterfaceInViewController(successCallback, failure, cardType, region, isBackSide);
 
 ###  For all camera interfaces add the following methods to set the size of the card. 
 
@@ -256,15 +240,20 @@ If the proper card size is not set, AcuantMobileSDK will not be able to process 
 
 **For Driver's License Cards**
 
-> AcuantMobileSDK.setWidth(successCallback, failureCallback, 1250);
+	if(isAssureIDAllowed){
+        AcuantMobileSDK.setWidth(successCallback, failureCallback, 2024);
+    }else{
+        AcuantMobileSDK.setWidth(successCallback, failureCallback, 1250);
+    }
+
 
 **For Medical Insurance Cards**
 
-> AcuantMobileSDK.setWidth(successCallback, failureCallback, 1012);
+	AcuantMobileSDK.setWidth(successCallback, failureCallback, 1500);
 
 **For Passport Documents**
 
-> AcuantMobileSDK.setWidth(successCallback, failureCallback, 1478);
+	AcuantMobileSDK.setWidth(successCallback, failureCallback, 1478);
 
 ### Optional for all camera interfaces add the following methods to customize the appearance and final message on the camera screen. 
 
@@ -274,13 +263,13 @@ For iOS:
 
 Use the following method to customize the text, duration, background color, position, and orientation
 
-> AcuantMobileSDK.setInitialMessage(successCallback, failureCallback, initialMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
+	AcuantMobileSDK.setInitialMessage(successCallback, failureCallback, initialMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
 
 For Android:
 
 Use the following method to customize the text, duration, background color, position, and orientation
-
->AcuantMobileSDK.setInitialMessage(successCallback, failureCallback, initialMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
+	
+	AcuantMobileSDK.setInitialMessage(successCallback, failureCallback, initialMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
 
 Customize the capturing message, default implementation says "hold steady".
 
@@ -288,13 +277,13 @@ For iOS:
 
 Use the following method to customize the text, duration, background color, position, and orientation
 
-> AcuantMobileSDK.setCapturingMessage(successCallback, failureCallback, capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
+	AcuantMobileSDK.setCapturingMessage(successCallback, failureCallback, capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
 
 For Android:
 
 Use the following method to customize the text, duration, background color, position, and orientation
 
-> AcuantMobileSDK.setCapturingMessage(successCallback, failureCallback, capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
+	AcuantMobileSDK.setCapturingMessage(successCallback, failureCallback, capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation);
 
 NOTE:
 
@@ -312,179 +301,168 @@ BackgroundColorAlpha values must be float 0 – 255
 
 In order to enable the flashlight button (default customization).
 
-> AcuantMobileSDK.showFlashlightButton(successCallback, failure, showFlashlightButton);
+	AcuantMobileSDK.showFlashlightButton(successCallback, failure, showFlashlightButton);
 
 In order to customize the flashlight button image.
 
-> AcuantMobileSDK.imageForFlashlightButton(successCallback, failure, flashlightButtonImageOn, flashlightButtonImageOff);
+	AcuantMobileSDK.imageForFlashlightButton(successCallback, failure, flashlightButtonImageOn, flashlightButtonImageOff);
 
 In order to customize the flashlight button frame.
 
-> AcuantMobileSDK.frameForFlashlightButton(successCallback, failure, frameX, frameY, frameWidth, frameHeight);
+	AcuantMobileSDK.frameForFlashlightButton(successCallback, failure, frameX, frameY, frameWidth, frameHeight);
 
 ### Optional for barcode camera interfaces add the following methods to enable the barcode image cropping.
 
-> AcuantMobileSDK.setCanCropBarcode(success, failure, true);
+	AcuantMobileSDK.setCanCropBarcode(success, failure, true);
 
 ### Optional method to enable the initial message on the barcode camera interface. 
 
 By default it is disabled.
 
-> AcuantMobileSDK.setCanShowMessage(success, failure, true);
+	AcuantMobileSDK.setCanShowMessage(success, failure, true);
 
 ### Optional method to pause the scanning of the barcode camera
 
-> AcuantMobileSDK.pauseScanningBarcodeCamera(success, failure);
+	AcuantMobileSDK.pauseScanningBarcodeCamera(success, failure);
 
 ### Optional method to resume the scanning of the barcode camera
 
-> AcuantMobileSDK.resumeScanningBarcodeCamera(success, failure);
+	AcuantMobileSDK.resumeScanningBarcodeCamera(success, failure);
 
 ### Optional method to show or not show the iPad brackets on the card capture interface
 
-> AcuantMobileSDK.showiPadBrackets(success, failure, true);
+	AcuantMobileSDK.showiPadBrackets(success, failure, true);
 
 ## Get the crop image from the success callback.
 
 The cropped image returned came under base 64 format.
 
-> var success = function (data) {
-> 
-> log("success: " + data.id);
-> 
-> if (typeof data === 'object') {
-> 
-> if (data.id == 'didCaptureCropImage') {
-> 
-> \$("\#progress\_modal").toggleClass("hdn");
-> 
-> \$('\#progress\_modal').nsProgress('dismiss');
-> 
-> if (typeof data.data === 'string') {
-> 
-> if (isFrontSide) {
-> 
-> frontCardImage = data.data;
-> 
-> isBarcodeSide = data.scanBackSide;
-> 
-> var srcFront = "data:image/png;base64," + data.data;
-> 
-> var imgFront = \$('&lt;img class="bordered" src="' + srcFront +
-> '"&gt;');
-> 
-> \$("\#front-image").empty();
-> 
-> \$("\#front-image").prepend(imgFront);
-> 
-> \$("\#front-image").removeClass("bordered");
-> 
-> if (cardType == 2) {
-> 
-> navigator.notification.alert(
-> 
-> 'Scan the backside of the license.',
-> 
-> showCameraInterfaceDLBack,
-> 
-> 'AcuantHybridSampleSDK',
-> 
-> 'OK'
-> 
-> );
-> 
-> }
-> 
-> } else {
-> 
-> backCardImage = data.data;
-> 
-> var srcBack = "data:image/png;base64," + data.data;
-> 
-> var imgBack = \$('&lt;img class="bordered" src="' + srcBack + '"&gt;');
-> 
-> \$("\#back-image").show();
-> 
-> \$("\#back-image").empty();
-> 
-> \$("\#back-image").prepend(imgBack);
-> 
-> \$("\#back-image").removeClass("bordered");
-> 
-> }
-> 
-> }
-> 
-> }
-> 
-> }
-> 
-> };
+	var success = function(data) {
+
+     log("success: " + data.id);
+
+     if (typeof data === 'object') {
+
+         if (data.id == 'didCaptureCropImage') {
+
+             $("\#progress\_modal").toggleClass("hdn");
+
+             $('\#progress\_modal').nsProgress('dismiss');
+
+             if (typeof data.data === 'string') {
+
+                 if (isFrontSide) {
+
+                     frontCardImage = data.data;
+
+                     isBarcodeSide = data.scanBackSide;
+
+                     var srcFront = "data:image/png;base64," + data.data;
+
+                     var imgFront = $('&lt;img class="bordered" src="' + srcFront +
+                         '"&gt;');
+
+                     $("\#front-image").empty();
+
+                     $("\#front-image").prepend(imgFront);
+
+                     $("\#front-image").removeClass("bordered");
+
+                     if (cardType == 2) {
+
+                         navigator.notification.alert(
+
+                             'Scan the backside of the license.',
+
+                             showCameraInterfaceDLBack,
+
+                             'AcuantHybridSampleSDK',
+
+                             'OK'
+
+                         );
+
+                     }
+
+                 } else {
+
+                     backCardImage = data.data;
+
+                     var srcBack = "data:image/png;base64," + data.data;
+
+                     var imgBack = $('&lt;img class="bordered" src="' + srcBack + '"&gt;');
+
+                     $("\#back-image").show();
+
+                     $("\#back-image").empty();
+
+                     $("\#back-image").prepend(imgBack);
+
+                     $("\#back-image").removeClass("bordered");
+
+                 }
+
+             }
+
+         }
+
+     }
+    };
 
 ## Get the original image from the success callback.
 
 The original image returned came under base 64 format.
 
-> var success = function (data) {
-> 
-> log("success: " + data.id);
-> 
-> if (typeof data === 'object') {
-> 
-> if (data.id == 'didCaptureOriginalImage') {
-> 
-> if (typeof data.data === 'string') {
-> 
-> originalImage = data.data;
-> 
-> }
-> 
-> }
-> 
-> }
-> 
-> }
+	 var success = function(data) {
+
+     log("success: " + data.id);
+
+     if (typeof data === 'object') {
+
+         if (data.id == 'didCaptureOriginalImage') {
+
+             if (typeof data.data === 'string') {
+
+                 originalImage = data.data;
+
+             }
+
+         }
+
+     }
+    }
 
 ## Get the barcode data from the success callback.
 
 In order to retrieve the cropped image captured by all card capture
 interface must use the following method:
 
-> var success = function (data) {
-> 
-> log("success: " + data.id);
-> 
-> if (typeof data === 'object') {
-> 
-> if (data.id == 'didCaptureData') {
-> 
-> if (typeof data.data === 'string') {
-> 
-> barcodeStringData = data.data;
-> 
-> }
-> 
-> }
-> 
-> }
-> 
-> }
+	 var success = function(data) {
+     log("success: " + data.id);
+     if (typeof data === 'object') {
+         if (data.id == 'didCaptureData') {
+             if (typeof data.data === 'string') {
+                 barcodeStringData = data.data;
+             }
+         }
+     }
+    }
 
 # Processing a card
 
 ## Add the card processing method.
 
-> processCardImage(successCallback, failureCallback, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
+	processCardImage(successCallback, failureCallback, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
 
 ### For Driver's License Cards
 
 In order to setup Driver License Card, set the following values.
 
-> AcuantMobileSDK.processCardImage(success, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
+	AcuantMobileSDK.processCardImage(success, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
 
 Eg:
 
-> AcuantMobileSDK.processCardImage(success, failure, 2, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, 0, 101);
+	AcuantMobileSDK.processCardImage(success, failure, 2, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, 0, 101);
 
 **Explanation of the parameters:**
 
@@ -613,130 +591,182 @@ Enhanced Image – 5
 
 If using the Driver’s License Card, add the following code:
 
-> if (cardType == 2) {
-> 
-> frontCardImageResult = cardResult.licenceImage;
-> 
-> backCardImageResult = cardResult.licenceImageTwo;
-> 
-> faceImageResult = cardResult.faceImage;
-> 
-> signatureImageResult = cardResult.signatureImage;
-> 
-> resultString = "First Name - " + cardResult.nameFirst + "&lt;/br&gt;Middle Name - " + cardResult.nameMiddle + "&lt;/br&gt;Last Name - " + cardResult.nameLast + "&lt;/br&gt;Name Suffix - " + cardResult.nameSuffix + "&lt;/br&gt;ID - " + cardResult.licenceId + "&lt;/br&gt;License - " + cardResult.license + "&lt;/br&gt;DOB Long - " + cardResult.dateOfBirth4 + "&lt;/br&gt;DOB Short - " + cardResult.dateOfBirth + "&lt;/br&gt;Date Of Birth Local - " + cardResult.dateOfBirthLocal + "&lt;/br&gt;Issue Date Long - " + cardResult.issueDate4 + "&lt;/br&gt;Issue Date Short - " + cardResult.issueDate + "&lt;/br&gt;Issue Date Local - " + cardResult.issueDateLocal + "&lt;/br&gt;Expiration Date Long - " + cardResult.expirationDate4 + "&lt;/br&gt;Expiration Date Short - " + cardResult.expirationDate + "&lt;/br&gt;Eye Color - " + cardResult.eyeColor + "&lt;/br&gt;Hair Color - " + cardResult.hairColor + "&lt;/br&gt;Height - " + cardResult.height + "&lt;/br&gt;Weight - " + cardResult.weight + "&lt;/br&gt;Address - " + cardResult.address + "&lt;/br&gt;Address 2 - " + cardResult.address2 + "&lt;/br&gt;Address 3 - " + cardResult.address3 + "&lt;/br&gt;Address 4 - " + cardResult.address4 + "&lt;/br&gt;Address 5 - " + cardResult.address5 + "&lt;/br&gt;Address 6 - " + cardResult.address6 + "&lt;/br&gt;City - " + cardResult.city + "&lt;/br&gt;Zip - " + cardResult.zip + "&lt;/br&gt;State - " + cardResult.state + "&lt;/br&gt;County - " + cardResult.county + "&lt;/br&gt;Country Short - " + cardResult.countryShort + "&lt;/br&gt;Country Long - " + cardResult.idCountry + "&lt;/br&gt;Class - " + cardResult.licenceClass + "&lt;/br&gt;Restriction - " + cardResult.restriction + "&lt;/br&gt;Sex - " + cardResult.sex + "&lt;/br&gt;Audit - " + cardResult.audit + "&lt;/br&gt;Endorsements - " + cardResult.endorsements + "&lt;/br&gt;Fee - " + cardResult.fee + "&lt;/br&gt;CSC - " + cardResult.CSC + "&lt;/br&gt;SigNum - " + cardResult.sigNum + "&lt;/br&gt;Text1 - " + cardResult.text1 + "&lt;/br&gt;Text2 - " + cardResult.text2 + "&lt;/br&gt;Text3 - " + cardResult.text3 + "&lt;/br&gt;Type - " + cardResult.type + "&lt;/br&gt;Doc Type - " + cardResult.docType + "&lt;/br&gt;Father Name - " + cardResult.fatherName + "&lt;/br&gt;Mother Name - " + cardResult.motherName + "&lt;/br&gt;NameFirst\_NonMRZ - " + cardResult.nameFirst\_NonMRZ + "&lt;/br&gt;NameLast\_NonMRZ - " + cardResult.nameLast\_NonMRZ + "&lt;/br&gt;NameLast1 - " + cardResult.nameLast1 + "&lt;/br&gt;NameLast2 - " + cardResult.nameLast2 + "&lt;/br&gt;NameMiddle\_NonMRZ - " + cardResult.nameMiddle\_NonMRZ + "&lt;/br&gt;NameSuffix\_NonMRZ - " + cardResult.nameSuffix\_NonMRZ + "&lt;/br&gt;Document Detected Name - " + cardResult.documentDetectedName + "&lt;/br&gt;Nationality - " + cardResult.nationality + "&lt;/br&gt;Original - " + cardResult.original + "&lt;/br&gt;PlaceOfBirth - " + cardResult.placeOfBirth + "&lt;/br&gt;PlaceOfIssue - " + cardResult.placeOfIssue + "&lt;/br&gt;Social Security - " + cardResult.socialSecurity + "&lt;/br&gt;IsAddressCorrected - " + cardResult.isAddressCorrected + "&lt;/br&gt;IsAddressVerified - " + cardResult.isAddressVerified;
->
-> if (cardRegion == 0 || cardRegion == 1){
-> 
-> resultString = resultString + "&lt;/br&gt;IsBarcodeRead - " + cardResult.isBarcodeRead + "&lt;/br&gt;IsIDVerified - " + cardResult.isIDVerified + "&lt;/br&gt;IsOcrRead - " + cardResult.isOcrRead;
->
-> }
->
-> resultString = resultString + "&lt;/br&gt;Document Verification Confidence Rating - " + cardResult.documentVerificationRating;
->
-> }
+	if (cardType == 2) {
+
+     frontCardImageResult = cardResult.licenceImage;
+
+     backCardImageResult = cardResult.licenceImageTwo;
+
+     faceImageResult = cardResult.faceImage;
+
+     signatureImageResult = cardResult.signatureImage;
+
+     resultString = "First Name - " + cardResult.nameFirst + "&lt;/br&gt;Middle Name - " + cardResult.nameMiddle + "&lt;/br&gt;Last Name - " + cardResult.nameLast + "&lt;/br&gt;Name Suffix - " + cardResult.nameSuffix + "&lt;/br&gt;ID - " + cardResult.licenceId + "&lt;/br&gt;License - " + cardResult.license + "&lt;/br&gt;DOB Long - " + cardResult.dateOfBirth4 + "&lt;/br&gt;DOB Short - " + cardResult.dateOfBirth + "&lt;/br&gt;Date Of Birth Local - " + cardResult.dateOfBirthLocal + "&lt;/br&gt;Issue Date Long - " + cardResult.issueDate4 + "&lt;/br&gt;Issue Date Short - " + cardResult.issueDate + "&lt;/br&gt;Issue Date Local - " + cardResult.issueDateLocal + "&lt;/br&gt;Expiration Date Long - " + cardResult.expirationDate4 + "&lt;/br&gt;Expiration Date Short - " + cardResult.expirationDate + "&lt;/br&gt;Eye Color - " + cardResult.eyeColor + "&lt;/br&gt;Hair Color - " + cardResult.hairColor + "&lt;/br&gt;Height - " + cardResult.height + "&lt;/br&gt;Weight - " + cardResult.weight + "&lt;/br&gt;Address - " + cardResult.address + "&lt;/br&gt;Address 2 - " + cardResult.address2 + "&lt;/br&gt;Address 3 - " + cardResult.address3 + "&lt;/br&gt;Address 4 - " + cardResult.address4 + "&lt;/br&gt;Address 5 - " + cardResult.address5 + "&lt;/br&gt;Address 6 - " + cardResult.address6 + "&lt;/br&gt;City - " + cardResult.city + "&lt;/br&gt;Zip - " + cardResult.zip + "&lt;/br&gt;State - " + cardResult.state + "&lt;/br&gt;County - " + cardResult.county + "&lt;/br&gt;Country Short - " + cardResult.countryShort + "&lt;/br&gt;Country Long - " + cardResult.idCountry + "&lt;/br&gt;Class - " + cardResult.licenceClass + "&lt;/br&gt;Restriction - " + cardResult.restriction + "&lt;/br&gt;Sex - " + cardResult.sex + "&lt;/br&gt;Audit - " + cardResult.audit + "&lt;/br&gt;Endorsements - " + cardResult.endorsements + "&lt;/br&gt;Fee - " + cardResult.fee + "&lt;/br&gt;CSC - " + cardResult.CSC + "&lt;/br&gt;SigNum - " + cardResult.sigNum + "&lt;/br&gt;Text1 - " + cardResult.text1 + "&lt;/br&gt;Text2 - " + cardResult.text2 + "&lt;/br&gt;Text3 - " + cardResult.text3 + "&lt;/br&gt;Type - " + cardResult.type + "&lt;/br&gt;Doc Type - " + cardResult.docType + "&lt;/br&gt;Father Name - " + cardResult.fatherName + "&lt;/br&gt;Mother Name - " + cardResult.motherName + "&lt;/br&gt;NameFirst\_NonMRZ - " + cardResult.nameFirst\ _NonMRZ + "&lt;/br&gt;NameLast\_NonMRZ - " + cardResult.nameLast\ _NonMRZ + "&lt;/br&gt;NameLast1 - " + cardResult.nameLast1 + "&lt;/br&gt;NameLast2 - " + cardResult.nameLast2 + "&lt;/br&gt;NameMiddle\_NonMRZ - " + cardResult.nameMiddle\ _NonMRZ + "&lt;/br&gt;NameSuffix\_NonMRZ - " + cardResult.nameSuffix\ _NonMRZ + "&lt;/br&gt;Document Detected Name - " + cardResult.documentDetectedName + "&lt;/br&gt;Nationality - " + cardResult.nationality + "&lt;/br&gt;Original - " + cardResult.original + "&lt;/br&gt;PlaceOfBirth - " + cardResult.placeOfBirth + "&lt;/br&gt;PlaceOfIssue - " + cardResult.placeOfIssue + "&lt;/br&gt;Social Security - " + cardResult.socialSecurity + "&lt;/br&gt;IsAddressCorrected - " + cardResult.isAddressCorrected + "&lt;/br&gt;IsAddressVerified - " + cardResult.isAddressVerified;
+
+     if (cardRegion == 0 || cardRegion == 1) {
+
+         resultString = resultString + "&lt;/br&gt;IsBarcodeRead - " + cardResult.isBarcodeRead + "&lt;/br&gt;IsIDVerified - " + cardResult.isIDVerified + "&lt;/br&gt;IsOcrRead - " + cardResult.isOcrRead;
+
+     }
+
+     resultString = resultString + "&lt;/br&gt;Document Verification Confidence Rating - " + cardResult.documentVerificationRating;
+     }
 
 ### For Medical Insurance Cards
 
 If using the Medical Insurance Card, add the following code:
 
-> if (cardType == 1) {
-> 
-> frontCardImageResult = cardResult.reformattedImage;
-> 
-> backCardImageResult = cardResult.reformattedImageTwo;
-> 
-> resultString = "First Name - " + cardResult.firstName + "&lt;/br&gt;Last Name - " + cardResult.lastName + "&lt;/br&gt;Middle Name - " + cardResult.middleName + "&lt;/br&gt;MemberID - " + cardResult.memberId + "&lt;/br&gt;Group No. - " + cardResult.groupNumber + "&lt;/br&gt;Contract Code - " + cardResult.contractCode + "&lt;/br&gt;Copay ER - " + cardResult.copayEr + "&lt;/br&gt;Copay OV - " + cardResult.copayOv + "&lt;/br&gt;Copay SP - " + cardResult.copaySp + "&lt;/br&gt;Copay UC - " + cardResult.copayUc + "&lt;/br&gt;Coverage - " + cardResult.coverage + "&lt;/br&gt;Date of Birth - " + cardResult.dateOfBirth + "&lt;/br&gt;Deductible - " + cardResult.deductible + "&lt;/br&gt;Effective Date - " + cardResult.effectiveDate + "&lt;/br&gt;Employer - " + cardResult.employer + "&lt;/br&gt;Expire Date - " + cardResult.expirationDate + "&lt;/br&gt;Group Name - " + cardResult.groupName + "&lt;/br&gt;Issuer Number - " + cardResult.issuerNumber + "&lt;/br&gt;Other - " + cardResult.other + "&lt;/br&gt;Payer ID - " + cardResult.payerId + "&lt;/br&gt;Plan Admin - " + cardResult.planAdmin + "&lt;/br&gt;Plan Provider - " + cardResult.planProvider + "&lt;/br&gt;Plan Type - " + cardResult.planType + "&lt;/br&gt;RX Bin - " + cardResult.rxBin + "&lt;/br&gt;RX Group - " + cardResult.rxGroup + "&lt;/br&gt;RX ID - " + cardResult.rxId + "&lt;/br&gt;RX PCN - " + cardResult.rxPcn + "&lt;/br&gt;Telephone - " + cardResult.phoneNumber + "&lt;/br&gt;Web - " + cardResult.webAddress + "&lt;/br&gt;Email - " + cardResult.email + "&lt;/br&gt;Address - " + cardResult.fullAddress + "&lt;/br&gt;City - " + cardResult.city + "&lt;/br&gt;Zip - " + cardResult.zip + "&lt;/br&gt;State - " + cardResult.state; }
+    if (cardType == 1) {
+
+        frontCardImageResult = cardResult.reformattedImage;
+
+        backCardImageResult = cardResult.reformattedImageTwo;
+
+        resultString = "First Name - " + cardResult.firstName + "&lt;/br&gt;Last Name - " + cardResult.lastName + "&lt;/br&gt;Middle Name - " + cardResult.middleName + "&lt;/br&gt;MemberID - " + cardResult.memberId + "&lt;/br&gt;Group No. - " + cardResult.groupNumber + "&lt;/br&gt;Contract Code - " + cardResult.contractCode + "&lt;/br&gt;Copay ER - " + cardResult.copayEr + "&lt;/br&gt;Copay OV - " + cardResult.copayOv + "&lt;/br&gt;Copay SP - " + cardResult.copaySp + "&lt;/br&gt;Copay UC - " + cardResult.copayUc + "&lt;/br&gt;Coverage - " + cardResult.coverage + "&lt;/br&gt;Date of Birth - " + cardResult.dateOfBirth + "&lt;/br&gt;Deductible - " + cardResult.deductible + "&lt;/br&gt;Effective Date - " + cardResult.effectiveDate + "&lt;/br&gt;Employer - " + cardResult.employer + "&lt;/br&gt;Expire Date - " + cardResult.expirationDate + "&lt;/br&gt;Group Name - " + cardResult.groupName + "&lt;/br&gt;Issuer Number - " + cardResult.issuerNumber + "&lt;/br&gt;Other - " + cardResult.other + "&lt;/br&gt;Payer ID - " + cardResult.payerId + "&lt;/br&gt;Plan Admin - " + cardResult.planAdmin + "&lt;/br&gt;Plan Provider - " + cardResult.planProvider + "&lt;/br&gt;Plan Type - " + cardResult.planType + "&lt;/br&gt;RX Bin - " + cardResult.rxBin + "&lt;/br&gt;RX Group - " + cardResult.rxGroup + "&lt;/br&gt;RX ID - " + cardResult.rxId + "&lt;/br&gt;RX PCN - " + cardResult.rxPcn + "&lt;/br&gt;Telephone - " + cardResult.phoneNumber + "&lt;/br&gt;Web - " + cardResult.webAddress + "&lt;/br&gt;Email - " + cardResult.email + "&lt;/br&gt;Address - " + cardResult.fullAddress + "&lt;/br&gt;City - " + cardResult.city + "&lt;/br&gt;Zip - " + cardResult.zip + "&lt;/br&gt;State - " + cardResult.state;
+    }
 
 ### For Passport Card
 
 If using the Passport Card, add the following code:
 
-> if (cardType == 3) {
-> 
-> frontCardImageResult = cardResult.passportImage;
-> 
-> faceImageResult = cardResult.faceImage;
-> 
-> signatureImageResult = cardResult.signImage;
-> 
-> resultString = "First Name - " + cardResult.nameFirst + "&lt;/br&gt;Middle Name - " + cardResult.nameMiddle + "&lt;/br&gt;Last Name - " + cardResult.nameLast + "&lt;/br&gt;Passport Number - " + cardResult.passportNumber + "&lt;/br&gt;Personal Number - " + cardResult.personalNumber + "&lt;/br&gt;Sex - " + cardResult.sex + "&lt;/br&gt;Country Long - " + cardResult.countryLong + "&lt;/br&gt;Nationality Long - " + cardResult.nationalityLong + "&lt;/br&gt;DOB Long - " + cardResult.dateOfBirth4 + "&lt;/br&gt;Issue Date Long - " + cardResult.issueDate4 + "&lt;/br&gt;Expiration Date Long - " + cardResult.expirationDate4 + "&lt;/br&gt;Place of Birth - " + cardResult.end\_POB;
->
-> }
+ 	if (cardType == 3) {
+
+     frontCardImageResult = cardResult.passportImage;
+
+     faceImageResult = cardResult.faceImage;
+
+     signatureImageResult = cardResult.signImage;
+
+     resultString = "First Name - " + cardResult.nameFirst + "&lt;/br&gt;Middle Name - " + cardResult.nameMiddle + "&lt;/br&gt;Last Name - " + cardResult.nameLast + "&lt;/br&gt;Passport Number - " + cardResult.passportNumber + "&lt;/br&gt;Personal Number - " + cardResult.personalNumber + "&lt;/br&gt;Sex - " + cardResult.sex + "&lt;/br&gt;Country Long - " + cardResult.countryLong + "&lt;/br&gt;Nationality Long - " + cardResult.nationalityLong + "&lt;/br&gt;DOB Long - " + cardResult.dateOfBirth4 + "&lt;/br&gt;Issue Date Long - " + cardResult.issueDate4 + "&lt;/br&gt;Expiration Date Long - " + cardResult.expirationDate4 + "&lt;/br&gt;Place of Birth - " + cardResult.end\ _POB;
+
+ }
+
+
 
 ### For failure case.
 
 If the image process fails for any reason you can then check the error in the failure callback by asking if error.id is equal to ‘didFailWithError’.
 
-> var failure = function (data) {
-> 
-> if (data.id == ‘didFailWithError’) {
-> 
-> log("Process error type:" + data.errorType + " Message: " + data.errorMessage);
-> 
-> alert(data.errorMessage);
-> 
-> \$('\#progress\_modal').nsProgress('dismiss');
-> 
-> } else if (data.errorType) {
-> 
-> log("Error Type:" + data.errorType + " Message: " + data.errorMessage);
-> 
-> alert(data.errorMessage);
-> 
-> \$('\#progress\_modal').nsProgress('dismiss');
-> 
-> } else {
-> 
-> {
-> 
-> log("failure: " + data.error);
-> 
-> }
-> 
-> };
+		 var failure = function(data) {
+
+         if (data.id == ‘didFailWithError’) {
+
+             log("Process error type:" + data.errorType + " Message: " + data.errorMessage);
+
+             alert(data.errorMessage);
+
+             \
+             $('\#progress\_modal').nsProgress('dismiss');
+
+         } else if (data.errorType) {
+
+             log("Error Type:" + data.errorType + " Message: " + data.errorMessage);
+
+             alert(data.errorMessage);
+
+             \
+             $('\#progress\_modal').nsProgress('dismiss');
+
+         } else {
+
+             {
+
+                 log("failure: " + data.error);
+
+             }
+
+         };
 
 # Error Types
 
-AcuantErrorCouldNotReachServer = 0, //check internet connection
+	AcuantErrorCouldNotReachServer = 0, //check internet connection
 
-AcuantErrorUnableToAuthenticate = 1, //keyLicense are incorrect
+    AcuantErrorUnableToAuthenticate = 1, //keyLicense are incorrect
 
-AcuantErrorUnableToProcess = 2, //image received by the server was
-unreadable, take a new one
+    AcuantErrorUnableToProcess = 2, //image received by the server was
+    unreadable, take a new one
 
-AcuantErrorInternalServerError = 3, //there was an error in our server,
-try again later
+	AcuantErrorInternalServerError = 3, //there was an error in our server,
+    try again later
 
-AcuantErrorUnknown = 4, //there was an error but we were unable to
-determine the reason, try again later
+	AcuantErrorUnknown = 4, //there was an error but we were unable to
+    determine the reason,
+    try again later
 
-AcuantErrorTimedOut = 5, //request timed out, may be because internet
-connection is too slow
+	AcuantErrorTimedOut = 5, //request timed out, may be because internet
+    connection is too slow
 
-AcuantErrorAutoDetectState = 6, //Error when try to detect the state
+	AcuantErrorAutoDetectState = 6, //Error when try to detect the state
 
-AcuantErrorWebResponse = 7, //the json was received by the server
-contain error
+    AcuantErrorWebResponse = 7, //the json was received by the server
+    contain error
 
-AcuantErrorUnableToCrop = 8, //the received image can't be cropped.
+	AcuantErrorUnableToCrop = 8, //the received image can't be cropped.
 
-AcuantErrorInvalidLicenseKey = 9, //Is an invalid license key.
+    AcuantErrorInvalidLicenseKey = 9, //Is an invalid license key.
 
-AcuantErrorInactiveLicenseKey = 10, //Is an inative license key.
+    AcuantErrorInactiveLicenseKey = 10, //Is an inative license key.
 
-AcuantErrorAccountDisabled = 11, //Is an account disabled.
+    AcuantErrorAccountDisabled = 11, //Is an account disabled.
 
-AcuantErrorOnActiveLicenseKey = 12, //there was an error on activation
-key.
+    AcuantErrorOnActiveLicenseKey = 12, //there was an error on activation
+    key.
 
-AcuantErrorValidatingLicensekey = 13, //The validation is still in
-process.
+	AcuantErrorValidatingLicensekey = 13, //The validation is still in
+    process.
 
-AcuantErrorCameraUnauthorized = 14, //The privacy settings are
-preventing us from accessing your camera.
+	AcuantErrorCameraUnauthorized = 14, //The privacy settings are
+    preventing us from accessing your camera.
 
-AcuantErrorOpenCamera = 15 //There are an error when the camera is
-opened.
+	AcuantErrorOpenCamera = 15 //There are an error when the camera is opened.
+
+### AssureID Authentication
+
+For Driving license and Passport , in order to see AssureID authentication results, please look for these two fields : “AuthenticationResult”, “AuthenticationResultSummary”.
+
+AuthenticationResult: can have either of the following values:
+			
+			-  Passed
+			-  Failed
+			-  Attention
+			-  Unknown
+			-  Skipped
+ 
+AuthenticationResultSummary: When “AuthenticationResult” will have the value “Attention”, “AuthenticationResultSummary” will contain the reason for “Attention’.
+
+Note: AuthenticationResultSummary will be empty for “Passed”,“Failed”,"Unknown" and "Skipped" results.
+
+# Tracking Capture Device Location
+
+If it is required to detect the location at which the ID/Passport is captured, location tracking can be enabled.
+
+		AcuantMobileSDKController.enableLocationTracking(null,null);
+		
+		
+**Note : Add the below key and a value for it in the application .plist file to enable location tracking in iOS**
+
+		NSLocationAlwaysUsageDescription
+		
+**Note : Give permission to the application for location tracking in both iOS and Android**
+
+If enableLocationTracking is called , location details can be access from the returned card as below
+
+		var deviceCity = cardResult.DeviceCity;
+		var deviceArea = cardResult.DeviceArea;
+		var deviceState = cardResult.DeviceState;
+		var deviceCountry = cardResult.DeviceCountry;
+		var countryCode = cardResult.DeviceCountryCode;
+		var deviceZipCode = cardResult.DeviceZipcode;
+		var address = cardResult.DeviceStreetAddress;
+			
+			
+Below are the location test fields to the AcuantCardResult class
+			
+		idLocationStateTestResult // if ID/Passport State matched with Device state
+		idLocationCountryTestResult // if ID/Passport Country matched with Device Country
+		idLocationCityTestResult // if ID/Passport City matched with Device City
+		idLocationZipcodeTestResult // if ID/Passport zip code matched with Device zip code
+		
 
 # Supported Hybrid Frameworks
 
@@ -754,7 +784,49 @@ Mobile Angular UI
 
 # Change Log
 
-- Improved cropping in Android platform
-- libpng version updated to resolve security vulnerabilities issue in Android platform 
-- Memory optimization to fix memory out of bound crashes in low memory devices
-- Added DocumentDetectNameShort field for Android platform
+- Significant improvements done to ID capture interface.
+
+	- Continuous Auto focus.
+	- Continuous brightness correction.
+	- Shake detection to avoid blurry images.
+	- Optimized memory and processing speed for document cropping.
+	- Added method to retrieve the barcode string and the backside image by the barcode capture interface for driving license.
+
+	
+			// To Enable barcode side capture
+			AcuantMobileSDK.setCanCropBarcode(success, failure, true);
+	
+	If barcode side image capture is enabled then the image is returned in the following 
+	way
+	
+			var success = function (data) {
+    			if (data.id == 'didCaptureCropImage') {
+    				if (typeof data.data === 'string') {
+             			var srcBack = "data:image/png;base64," + data.data;
+            		}
+        		}
+        	};
+            
+
+	
+- Added AssureID Authentication feature 
+- Modified document width as below
+		
+	**For Driver's License Cards**
+
+		if(isAssureIDAllowed){
+        	AcuantMobileSDK.setWidth(successCallback, failureCallback, 2024);
+    	}else{
+        	AcuantMobileSDK.setWidth(successCallback, failureCallback, 1250);
+    	}
+
+
+	**For Medical Insurance Cards**
+
+		AcuantMobileSDK.setWidth(successCallback, failureCallback, 1500);
+
+	**For Passport Documents**
+	
+		AcuantMobileSDK.setWidth(successCallback, failureCallback, 1478);
+	
+- Added location tracking and authentication

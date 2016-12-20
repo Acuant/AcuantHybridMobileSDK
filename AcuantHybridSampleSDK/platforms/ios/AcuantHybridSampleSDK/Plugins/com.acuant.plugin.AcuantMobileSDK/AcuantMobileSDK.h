@@ -221,4 +221,6 @@ Use this method to present the card capture interface.
  */
 - (void)imageForFlashlightButton:(CDVInvokedUrlCommand*)command;
 
+-(void)enableLocationTracking:(CDVInvokedUrlCommand*)command;
+
 @end
