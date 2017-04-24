@@ -49,6 +49,7 @@ var cardResult;
 var frontCardText;
 var backCardText;
 var cardAspectRatio;
+var isAssureIDAllowed = false;
 var showBarcodeImage = false;
 
 var log = function (message) {
@@ -196,7 +197,35 @@ var loadResultScreen = function () {
         faceImageResult = cardResult.faceImage;
         signatureImageResult = cardResult.signImage;
         resultString = "First Name -  " + cardResult.nameFirst + "</br>Middle Name -  " + cardResult.nameMiddle + "</br>Last Name -  " + cardResult.nameLast + "</br>Passport Number -  " + cardResult.passportNumber + "</br>Personal Number -  " + cardResult.personalNumber + "</br>Sex -  " + cardResult.sex + "</br>Country Long -  " + cardResult.countryLong + "</br>Nationality Long -  " + cardResult.nationalityLong + "</br>DOB Long -  " + cardResult.dateOfBirth4 + "</br>Issue Date Long -  " + cardResult.issueDate4 + "</br>Expiration Date Long -  " + cardResult.expirationDate4 + "</br>Place of Birth -  " + cardResult.end_POB;
-    } else if (cardType == 2) {
+        if(cardResult.authenticationResult!=null && cardResult.authenticationResult.length>0){
+            resultString = resultString + "</br>Authentication Result -  " + cardResult.authenticationResult;
+        }
+        if(cardResult.authenticationResultSummaryList!=null && cardResult.authenticationResultSummaryList.length>0){
+            resultString = resultString + "</br>Authentication Result Summary -  " + cardResult.authenticationResultSummaryList;
+        }
+        if(cardResult.idLocationCityTestResult!=2){
+            resultString = resultString + "</br>idLocationCityTestResult -  " + cardResult.idLocationCityTestResult;
+        }
+        if(cardResult.idLocationCountryTestResult!=2){
+            resultString = resultString + "</br>idLocationCountryTestResult -  " + cardResult.idLocationCountryTestResult;
+        }
+        if(cardResult.idLocationStateTestResult!=2){
+            resultString = resultString + "</br>idLocationStateTestResult -  " + cardResult.idLocationStateTestResult;
+        }
+        if(cardResult.idLocationZipcodeTestResult!=2){
+            resultString = resultString + "</br>idLocationZipcodeTestResult -  " + cardResult.idLocationZipcodeTestResult;
+        }
+        
+        resultString = resultString + "</br>Device City -  " + cardResult.DeviceCity;
+        resultString = resultString + "</br>Device Area -  " + cardResult.DeviceArea;
+        resultString = resultString + "</br>Device State -  " + cardResult.DeviceState;
+        resultString = resultString + "</br>Device Country -  " + cardResult.DeviceCountry;
+        resultString = resultString + "</br>Device Country Code -  " + cardResult.DeviceCountryCode;
+        resultString = resultString + "</br>Device Zipcode -  " + cardResult.DeviceZipcode;
+        resultString = resultString + "</br>Device Street Address -  " + cardResult.DeviceStreetAddress;
+        
+    } 
+    else if (cardType == 2) {
         frontCardImageResult = cardResult.licenceImage;
         backCardImageResult = cardResult.licenceImageTwo;
         faceImageResult = cardResult.faceImage;
@@ -206,6 +235,35 @@ var loadResultScreen = function () {
             resultString = resultString + "</br>IsBarcodeRead -  " + cardResult.isBarcodeRead + "</br>IsIDVerified -  " + cardResult.isIDVerified + "</br>IsOcrRead -  " + cardResult.isOcrRead;
         }
         resultString = resultString + "</br>Document Verification Confidence Rating -  " + cardResult.documentVerificationRating;
+        if(cardResult.authenticationResult!=null && cardResult.authenticationResult.length>0){
+        
+            resultString = resultString + "</br>Authentication Result -  " + cardResult.authenticationResult;
+        }
+        if(cardResult.authenticationResultSummaryList!=null && cardResult.authenticationResultSummaryList.length>0){
+        
+            resultString = resultString + "</br>Authentication Result Summary -  " + cardResult.authenticationResultSummaryList;
+        }
+        if(cardResult.idLocationCityTestResult!=2){
+            resultString = resultString + "</br>idLocationCityTestResult -  " + cardResult.idLocationCityTestResult;
+        }
+        if(cardResult.idLocationCountryTestResult!=2){
+            resultString = resultString + "</br>idLocationCountryTestResult -  " + cardResult.idLocationCountryTestResult;
+        }
+        if(cardResult.idLocationStateTestResult!=2){
+            resultString = resultString + "</br>idLocationStateTestResult -  " + cardResult.idLocationStateTestResult;
+        }
+        if(cardResult.idLocationZipcodeTestResult!=2){
+          
+            resultString = resultString + "</br>idLocationZipcodeTestResult -  " + cardResult.idLocationZipcodeTestResult;
+        }
+        
+        resultString = resultString + "</br>Device City -  " + cardResult.DeviceCity;
+        resultString = resultString + "</br>Device Area -  " + cardResult.DeviceArea;
+        resultString = resultString + "</br>Device State -  " + cardResult.DeviceState;
+        resultString = resultString + "</br>Device Country -  " + cardResult.DeviceCountry;
+        resultString = resultString + "</br>Device Country Code -  " + cardResult.DeviceCountryCode;
+        resultString = resultString + "</br>Device Zipcode -  " + cardResult.DeviceZipcode;
+        resultString = resultString + "</br>Device Street Address -  " + cardResult.DeviceStreetAddress;
     }
     log('back ' + backCardImageResult);
     log('front ' + frontCardImageResult);
@@ -245,10 +303,11 @@ var success = function (data) {
             $("#progress_modal").toggleClass("hdn");
             $('#progress_modal').nsProgress('dismiss');
             if (data.data === true) {
-                log('Framework validated');
+            	log('Framework validated');
             } else {
                 log('Framework is not validated');
             }
+            isAssureIDAllowed = data.isAssureIDAllowed;
             //set Back button image and PDF417 image
             if (isMobile.Android()) {
                 log("BackButton Image Android");
@@ -337,6 +396,48 @@ var success = function (data) {
             log("success: " + JSON.stringify(cardResult));
             loadResultScreen();
         }
+        if(data.id=='barcodeScanTimeOut'){
+        	log("success: "+data.id);
+        	if (typeof data.croppedData === 'string') {
+                backCardImage = data.croppedData;
+                var srcBack = "data:image/png;base64," + data.croppedData;
+                var imgBack = $('<img class="bordered" src="' + srcBack + '">');
+                $("#back-image").show();
+                $("#back-image").empty();
+                $("#back-image").prepend(imgBack);
+                $("#back-image").removeClass("bordered");
+            }
+            if (typeof data.originalData === 'string') {
+                originalImage = data.originalData;
+            }
+            $("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+        	
+        }
+        
+        if(data.id=='didCancelToCaptureData'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+        	if (isFrontSide) {
+                    frontCardImage = data.croppedImageData;
+                    isBarcodeSide = data.scanBackSide;
+                    var srcFront = "data:image/png;base64," + data.croppedImageData;
+                    var imgFront = $('<img class="bordered" src="' + srcFront + '">');
+                    $("#front-image").empty();
+                    $("#front-image").prepend(imgFront);
+                    $("#front-image").removeClass("bordered");
+                } else {
+                    backCardImage = data.croppedImageData;
+                    var srcBack = "data:image/png;base64," + data.croppedImageData;
+                    var imgBack = $('<img class="bordered" src="' + srcBack + '">');
+                    $("#back-image").show();
+                    $("#back-image").empty();
+                    $("#back-image").prepend(imgBack);
+                    $("#back-image").removeClass("bordered");
+                }
+        }
     }
 };
 var failure = function (data) {
@@ -397,7 +498,11 @@ var selectedRegionAction = function (id) {
     backCardText = "";
     clearCardHolder();
     cardType = 2;
-    cardWidth = 1250;
+    if(isAssureIDAllowed){
+        cardWidth = 2024;
+    }else{
+        cardWidth = 1250;
+    }
     cardAspectRatio = 0.637;
     var height = $("#front-image").width() * 0.637;
     $("#front-image").height(height);
@@ -410,6 +515,7 @@ var selectedRegionAction = function (id) {
 };
 var driverLicenseAction = function () {
     log('driverLicenseAction');
+    AcuantMobileSDK.enableLocationTracking(null,null);
     $("#page1").toggleClass("hdn");
     $("#page3").toggleClass("hdn");
 };
@@ -425,6 +531,7 @@ var passportAction = function () {
     $("#front-image").height(height);
     $("#front-image").show();
     $("#back-image").hide();
+    AcuantMobileSDK.enableLocationTracking(null,null);
     if (isMobile.Android()) {
         AcuantMobileSDK.setInitialMessage(success, failure, "ALING AND TAP", 0, 0, 0, 0, 39, 100, 138, 255, 10, 0);
         AcuantMobileSDK.setCapturingMessage(success, failure, "HOLD STEADY", 0, 0, 0, 0, 39, 100, 138, 255, 10, 0);
@@ -437,7 +544,7 @@ var medicalInsuranceAction = function () {
     clearCardHolder();
     isBarcodeSide = false;
     cardType = 1;
-    cardWidth = 1012;
+    cardWidth = 1500;
     cardAspectRatio = 0.637;
     var height = $("#front-image").width() * 0.637;
     $("#front-image").height(height);
@@ -461,7 +568,7 @@ var processAction = function () {
     if (frontCardImage) {
         $("#progress_modal").toggleClass("hdn");
         $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data', 'clear');
-        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, cardRegion, 101);
+        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 50, false, true, true, cardRegion, 101);
     }
 };
 
@@ -494,7 +601,7 @@ var showCameraInterfaceDLBack = function () {
 
 
 var activateAction = function () {
-    log('activateAction');
+	log('activateAction');
     AcuantMobileSDK.activateLicenseKey(success, failure, licenseKey);
 };
 var getLicenseKey = function () {
@@ -564,13 +671,14 @@ var app = {
 
             licenseKey = localStorage.getItem("license-key");
             $("#license-key").val(licenseKey);
-            AcuantMobileSDK.initAcuantMobileSDK(success, failure, licenseKey, null);
-            AcuantMobileSDK.stringForWatermarkLabel(success, failure, "Powered By Acuant");
-
-            //set Customization methods
-            AcuantMobileSDK.setCanCropBarcode(success, failure, false);
-            AcuantMobileSDK.setCanShowMessage(success, failure, false);
-            AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
+            	AcuantMobileSDK.initAcuantMobileSDK(success, failure, licenseKey, null);
+            	AcuantMobileSDK.stringForWatermarkLabel(success, failure, "Powered By Acuant");
+            	//set Customization methods
+            	AcuantMobileSDK.setCanCropBarcode(success, failure, false);
+            	AcuantMobileSDK.setCropBarcodeOnCancel(success, failure, true);
+            	AcuantMobileSDK.setCanShowMessage(success, failure, false);
+            	AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
+            	AcuantMobileSDK.enableLocationTracking(null,null);
             log("end onDeviceReady");
         } catch (err) {
             log("onDeviceReady: " + err.message);

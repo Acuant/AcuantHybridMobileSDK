@@ -77,7 +77,7 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.acuant.plugin.AcuantMobileSDK": "2.2",
+    "com.acuant.plugin.AcuantMobileSDK": "2.3",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
     "cordova-plugin-console": "1.0.3",

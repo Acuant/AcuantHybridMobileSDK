@@ -396,6 +396,48 @@ var success = function (data) {
             log("success: " + JSON.stringify(cardResult));
             loadResultScreen();
         }
+        if(data.id=='barcodeScanTimeOut'){
+        	log("success: "+data.id);
+        	if (typeof data.croppedData === 'string') {
+                backCardImage = data.croppedData;
+                var srcBack = "data:image/png;base64," + data.croppedData;
+                var imgBack = $('<img class="bordered" src="' + srcBack + '">');
+                $("#back-image").show();
+                $("#back-image").empty();
+                $("#back-image").prepend(imgBack);
+                $("#back-image").removeClass("bordered");
+            }
+            if (typeof data.originalData === 'string') {
+                originalImage = data.originalData;
+            }
+            $("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+        	
+        }
+        
+        if(data.id=='didCancelToCaptureData'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+        	if (isFrontSide) {
+                    frontCardImage = data.croppedImageData;
+                    isBarcodeSide = data.scanBackSide;
+                    var srcFront = "data:image/png;base64," + data.croppedImageData;
+                    var imgFront = $('<img class="bordered" src="' + srcFront + '">');
+                    $("#front-image").empty();
+                    $("#front-image").prepend(imgFront);
+                    $("#front-image").removeClass("bordered");
+                } else {
+                    backCardImage = data.croppedImageData;
+                    var srcBack = "data:image/png;base64," + data.croppedImageData;
+                    var imgBack = $('<img class="bordered" src="' + srcBack + '">');
+                    $("#back-image").show();
+                    $("#back-image").empty();
+                    $("#back-image").prepend(imgBack);
+                    $("#back-image").removeClass("bordered");
+                }
+        }
     }
 };
 var failure = function (data) {
@@ -633,6 +675,7 @@ var app = {
             	AcuantMobileSDK.stringForWatermarkLabel(success, failure, "Powered By Acuant");
             	//set Customization methods
             	AcuantMobileSDK.setCanCropBarcode(success, failure, false);
+            	AcuantMobileSDK.setCropBarcodeOnCancel(success, failure, true);
             	AcuantMobileSDK.setCanShowMessage(success, failure, false);
             	AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
             	AcuantMobileSDK.enableLocationTracking(null,null);

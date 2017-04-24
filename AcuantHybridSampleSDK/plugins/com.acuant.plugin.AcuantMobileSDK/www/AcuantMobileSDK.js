@@ -331,6 +331,20 @@
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCanCropBarcode", [canCropBarcode]);
         }
     },
+    setCropBarcodeOnCancel: function(successCallback, failure, cropBarcodeOnCancel){
+        if ((typeof cropBarcodeOnCancel !== 'boolean')) {
+            failure({
+                "id": "setCropBarcodeOnCancel",
+                "error": "setCropBarcodeOnCancel Must Be Boolean"
+            });
+            return;
+        }
+        if (isAndroid) {
+		   cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCropBarcodeOnCancel", [cropBarcodeOnCancel]);
+        }else if(isIOS){
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCropBarcodeOnCancel", [cropBarcodeOnCancel]);
+        }
+    },
         setCanShowMessage: function(successCallback, failure, canShowMessage){
             if ((typeof canShowMessage !== 'boolean')) {
                 failure({

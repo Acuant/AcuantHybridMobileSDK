@@ -12,6 +12,7 @@
 @property (strong, nonatomic) UIImage *backButtonImage;
 @property (nonatomic) CGRect backButtonFrame;
 @property (nonatomic) BOOL showBackButton;
+@property (nonatomic) BOOL canCropOnCancel;
 @property (strong, nonatomic) UIImage *helpImage;
 @property (nonatomic) CGRect helpImageFrame;
 @property (strong, nonatomic) UIImage *flashlightButtonImage;
@@ -270,6 +271,21 @@
     }
     _callbackId = [command callbackId];
     [_instance setCanCropBarcode:canCropBarcode];
+}
+
+-(void)setCropBarcodeOnCancel:(CDVInvokedUrlCommand*)command{
+    _methodId = @"setCropBarcodeOnCancel";
+    if ([command.arguments objectAtIndex:0])
+    {
+        NSNumber *canCropNumber = [command.arguments objectAtIndex:0];
+        _canCropOnCancel = canCropNumber.boolValue;
+    }
+    
+    _callbackId = [command callbackId];
+}
+
+- (BOOL)canCropBarcodeOnBackPressed{
+    return _canCropOnCancel;
 }
 
 
@@ -675,7 +691,7 @@
  Called to inform the delegate that a card image was captured
  @param cardImage the card image
  */
- - (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide{
+ - (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide andCardType:(AcuantCardType)cardType{
     CDVPluginResult* result;
     if ((_region == AcuantCardRegionUnitedStates || _region == AcuantCardRegionCanada) && _isBackSide){
         _methodId = @"cropBarcode";
@@ -704,6 +720,29 @@
         [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
     }
 }
+
+- (void)didCancelToCaptureData:(UIImage*)croppedImage andOriginalImage:(UIImage*)originalImage{
+    _methodId = @"didCancelToCaptureData";
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
+    [resultDictionary setObject:_methodId forKey:@"id"];
+    if(croppedImage!=nil){
+        NSData *data = UIImagePNGRepresentation(croppedImage);
+        NSString *encodedString = [data base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedString forKey:@"croppedImageData"];
+    }
+    
+    if(originalImage!=nil){
+        NSData *data = UIImagePNGRepresentation(originalImage);
+        NSString *encodedString = [data base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedString forKey:@"originalImageData"];
+    }
+    
+    CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                             messageAsDictionary:resultDictionary];
+    [result setKeepCallback:[NSNumber numberWithBool:YES]];
+    [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
+
 
  - (void)didCaptureOriginalImage:(UIImage *)cardImage{
     CDVPluginResult* result;
@@ -741,8 +780,21 @@
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
 
--(void)barcodeScanTimeOut{
+-(void)barcodeScanTimeOut:(UIImage*)croppedImage andOriginalImage:(UIImage*)originalImage{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"barcodeScanTimeOut" forKey:@"id"];
+    
+    if(croppedImage!=nil){
+        NSData *croppedImagedata = UIImagePNGRepresentation(croppedImage);
+        NSString *encodedCroppedString = [croppedImagedata base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedCroppedString forKey:@"croppedData"];
+    }
+    
+    if(originalImage!=nil){
+        NSData *originalImageData = UIImagePNGRepresentation(originalImage);
+        NSString *encodedOriginalString = [originalImageData base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedOriginalString forKey:@"originalData"];
+    }
+    
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
      messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];

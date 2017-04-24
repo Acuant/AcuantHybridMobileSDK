@@ -223,4 +223,6 @@ Use this method to present the card capture interface.
 
 -(void)enableLocationTracking:(CDVInvokedUrlCommand*)command;
 
+-(void)setCropBarcodeOnCancel:(CDVInvokedUrlCommand*)command;
+
 @end

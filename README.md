@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 12/21/2016
+Last updated on – 04/25/2017
 
 # Introduction
 
@@ -784,49 +784,8 @@ Mobile Angular UI
 
 # Change Log
 
-- Significant improvements done to ID capture interface.
-
-	- Continuous Auto focus.
-	- Continuous brightness correction.
-	- Shake detection to avoid blurry images.
-	- Optimized memory and processing speed for document cropping.
-	- Added method to retrieve the barcode string and the backside image by the barcode capture interface for driving license.
-
+Updated Android SDK with the following changes
 	
-			// To Enable barcode side capture
-			AcuantMobileSDK.setCanCropBarcode(success, failure, true);
-	
-	If barcode side image capture is enabled then the image is returned in the following 
-	way
-	
-			var success = function (data) {
-    			if (data.id == 'didCaptureCropImage') {
-    				if (typeof data.data === 'string') {
-             			var srcBack = "data:image/png;base64," + data.data;
-            		}
-        		}
-        	};
-            
-
-	
-- Added AssureID Authentication feature 
-- Modified document width as below
-		
-	**For Driver's License Cards**
-
-		if(isAssureIDAllowed){
-        	AcuantMobileSDK.setWidth(successCallback, failureCallback, 2024);
-    	}else{
-        	AcuantMobileSDK.setWidth(successCallback, failureCallback, 1250);
-    	}
-
-
-	**For Medical Insurance Cards**
-
-		AcuantMobileSDK.setWidth(successCallback, failureCallback, 1500);
-
-	**For Passport Documents**
-	
-		AcuantMobileSDK.setWidth(successCallback, failureCallback, 1478);
-	
-- Added location tracking and authentication
+- Improved cropping of ID and Passports
+- Memory optimization
+- Resolved focus issue for Samsung Galaxy S7
