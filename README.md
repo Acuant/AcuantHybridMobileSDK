@@ -783,8 +783,6 @@ ionic
 Mobile Angular UI
 
 # Change Log
-
-Updated Android SDK with the following changes
 	
 - Improved cropping of ID and Passports
 - Memory optimization
