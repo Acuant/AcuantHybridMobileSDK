@@ -29,7 +29,7 @@
     <color name="statusForeground">#DDEEEEEE</color>
     <color name="textback">#FF000000</color>
     <color name="transparent">#00000000</color>
-    <declare-styleable name="RecognizerView"><attr format="enum" name="initialOrientation"><enum name="portrait" value="0"/><enum name="landscapeRight" value="1"/><enum name="inversePortrait" value="2"/><enum name="landscapeLeft" value="3"/></attr><attr format="boolean" name="animateRotation"/><attr format="integer" name="animationDuration"/></declare-styleable>
+    <declare-styleable name="RecognizerView"><attr format="enum" name="initialOrientation1"><enum name="portrait" value="0"/><enum name="landscapeRight" value="1"/><enum name="inversePortrait" value="2"/><enum name="landscapeLeft" value="3"/></attr><attr format="boolean" name="animateRotation"/><attr format="integer" name="animationDuration"/></declare-styleable>
     <declare-styleable name="RecognizerView_LayoutParams"><attr format="boolean" name="rotatable"/></declare-styleable>
     <!-- From: file:/Users/dodo/Work/PhotoPayContainer/PhotoPay/core-photopay/PhotoPayAndroid/android-studio/LibRecognizer/src/barcode/res/values/acuantstrings.xml -->
     <eat-comment/>
