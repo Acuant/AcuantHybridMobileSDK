@@ -117,7 +117,7 @@ Sometimes for iOS framework the shorcut files don't get copied.Make sure the sho
 
 ![](document_images/ios_plugin_structure.png)
 
-If the shortcuts are not present the the entire "AcuantMobileSDK.embeddedframework" folder from cordova-plugin-AcuantHybridSDK folder into the projects "plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs" folder.Then remove the ios platform and add again.
+If the shortcuts are not present , then copy the entire "AcuantMobileSDK.embeddedframework" folder from cordova-plugin-AcuantHybridSDK folder into the projects "plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs" folder.Then remove the ios platform and add again.
 
 ## Add AcuantMobileSDK Plugin on each project 
 
