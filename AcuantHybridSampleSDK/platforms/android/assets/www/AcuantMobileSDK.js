@@ -317,6 +317,20 @@
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setWidth", [width]);
         }
     },
+    setCanCaptureOriginalImage: function(successCallback, failure, canCaptureOriginalImage){
+        if ((typeof canCaptureOriginalImage !== 'boolean')) {
+            failure({
+                "id": "setCanCaptureOriginalImage",
+                "error": "canCaptureOriginalImage Must Be Boolean"
+            });
+            return;
+        }
+        if (isWindows) {
+
+        } else {
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCanCaptureOriginalImage", [canCaptureOriginalImage]);
+        }
+    },
     setCanCropBarcode: function(successCallback, failure, canCropBarcode){
         if ((typeof canCropBarcode !== 'boolean')) {
             failure({
@@ -934,5 +948,108 @@
         } else {
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "imageForFlashlightButton", [flashlightButtonImageOn, flashlightButtonImageOff]);
         }
-   }
+   },showFacialInterface:function (successCallback, failure) {
+        if (isWindows) {
+            
+        } else {
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "showFacialInterface");
+        }
+    },setFacialInstructionText:function (successCallback, failure,instructionText) {
+        if (isWindows) {
+            
+        } else {
+            if (instructionText === null) {
+                failure({
+                        "id": "setFacialInstructionText",
+                        "error": "Instruction Text Is Null"
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialInstructionText",[instructionText]);
+        }
+    },setFacialInstructionLocation:function (successCallback, failure,left,top) {
+        if (isWindows) {
+            
+        } else {
+            if ((typeof left !== 'number') || (typeof top !== 'number')) {
+                failure({
+                        "id": "setFacialInstructionLocation",
+                        "error": "left and top position must me int."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialInstructionLocation",[left,top]);
+        }
+    },setFacialInstructionTextStyle:function (successCallback, failure,fontColor,fontSize) {
+        if (isWindows) {
+            
+        } else {
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialInstructionTextStyle",[fontColor,fontSize]);
+        }
+    },setFacialRecognitionTimeout:function (successCallback, failure,timeoutInSeconds) {
+        if (isWindows) {
+            
+        } else {
+            if ((typeof timeoutInSeconds !== 'number')) {
+                failure({
+                        "id": "setFacialRecognitionTimeout",
+                        "error": "timeoutInSeconds must me int."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialRecognitionTimeout",[timeoutInSeconds]);
+        }
+    },processFacialImageValidation:function (successCallback, failure,selfieImage,faceImage) {
+        if (isWindows) {
+            
+        } else {
+            if ((selfieImage === null) || (faceImage === null)) {
+                failure({
+                        "id": "processFacialImageValidation",
+                        "error": "Selfie Image or face image is null."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processFacialImageValidation",[selfieImage,faceImage]);
+        }
+    },setFacialSubInstructionString:function (successCallback, failure,subInstructionString) {
+        if (isWindows) {
+            
+        } else {
+            if ((subInstructionString === null) || (subInstructionString === '')) {
+                failure({
+                        "id": "setFacialSubInstructionString",
+                        "error": "Argument should not be null or empty."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialSubInstructionString",[subInstructionString]);
+        }
+    },setFacialSubInstructionLocation:function (successCallback, failure,left,top) {
+        if (isWindows) {
+            
+        } else {
+            if ((typeof left !== 'number') || (typeof top !== 'number')) {
+                failure({
+                        "id": "setFacialSubInstructionLocation",
+                        "error": "left and top position must me int."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialSubInstructionLocation",[left,top]);
+        }
+    },setFacialSubInstructionColor:function (successCallback, failure,fontColor) {
+        if (isWindows) {
+            
+        } else {
+            if (fontColor===null || fontColor==='') {
+                failure({
+                        "id": "setFacialSubInstructionColor",
+                        "error": "Font color must be provided."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialSubInstructionColor",[fontColor]);
+        }
+    }
 };

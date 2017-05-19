@@ -41,16 +41,19 @@ var originalImage;
 var frontCardImageResult;
 var backCardImageResult;
 var faceImageResult;
+var selfieImageData;
 var signatureImageResult;
 var barcodeStringData;
 var backCardImageBase64;
 var PDF417ImageBase64;
 var cardResult;
+var facialResult;
 var frontCardText;
 var backCardText;
 var cardAspectRatio;
 var isAssureIDAllowed = false;
 var showBarcodeImage = false;
+var isFacialAllowed = false;
 
 var log = function (message) {
     if (debbug) {
@@ -223,6 +226,13 @@ var loadResultScreen = function () {
         resultString = resultString + "</br>Device Country Code -  " + cardResult.DeviceCountryCode;
         resultString = resultString + "</br>Device Zipcode -  " + cardResult.DeviceZipcode;
         resultString = resultString + "</br>Device Street Address -  " + cardResult.DeviceStreetAddress;
+        if(isFacialAllowed){
+        	resultString = resultString + "</br>FacialMatch -  " + facialResult.FacialMatch;
+        	resultString = resultString + "</br>FacialMatchConfidenceRating -  " + facialResult.FacialMatchConfidenceRating;
+        	resultString = resultString + "</br>IsFacialEnabled -  " + facialResult.IsFacialEnabled;
+        	resultString = resultString + "</br>TransactionId -  " + facialResult.TransactionId;
+        	resultString = resultString + "</br>FaceLivelinessDetection -  " + facialResult.FaceLivelinessDetection;
+        }
         
     } 
     else if (cardType == 2) {
@@ -264,6 +274,14 @@ var loadResultScreen = function () {
         resultString = resultString + "</br>Device Country Code -  " + cardResult.DeviceCountryCode;
         resultString = resultString + "</br>Device Zipcode -  " + cardResult.DeviceZipcode;
         resultString = resultString + "</br>Device Street Address -  " + cardResult.DeviceStreetAddress;
+        
+        if(isFacialAllowed){
+        	resultString = resultString + "</br>FacialMatch -  " + facialResult.FacialMatch;
+        	resultString = resultString + "</br>FacialMatchConfidenceRating -  " + facialResult.FacialMatchConfidenceRating;
+        	resultString = resultString + "</br>IsFacialEnabled -  " + facialResult.IsFacialEnabled;
+        	resultString = resultString + "</br>TransactionId -  " + facialResult.TransactionId;
+        	resultString = resultString + "</br>FaceLivelinessDetection -  " + facialResult.FaceLivelinessDetection;
+        }
     }
     log('back ' + backCardImageResult);
     log('front ' + frontCardImageResult);
@@ -308,6 +326,7 @@ var success = function (data) {
                 log('Framework is not validated');
             }
             isAssureIDAllowed = data.isAssureIDAllowed;
+            isFacialAllowed = data.isFacialAllowed;
             //set Back button image and PDF417 image
             if (isMobile.Android()) {
                 log("BackButton Image Android");
@@ -394,6 +413,21 @@ var success = function (data) {
             $('#progress_modal').nsProgress('dismiss');
             cardResult = data.data;
             log("success: " + JSON.stringify(cardResult));
+            if(isFacialAllowed && !isWindows && cardType!=1){
+            	navigator.notification.alert(
+                                'Please position your face in front of the front camera and blink when red rectangle appears.',
+                                showFacialInterface,
+                                'AcuantHybridSampleSDK',
+                                'OK'
+                                );
+            }else{
+                loadResultScreen();
+            }
+        }
+        if(data.id=='didFinishProcessingFacialMatchWithResult'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            facialResult = data.data;
             loadResultScreen();
         }
         if(data.id=='barcodeScanTimeOut'){
@@ -438,18 +472,44 @@ var success = function (data) {
                     $("#back-image").removeClass("bordered");
                 }
         }
+        
+        
+        if(data.id=='onFacialRecognitionCanceled'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+            loadResultScreen();
+        }
+        
+        if(data.id=='onFacialRecognitionTimedOut'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+            selfieImageData = data.selfieImageData;
+            processFacialMatch();
+        }
+        
+        if(data.id=='onFacialRecognitionCompleted'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            AcuantMobileSDK.dismissCardCaptureInterface();
+            selfieImageData = data.selfieImageData;
+            processFacialMatch();
+        }
     }
 };
 var failure = function (data) {
     log("failure: " + JSON.stringify(data));
     if (data.errorType) {
         if (data.id == "didFailWithError") {
-            navigator.notification.alert(
+        if(data.ErrorInMethod!='onOriginalCapture')
+			{   navigator.notification.alert(
                 data.errorMessage,
                 alertCallback,
                 'AcuantHybridSampleSDK',
                 'OK'
                 );
+            }
         }
         if (data.id == "activateLicenseKey") {
             navigator.notification.alert(
@@ -572,6 +632,34 @@ var processAction = function () {
     }
 };
 
+var processFacialMatch = function () {
+    log('processFacialMatch');
+    $("#progress_modal").toggleClass("hdn");
+    $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data', 'clear');
+    faceImageResult = cardResult.faceImage;
+    if(faceImageResult===null){
+    	loadResultScreen();
+    }else{
+    	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
+    }
+};
+
+var showFacialInterface = function() {
+    AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
+    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
+    if(isAndroid){
+    	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
+    	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);
+    	AcuantMobileSDK.setFacialSubInstructionColor(success, failure,'#FF0000');
+    }else if(isIOS){
+        AcuantMobileSDK.setFacialInstructionLocation(success, failure,0,50);
+        AcuantMobileSDK.setFacialSubInstructionString(success, failure,'Analyzing');
+        AcuantMobileSDK.setFacialSubInstructionColor(success, failure,'#FF0000');
+        AcuantMobileSDK.setFacialInstructionTextStyle(success,failure,'#ffffff',13);
+    }
+    AcuantMobileSDK.showFacialInterface(success, failure);
+}
+
 var showCameraInterfaceFront = function () {
     log('showCameraInterfaceFront');
     isFrontSide = true;
@@ -602,7 +690,7 @@ var showCameraInterfaceDLBack = function () {
 
 var activateAction = function () {
 	log('activateAction');
-    AcuantMobileSDK.activateLicenseKey(success, failure, licenseKey);
+	AcuantMobileSDK.activateLicenseKey(success, failure, licenseKey);
 };
 var getLicenseKey = function () {
     log('getLicenseKey');
@@ -677,6 +765,7 @@ var app = {
             	AcuantMobileSDK.setCanCropBarcode(success, failure, false);
             	AcuantMobileSDK.setCropBarcodeOnCancel(success, failure, true);
             	AcuantMobileSDK.setCanShowMessage(success, failure, false);
+            	AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,false);
             	AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
             	AcuantMobileSDK.enableLocationTracking(null,null);
             log("end onDeviceReady");

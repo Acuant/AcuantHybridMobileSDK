@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="acuantMobileSDK-">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/acuantMobileSDK/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/acuantMobileSDK/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/fbafa6904ef8859fe45eba3a049698fb481db542/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/fbafa6904ef8859fe45eba3a049698fb481db542/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/fbafa6904ef8859fe45eba3a049698fb481db542/output/jars/libs/wsq_imageutil.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

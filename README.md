@@ -125,6 +125,10 @@ Step - 2 : Execute the following command
 	For example :
 
 	cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK`
+	
+Step - 3 : Add the following path to framework search path
+
+	"$(PROJECT_DIR)/../../plugins/**"
 
 
 *Note : In Windows please make sure the zcard.dll is present in “<Project folder>\platforms\windows\plugins\com.acuant.plugin.AcuantMobileSDK” in folder.Otherwise copy it from cordova-plugin-AcuantHybridSDK plugin folder.*

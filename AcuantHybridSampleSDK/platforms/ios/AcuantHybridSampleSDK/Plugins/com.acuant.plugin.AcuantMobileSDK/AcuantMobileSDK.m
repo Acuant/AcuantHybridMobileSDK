@@ -1,8 +1,11 @@
 #import "AcuantMobileSDK.h"
 #import <AcuantMobileSDK/AcuantMobileSDKController.h>
+#import <AcuantMobileSDK/AcuantFacialRecognitionViewController.h>
+#import <AcuantMobileSDK/AcuantFacialData.h>
 #import <objc/runtime.h>
 
-@interface AcuantMobileSDK() <AcuantMobileSDKControllerCapturingDelegate, AcuantMobileSDKControllerProcessingDelegate>
+
+@interface AcuantMobileSDK() <AcuantMobileSDKControllerCapturingDelegate, AcuantMobileSDKControllerProcessingDelegate,AcuantFacialCaptureDelegate>
 //Framework init
 @property (strong, nonatomic) NSString *key;
 @property (strong, nonatomic) NSString *cloudAddressString;
@@ -13,6 +16,7 @@
 @property (nonatomic) CGRect backButtonFrame;
 @property (nonatomic) BOOL showBackButton;
 @property (nonatomic) BOOL canCropOnCancel;
+@property (nonatomic) BOOL canCaptureOriginalImage;
 @property (strong, nonatomic) UIImage *helpImage;
 @property (nonatomic) CGRect helpImageFrame;
 @property (strong, nonatomic) UIImage *flashlightButtonImage;
@@ -26,7 +30,18 @@
 @property (nonatomic) BOOL hiddenBarcodeErrorMessage;
 @property (nonatomic) BOOL hiddenStatusBar;
 @property (nonatomic) BOOL showiPadBrackets;
-
+@property (strong, nonatomic) NSString *facialInstructionString;
+@property (strong, nonatomic) NSString *subInstructionString;
+@property (strong, nonatomic) NSNumber *facialTimeout;
+@property (nonatomic) CGRect facialMessageFrame;
+@property (nonatomic) CGRect facialSubMessageFrame;
+@property(nonatomic,strong) NSNumber* facialTextLeft;
+@property(nonatomic,strong) NSNumber* facialTextTop;
+@property(nonatomic,strong) NSNumber* facialSubInstructionLeft;
+@property(nonatomic,strong) NSNumber* facialSubInstructionTop;
+@property(nonatomic,strong) NSString* facialInstructionFontColor;
+@property(nonatomic,strong) NSString* facialSubInstructionFontColor;
+@property(nonatomic,strong) NSNumber* facialInstructionFontSize;
 //Framework Process
 @property (strong, nonatomic) NSString *callbackId;
 @property AcuantCardType cardType;
@@ -49,7 +64,7 @@
  @discussion never try to alloc/init this class, always obtain an instance through this method.
  @return the AcuantMobileSDKController instance
  */
- - (void)initAcuantMobileSDK:(CDVInvokedUrlCommand*)command{
+- (void)initAcuantMobileSDK:(CDVInvokedUrlCommand*)command{
     if ([command.arguments objectAtIndex:0])
     {
         _key = [command.arguments objectAtIndex:0];
@@ -78,7 +93,7 @@
  @discussion never try to alloc/init this class, always obtain an instance through this method.
  @return the AcuantMobileSDKController instance
  */
- - (void)initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController:(CDVInvokedUrlCommand*)command{
+- (void)initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController:(CDVInvokedUrlCommand*)command{
     if ([command.arguments objectAtIndex:0])
     {
         _key = [command.arguments objectAtIndex:0];
@@ -98,9 +113,9 @@
     _region = cardRegionNumber.intValue;
     NSNumber *isBarcodeSideNumber = [command.arguments objectAtIndex:3];
     _isBackSide = isBarcodeSideNumber.boolValue;
-
+    
     UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-
+    
     _instance = [AcuantMobileSDKController initAcuantMobileSDKWithLicenseKey:_key AndShowCardCaptureInterfaceInViewController:rootViewController delegate:self typeCard:_cardType region:_region isBarcodeSide:_isBackSide];
 }
 
@@ -110,7 +125,7 @@
  @param command CDVInvokedUrlCommand
  @discussion a valid viewController is required
  */
- - (void)showManualCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
+- (void)showManualCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
     _methodId = @"showManualCameraInterfaceInViewController";
     NSNumber *cardTypeNumber = [command.arguments objectAtIndex:0];
     _cardType = cardTypeNumber.intValue;
@@ -128,7 +143,7 @@
  @param command CDVInvokedUrlCommand
  @discussion a valid viewController is required
  */
- - (void)showBarcodeCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
+- (void)showBarcodeCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command{
     _methodId = @"showBarcodeCameraInterfaceInViewController";
     NSNumber *cardTypeNumber = [command.arguments objectAtIndex:0];
     _cardType = cardTypeNumber.intValue;
@@ -144,7 +159,7 @@
  @param command CDVInvokedUrlCommand
  @discussion You cannot use [UIPopOverController dismissPopoverAnimated:] method to dismiss the UIPopOverController
  */
- - (void)dismissCardCaptureInterface:(CDVInvokedUrlCommand*)command{
+- (void)dismissCardCaptureInterface:(CDVInvokedUrlCommand*)command{
     _methodId = @"dismissCardCaptureInterface";
     _callbackId = [command callbackId];
     [_instance dismissCardCaptureInterface];
@@ -155,7 +170,7 @@
  @discussion you don't need to call this method after presenting the camera interface
  @discussion if we're already capturing video this method does nothing
  */
- - (void)startCamera:(CDVInvokedUrlCommand*)command{
+- (void)startCamera:(CDVInvokedUrlCommand*)command{
     _methodId = @"startCamera";
     _callbackId = [command callbackId];
     [_instance startCamera];
@@ -165,7 +180,7 @@
  @param command CDVInvokedUrlCommand
  @discussion if camera is already stop, this method does nothing
  */
- - (void)stopCamera:(CDVInvokedUrlCommand*)command{
+- (void)stopCamera:(CDVInvokedUrlCommand*)command{
     _methodId = @"stopCamera";
     _callbackId = [command callbackId];
     [_instance stopCamera];
@@ -198,7 +213,7 @@
  @param command CDVInvokedUrlCommand
  @discussion you are in charge of setting License key on each application launch as part of the setup of the framework
  */
- - (void)setLicenseKey:(CDVInvokedUrlCommand*)command{
+- (void)setLicenseKey:(CDVInvokedUrlCommand*)command{
     _methodId = @"setLicenseKey";
     if ([command.arguments objectAtIndex:0])
     {
@@ -212,7 +227,7 @@
  Use this method to configure the Cloud Address of the server
  @param command CDVInvokedUrlCommand
  */
- - (void)setCloudAddress:(CDVInvokedUrlCommand*)command{
+- (void)setCloudAddress:(CDVInvokedUrlCommand*)command{
     _methodId = @"setLicenseKey";
     if ([command.arguments objectAtIndex:0])
     {
@@ -225,7 +240,7 @@
  Use this method to activate the license key
  @param command CDVInvokedUrlCommand
  */
- - (void)activateLicenseKey:(CDVInvokedUrlCommand*)command{
+- (void)activateLicenseKey:(CDVInvokedUrlCommand*)command{
     _methodId = @"activateLicenseKey";
     if ([command.arguments objectAtIndex:0])
     {
@@ -245,7 +260,7 @@
  @param command CDVInvokedUrlCommand
  @discussion you need to set the height with setHeight:(int)height to crop the image with these values
  */
- -(void)setWidth:(CDVInvokedUrlCommand*)command{
+-(void)setWidth:(CDVInvokedUrlCommand*)command{
     _methodId = @"setWidth";
     int width = 0;
     if ([command.arguments objectAtIndex:0])
@@ -261,7 +276,7 @@
  Use it to enable or disable the barcode Cropping
  @param canCropBarcode boolean enable or disable the watermark
  */
- -(void)setCanCropBarcode:(CDVInvokedUrlCommand*)command{
+-(void)setCanCropBarcode:(CDVInvokedUrlCommand*)command{
     _methodId = @"setCanCropBarcode";
     BOOL canCropBarcode = NO;
     if ([command.arguments objectAtIndex:0])
@@ -284,12 +299,24 @@
     _callbackId = [command callbackId];
 }
 
+-(void)setCaptureOriginalImage:(CDVInvokedUrlCommand*)command{
+    _methodId = @"setCanCaptureOriginalImage";
+    if ([command.arguments objectAtIndex:0])
+    {
+        NSNumber *setCanCaptureOriginalImageNumber = [command.arguments objectAtIndex:0];
+        _canCaptureOriginalImage = setCanCaptureOriginalImageNumber.boolValue;
+    }
+    
+    _callbackId = [command callbackId];
+    [_instance setCanCaptureOriginalImage:_canCaptureOriginalImage];
+}
+
 - (BOOL)canCropBarcodeOnBackPressed{
     return _canCropOnCancel;
 }
 
 
- -(void)setCanShowMessage:(CDVInvokedUrlCommand*)command{
+-(void)setCanShowMessage:(CDVInvokedUrlCommand*)command{
     _methodId = @"setCanShowMessage";
     BOOL canShowMessage = NO;
     if ([command.arguments objectAtIndex:0])
@@ -306,7 +333,7 @@
  @param command CDVInvokedUrlCommand
  @discussion in case this method in not implementd by the delegate, we'll set a default message, background color, time lenght and frame.
  */
- -(void)setInitialMessage:(CDVInvokedUrlCommand*)command{
+-(void)setInitialMessage:(CDVInvokedUrlCommand*)command{
     _methodId = @"setInitialMessage";
     NSString *initialMessage = [command.arguments objectAtIndex:0];
     
@@ -344,7 +371,7 @@
  @param command CDVInvokedUrlCommand
  @discussion in case this method in not implementd by the delegate, we'll set a default message, background color, time lenght and frame.
  */
- -(void)setCapturingMessage:(CDVInvokedUrlCommand*)command{
+-(void)setCapturingMessage:(CDVInvokedUrlCommand*)command{
     _methodId = @"setCapturingMessage";
     NSString *capturingMessage = [command.arguments objectAtIndex:0];
     
@@ -386,7 +413,7 @@
  @discussion you should call this method only once and wait until your delegate is informed. If you call this method while we're already processing a card, we'll ignore your second call.
  @discussion The recommended size to this images is 1009 width and relative height to the width.
  */
- - (void)processCardImage:(CDVInvokedUrlCommand*)command{
+- (void)processCardImage:(CDVInvokedUrlCommand*)command{
     _methodId = @"processCardImage";
     
     UIImage *frontImage;
@@ -419,7 +446,7 @@
     if ([stringData isKindOfClass:[NSNull class]]) {
         stringData = nil;
     }
-
+    
     //Obtain the default AcuantCardProcessRequestOptions object for the type of card you want to process (License card for this example)
     AcuantCardProcessRequestOptions *options = [AcuantCardProcessRequestOptions defaultRequestOptionsForCardType:_cardType];
     
@@ -448,10 +475,10 @@
     
     // Now, perform the request
     [_instance processFrontCardImage:frontImage
-       BackCardImage:backImage
-       andStringData:stringData
-       withDelegate:self
-       withOptions:options];
+                       BackCardImage:backImage
+                       andStringData:stringData
+                        withDelegate:self
+                         withOptions:options];
     
 }
 
@@ -461,7 +488,7 @@
 /**
  These methods control the attributes of the status bar when this view controller is shown.
  */
- - (void)cameraPrefersStatusBarHidden:(CDVInvokedUrlCommand*)command{
+- (void)cameraPrefersStatusBarHidden:(CDVInvokedUrlCommand*)command{
     NSNumber *cameraPrefersStatusBarHiddenNumber = [command.arguments objectAtIndex:0];
     _hiddenStatusBar = cameraPrefersStatusBarHiddenNumber.boolValue;
     
@@ -476,7 +503,7 @@
  @discussion in case this method is not implemented by the delegate, we'll set a default location for the help image though we encourage you to set the position manually.
  @discussion if your application supports multiple screen sizes then you are in charge of returning the correct position for each screen size.
  */
- - (void)frameForWatermarkView:(CDVInvokedUrlCommand*)command{
+- (void)frameForWatermarkView:(CDVInvokedUrlCommand*)command{
     NSNumber *xnumber = [command.arguments objectAtIndex:0];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:1];
@@ -496,7 +523,7 @@
  @return the watermark Message
  @discussion if this method is not implemented or nil is returned, we'll not display a watermark Message view
  */
- - (void)stringForWatermarkLabel:(CDVInvokedUrlCommand*)command{
+- (void)stringForWatermarkLabel:(CDVInvokedUrlCommand*)command{
     NSString *watermarkLabelString = [command.arguments objectAtIndex:0];
     _watermarkLabel = watermarkLabelString;
 }
@@ -510,7 +537,7 @@
  @discussion in case this method is not implemented by the delegate, we'll set a default location for the help image though we encourage you to set the position manually.
  @discussion if your application supports multiple screen sizes then you are in charge of returning the correct position for each screen size.
  */
- - (void)frameForHelpImageView:(CDVInvokedUrlCommand*)command{
+- (void)frameForHelpImageView:(CDVInvokedUrlCommand*)command{
     NSNumber *xnumber = [command.arguments objectAtIndex:0];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:1];
@@ -530,7 +557,7 @@
  @return the help image
  @discussion if this method is not implemented or nil is returned, we'll not display a help image view
  */
- - (void)imageForHelpImageView:(CDVInvokedUrlCommand*)command{
+- (void)imageForHelpImageView:(CDVInvokedUrlCommand*)command{
     NSString *encodedString = [command.arguments objectAtIndex:0];
     if (encodedString && ![encodedString isKindOfClass:[NSNull class]]) {
         NSRange range = [encodedString rangeOfString:@"base64," options:NSBackwardsSearch];
@@ -554,7 +581,7 @@
  @discussion if this method is not implemented or nil is returned, we'll display a the button with "back" text
  @discussion this delegate method is only called when presenting the card capture interface full screen. If card capture interface is presented in a UIPopOverController, this method is not called at all because a Cancel UIBarButtonItem in the UINavigationBar is used instead.
  */
- - (void)showBackButton:(CDVInvokedUrlCommand*)command{
+- (void)showBackButton:(CDVInvokedUrlCommand*)command{
     NSNumber *showBackButtonNumber = [command.arguments objectAtIndex:0];
     _showBackButton = showBackButtonNumber.boolValue;
 }
@@ -569,7 +596,7 @@
  @discussion if your application supports multiple screen sizes then you are in charge of returning the correct position for each screen size.
  @discussion this delegate method is only called when presenting the card capture interface full screen. If card capture interface is presented in a UIPopOverController, this method is noot called at all because a Cancel UIBarButtonItem in the UINavigationBar is used instead.
  */
- - (void)frameForBackButton:(CDVInvokedUrlCommand*)command{
+- (void)frameForBackButton:(CDVInvokedUrlCommand*)command{
     NSNumber *xnumber = [command.arguments objectAtIndex:0];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:1];
@@ -590,7 +617,7 @@
  @discussion if this method is not implemented or nil is returned, we'll display a white rounded button with "back" text
  @discussion this delegate method is only called when presenting the card capture interface full screen. If card capture interface is presented in a UIPopOverController, this method is not called at all because a Cancel UIBarButtonItem in the UINavigationBar is used instead.
  */
- - (void)imageForBackButton:(CDVInvokedUrlCommand*)command{
+- (void)imageForBackButton:(CDVInvokedUrlCommand*)command{
     NSString *encodedString = [command.arguments objectAtIndex:0];
     if (encodedString && ![encodedString isKindOfClass:[NSNull class]]) {
         NSRange range = [encodedString rangeOfString:@"base64," options:NSBackwardsSearch];
@@ -611,7 +638,7 @@
 }
 
 
- /**
+/**
  Called to show or not show the iPad brackets on the card capture interface
  @param command CDVInvokedUrlCommand
  @return show or not show the iPad brackets
@@ -630,7 +657,7 @@
  @return show or not show the flashlight button
  @discussion if this method is not implemented or nil is returned, we'll display a the button with "flash" text
  */
- - (void)showFlashlightButton:(CDVInvokedUrlCommand*)command{
+- (void)showFlashlightButton:(CDVInvokedUrlCommand*)command{
     NSNumber *showFlashlightButtonNumber = [command.arguments objectAtIndex:0];
     _showFlashlightButton = showFlashlightButtonNumber.boolValue;
 }
@@ -644,7 +671,7 @@
  @discussion in case this method is not implemented by the delegate, we'll set a default location for the button though we encourage you to set the position manually.
  @discussion if your application supports multiple screen sizes then you are in charge of returning the correct position for each screen size.
  */
- - (void)frameForFlashlightButton:(CDVInvokedUrlCommand*)command{
+- (void)frameForFlashlightButton:(CDVInvokedUrlCommand*)command{
     NSNumber *xnumber = [command.arguments objectAtIndex:0];
     int x = xnumber.intValue;
     NSNumber *ynumber = [command.arguments objectAtIndex:1];
@@ -665,7 +692,7 @@
  @discussion if this method is not implemented or nil is returned, we'll display a white rounded button with "flash" text
  @discussion this delegate method is only called when presenting the card capture interface full screen. If card capture interface is presented in a UIPopOverController, this method is not called at all because a Cancel UIBarButtonItem in the UINavigationBar is used instead.
  */
- - (void)imageForFlashlightButton:(CDVInvokedUrlCommand*)command{
+- (void)imageForFlashlightButton:(CDVInvokedUrlCommand*)command{
     NSString *encodedString = [command.arguments objectAtIndex:0];
     if (encodedString && ![encodedString isKindOfClass:[NSNull class]]) {
         NSRange range = [encodedString rangeOfString:@"base64," options:NSBackwardsSearch];
@@ -691,7 +718,7 @@
  Called to inform the delegate that a card image was captured
  @param cardImage the card image
  */
- - (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide andCardType:(AcuantCardType)cardType{
+- (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide andCardType:(AcuantCardType)cardType{
     CDVPluginResult* result;
     if ((_region == AcuantCardRegionUnitedStates || _region == AcuantCardRegionCanada) && _isBackSide){
         _methodId = @"cropBarcode";
@@ -706,7 +733,7 @@
         [resultDictionary setObject:encodedString forKey:@"data"];
         [resultDictionary setObject:[NSNumber numberWithBool:scanBackSide] forKey:@"scanBackSide"];
         result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-            messageAsDictionary:resultDictionary];
+                                messageAsDictionary:resultDictionary];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
         [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
     }else{
@@ -715,7 +742,7 @@
         NSNumber *errorType = [NSNumber numberWithInt:AcuantErrorUnableToCrop];
         [resultDictionary setObject:errorType forKey:@"errorType"];
         result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-            messageAsDictionary:resultDictionary];
+                                messageAsDictionary:resultDictionary];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
         [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
     }
@@ -744,7 +771,7 @@
 }
 
 
- - (void)didCaptureOriginalImage:(UIImage *)cardImage{
+- (void)didCaptureOriginalImage:(UIImage *)cardImage{
     CDVPluginResult* result;
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didCaptureOriginalImage" forKey:@"id"];
     if(cardImage){
@@ -752,18 +779,20 @@
         NSString *encodedString = [data base64EncodedStringWithOptions:0];
         [resultDictionary setObject:encodedString forKey:@"data"];
         result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-            messageAsDictionary:resultDictionary];
+                                messageAsDictionary:resultDictionary];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
         [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
     }else{
         [resultDictionary setObject:@"didFailWithError" forKey:@"id"];
+        [resultDictionary setObject:@"onOriginalCapture"   forKey:@"ErrorInMethod"];
         [resultDictionary setObject:@"Unable to capture" forKey:@"errorMessage"];
         NSNumber *errorType = [NSNumber numberWithInt:AcuantErrorUnableToCrop];
         [resultDictionary setObject:errorType forKey:@"errorType"];
         result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-            messageAsDictionary:resultDictionary];
+                                messageAsDictionary:resultDictionary];
         [result setKeepCallback:[NSNumber numberWithBool:YES]];
         [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+        
     }
 }
 
@@ -771,11 +800,11 @@
  Called to inform the delegate that a barcode image was captured
  @param data the barcode string
  */
- - (void)didCaptureData:(NSString*)data{
+- (void)didCaptureData:(NSString*)data{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didCaptureData" forKey:@"id"];
     [resultDictionary setObject:data forKey:@"data"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -796,17 +825,17 @@
     }
     
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
 /**
  Called to inform the delegate that the user pressed the back button
  */
- - (void)didPressBackButton{
+- (void)didPressBackButton{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didPressBackButton" forKey:@"id"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -816,13 +845,13 @@
  @param error the reason why the request failed
  @discussion the delegate is in charge of analysing the error sent and inform the user.
  */
- -(void)didFailWithError:(AcuantError *)error{
+-(void)didFailWithError:(AcuantError *)error{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didFailWithError" forKey:@"id"];
     [resultDictionary setObject:error.errorMessage forKey:@"errorMessage"];
     NSNumber *errorType = [NSNumber numberWithInt:error.errorType];
     [resultDictionary setObject:errorType forKey:@"errorType"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -835,13 +864,14 @@
 /**
  Called to inform the delegate that the framework was validated
  */
- -(void)mobileSDKWasValidated:(BOOL)wasValidated{
+-(void)mobileSDKWasValidated:(BOOL)wasValidated{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"mobileSDKWasValidated" forKey:@"id"];
     NSNumber *wasValidatedNumber = [NSNumber numberWithBool:wasValidated];
     [resultDictionary setObject:[NSNumber numberWithBool:_instance.isAssureIDAllowed] forKey:@"isAssureIDAllowed"];
+    [resultDictionary setObject:[NSNumber numberWithBool:_instance.isFacialEnabled] forKey:@"isFacialAllowed"];
     [resultDictionary setObject:wasValidatedNumber forKey:@"data"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -849,10 +879,10 @@
 /**
  Called to inform the delegate that the capture interface did appear
  */
- - (void)cardCaptureInterfaceDidAppear{
+- (void)cardCaptureInterfaceDidAppear{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"cardCaptureInterfaceDidAppear" forKey:@"id"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -860,10 +890,10 @@
 /**
  Called to inform the delegate that the capture interface did disappear
  */
- - (void)cardCaptureInterfaceDidDisappear{
+- (void)cardCaptureInterfaceDidDisappear{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"cardCaptureInterfaceDidDisappear" forKey:@"id"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -871,10 +901,10 @@
 /**
  Called to inform the delegate that the capture interface will disappear
  */
- - (void)cardCaptureInterfaceWillDisappear{
+- (void)cardCaptureInterfaceWillDisappear{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"cardCaptureInterfaceWillDisappear" forKey:@"id"];
     CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-     messageAsDictionary:resultDictionary];
+                                             messageAsDictionary:resultDictionary];
     [result setKeepCallback:[NSNumber numberWithBool:YES]];
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
@@ -883,12 +913,12 @@
  Called to inform delegate that the request completed succesfully.
  @param result the data parsed from the card image
  */
- - (void)didFinishProcessingCardWithResult:(AcuantCardResult*)result{
+- (void)didFinishProcessingCardWithResult:(AcuantCardResult*)result{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didFinishProcessingCardWithResult" forKey:@"id"];
     
     NSMutableDictionary *cardResult = [NSMutableDictionary dictionary];
     if (_cardType == AcuantCardTypeDriversLicenseCard) {
-        cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantDriversLicenseCard *)result];        
+        cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantDriversLicenseCard *)result];
     }else if(_cardType == AcuantCardTypeMedicalInsuranceCard){
         cardResult =  [self dictionaryWithPropertiesOfObject: (AcuantMedicalInsuranceCard *)result];
     }else{
@@ -902,58 +932,242 @@
     [self.commandDelegate sendPluginResult:resultPlugin callbackId:_callbackId];
 }
 
+
+- (void)didFinishValidatingImageWithResult:(AcuantCardResult*)result{
+    AcuantFacialData* facialData = (AcuantFacialData*)result;
+    NSMutableDictionary *cardResult = [NSMutableDictionary dictionary];
+    [cardResult setObject:[facialData valueForKey:@"isFacialEnabled"]  forKey:@"IsFacialEnabled"];
+    [cardResult setObject:[facialData valueForKey:@"isMatch"]  forKey:@"FacialMatch"];
+    [cardResult setObject:[facialData valueForKey:@"facialMatchConfidenceRating"] forKey:@"FacialMatchConfidenceRating"];
+    [cardResult setObject:[facialData valueForKey:@"faceLivelinessDetection"] forKey:@"FaceLivelinessDetection"];
+    [cardResult setObject:facialData.transactionId forKey:@"TransactionId"];
+    
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"didFinishProcessingFacialMatchWithResult" forKey:@"id"];
+    [resultDictionary setObject:cardResult forKey:@"data"];
+    CDVPluginResult* resultPlugin =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDictionary];
+    [resultPlugin setKeepCallback:[NSNumber numberWithBool:YES]];
+    [self.commandDelegate sendPluginResult:resultPlugin callbackId:_callbackId];
+}
+
 #pragma mark -
 #pragma mark Pivate Methods
 
 -(NSMutableDictionary *) dictionaryWithPropertiesOfObject:(id)obj
-    {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        
-        unsigned count;
-        objc_property_t *properties = class_copyPropertyList([obj class], &count);
-        
-        
-        for (int i = 0; i < count; i++) {
-            NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
-            if ([obj valueForKey:key] !=  nil) {
-                if ([[obj valueForKey:key] isKindOfClass:[NSData class]]) {
-                    UIImage *image = [UIImage imageWithData:[obj valueForKey:key]];
-                    NSData *data = UIImagePNGRepresentation(image);
-                    NSString *encodedString = [data base64EncodedStringWithOptions:0];
-                    [dict setObject:encodedString forKey:key];
-                }else{
-                    [dict setObject:[obj valueForKey:key] forKey:key];
-                }
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    unsigned count;
+    objc_property_t *properties = class_copyPropertyList([obj class], &count);
+    
+    
+    for (int i = 0; i < count; i++) {
+        NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
+        if ([obj valueForKey:key] !=  nil) {
+            if ([[obj valueForKey:key] isKindOfClass:[NSData class]]) {
+                UIImage *image = [UIImage imageWithData:[obj valueForKey:key]];
+                NSData *data = UIImagePNGRepresentation(image);
+                NSString *encodedString = [data base64EncodedStringWithOptions:0];
+                [dict setObject:encodedString forKey:key];
             }else{
-                [dict setObject:[NSNull null] forKey:key];
+                [dict setObject:[obj valueForKey:key] forKey:key];
             }
+        }else{
+            [dict setObject:[NSNull null] forKey:key];
         }
-        
-        if([obj valueForKey:@"_idLocationCountryTestResult"]){
-            [dict setObject:[obj valueForKey:@"_idLocationCountryTestResult"] forKey:@"idLocationCountryTestResult"];
-        }
-        if([obj valueForKey:@"_idLocationCountryTestResult"]){
-            [dict setObject:[obj valueForKey:@"_idLocationStateTestResult"] forKey:@"idLocationStateTestResult"];
-        }
-        
-        if([obj valueForKey:@"_idLocationCountryTestResult"]){
-            [dict setObject:[obj valueForKey:@"_idLocationCityTestResult"] forKey:@"idLocationCityTestResult"];
-        }
-        
-        if([obj valueForKey:@"_idLocationZipcodeTestResult"]){
-            [dict setObject:[obj valueForKey:@"_idLocationZipcodeTestResult"] forKey:@"idLocationZipcodeTestResult"];
-        }
-        
-        [dict setValue:[_instance getDeviceCity] forKey:@"DeviceCity"];
-        [dict setValue:[_instance getDeviceArea] forKey:@"DeviceArea"];
-        [dict setValue:[_instance getDeviceState] forKey:@"DeviceState"];
-        [dict setValue:[_instance getDeviceCountry] forKey:@"DeviceCountry"];
-        [dict setValue:[_instance getDeviceZipCode] forKey:@"DeviceZipcode"];
-        [dict setValue:[_instance getDeviceCountryCode] forKey:@"DeviceCountryCode"];
-        [dict setValue:[_instance getDeviceStreetAddress] forKey:@"DeviceStreetAddress"];
-        
-        
-        return [NSMutableDictionary dictionaryWithDictionary:dict];
     }
+    
+    if([obj valueForKey:@"_idLocationCountryTestResult"]){
+        [dict setObject:[obj valueForKey:@"_idLocationCountryTestResult"] forKey:@"idLocationCountryTestResult"];
+    }
+    if([obj valueForKey:@"_idLocationCountryTestResult"]){
+        [dict setObject:[obj valueForKey:@"_idLocationStateTestResult"] forKey:@"idLocationStateTestResult"];
+    }
+    
+    if([obj valueForKey:@"_idLocationCountryTestResult"]){
+        [dict setObject:[obj valueForKey:@"_idLocationCityTestResult"] forKey:@"idLocationCityTestResult"];
+    }
+    
+    if([obj valueForKey:@"_idLocationZipcodeTestResult"]){
+        [dict setObject:[obj valueForKey:@"_idLocationZipcodeTestResult"] forKey:@"idLocationZipcodeTestResult"];
+    }
+    
+    [dict setValue:[_instance getDeviceCity] forKey:@"DeviceCity"];
+    [dict setValue:[_instance getDeviceArea] forKey:@"DeviceArea"];
+    [dict setValue:[_instance getDeviceState] forKey:@"DeviceState"];
+    [dict setValue:[_instance getDeviceCountry] forKey:@"DeviceCountry"];
+    [dict setValue:[_instance getDeviceZipCode] forKey:@"DeviceZipcode"];
+    [dict setValue:[_instance getDeviceCountryCode] forKey:@"DeviceCountryCode"];
+    [dict setValue:[_instance getDeviceStreetAddress] forKey:@"DeviceStreetAddress"];
+    
+    
+    return [NSMutableDictionary dictionaryWithDictionary:dict];
+}
+
+
+#pragma mark - Facial Methods
+
+-(void)showFacialInterface:(CDVInvokedUrlCommand*)command{
+    UIViewController *rootViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    NSMutableAttributedString* instStr = [[NSMutableAttributedString alloc] initWithString:_facialInstructionString];
+    if(_facialInstructionFontSize!=nil){
+        UIFont *font = [UIFont systemFontOfSize:_facialInstructionFontSize.intValue];
+        [instStr addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, instStr.length)];
+    
+    }
+    if(_facialInstructionFontColor!=nil){
+        UIColor* fontColor = [self colorWithHexString:_facialInstructionFontColor];
+        [instStr addAttribute:NSForegroundColorAttributeName value:fontColor range:NSMakeRange(0, instStr.length)];
+    }
+    [AcuantFacialRecognitionViewController
+     presentFacialCaptureInterfaceWithDelegate:self withSDK:_instance inViewController:rootViewController withCancelButton:YES withWaterMark:_watermarkLabel withBlinkMessage:instStr inRect:_facialMessageFrame];
+    
+}
+-(void)setFacialInstructionText:(CDVInvokedUrlCommand*)command{
+    NSString *encodedString = [command.arguments objectAtIndex:0];
+    _facialInstructionString = encodedString;
+}
+-(void)setFacialInstructionLocation:(CDVInvokedUrlCommand*)command{
+    _facialTextLeft =[command.arguments objectAtIndex:0];
+    _facialTextTop =[command.arguments objectAtIndex:1];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    _facialMessageFrame = CGRectMake([_facialTextLeft doubleValue],[_facialTextTop doubleValue],screenWidth,20);
+}
+-(void)setFacialInstructionTextStyle:(CDVInvokedUrlCommand*)command{
+    _facialInstructionFontColor = [command.arguments objectAtIndex:0];
+    _facialInstructionFontSize =[command.arguments objectAtIndex:1];
+}
+-(void)setFacialRecognitionTimeout:(CDVInvokedUrlCommand*)command{
+    _facialTimeout = [command.arguments objectAtIndex:0];
+    
+}
+
+-(void)setFacialSubInstructionString:(CDVInvokedUrlCommand*)command{
+    _subInstructionString = [command.arguments objectAtIndex:0];
+    
+}
+
+-(void)setFacialSubInstructionLocation:(CDVInvokedUrlCommand*)command{
+    _facialSubInstructionLeft = [command.arguments objectAtIndex:0];
+    _facialSubInstructionTop =[command.arguments objectAtIndex:1];
+    
+}
+
+-(void)setFacialSubInstructionColor:(CDVInvokedUrlCommand*)command{
+    _facialSubInstructionFontColor = [command.arguments objectAtIndex:0];
+}
+
+- (UIColor *)colorWithHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
+
+-(void)processFacialImageValidation:(CDVInvokedUrlCommand*)command;{
+    _callbackId = [command callbackId];
+    NSString *selfiImageString = [command.arguments objectAtIndex:0];
+    UIImage* selfieImage = nil;
+    if (selfiImageString && ![selfiImageString isKindOfClass:[NSNull class]]) {
+        NSRange selfieImageReplaceRange = [selfiImageString rangeOfString:@"base64," options:NSBackwardsSearch];
+        if (selfieImageReplaceRange.location != NSNotFound){
+            selfiImageString = [selfiImageString substringFromIndex:selfieImageReplaceRange.location ];
+            selfiImageString = [selfiImageString stringByReplacingOccurrencesOfString:@"base64," withString:@""];
+        }
+        NSData *selfieImageData = [[NSData alloc]initWithBase64EncodedString:selfiImageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        selfieImage = [UIImage imageWithData:selfieImageData];
+    }
+    
+    NSString *faceImageString = [command.arguments objectAtIndex:1];
+    NSData *faceImageData = nil;
+    if (faceImageString && ![faceImageString isKindOfClass:[NSNull class]]) {
+        NSRange faceImageReplaceRange = [faceImageString rangeOfString:@"base64," options:NSBackwardsSearch];
+        if (faceImageReplaceRange.location != NSNotFound){
+            faceImageString = [faceImageString substringFromIndex:faceImageReplaceRange.location ];
+            faceImageString = [faceImageString stringByReplacingOccurrencesOfString:@"base64," withString:@""];
+        }
+        faceImageData = [[NSData alloc]initWithBase64EncodedString:faceImageString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        //faceImage = [UIImage imageWithData:faceImageData];
+    }
+    
+    AcuantCardProcessRequestOptions *options = [AcuantCardProcessRequestOptions defaultRequestOptionsForCardType:AcuantCardTypeFacial];
+    _cardType = AcuantCardTypeFacial;
+    // Now, perform the request
+    [_instance validatePhotoOne:selfieImage withImage:faceImageData withDelegate:self withOptions:options];
+}
+
+-(void)didFinishFacialRecognition:(UIImage*)image{
+    CDVPluginResult* result;
+    _methodId = @"onFacialRecognitionCompleted";
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"onFacialRecognitionCompleted" forKey:@"id"];
+    if(image!=nil){
+        NSData *data = UIImagePNGRepresentation(image);
+        NSString *encodedString = [data base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedString forKey:@"selfieImageData"];
+        result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                messageAsDictionary:resultDictionary];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+        [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+    }else{
+        [resultDictionary setObject:[[NSNull alloc] init] forKey:@"selfieImageData"];
+        result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                messageAsDictionary:resultDictionary];
+        [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+    }
+}
+-(void)didCancelFacialRecognition{
+    CDVPluginResult* result;
+    _methodId = @"onFacialRecognitionCanceled";
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"onFacialRecognitionCanceled" forKey:@"id"];
+        result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                messageAsDictionary:resultDictionary];
+        [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
+-(void)didTimeoutFacialRecognition:(UIImage*)lastImage{
+    CDVPluginResult* result;
+    _methodId = @"onFacialRecognitionTimedOut";
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"onFacialRecognitionTimedOut" forKey:@"id"];
+    if(lastImage!=nil){
+        NSData *data = UIImagePNGRepresentation(lastImage);
+        NSString *encodedString = [data base64EncodedStringWithOptions:0];
+        [resultDictionary setObject:encodedString forKey:@"selfieImageData"];
+        result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                messageAsDictionary:resultDictionary];
+        [result setKeepCallback:[NSNumber numberWithBool:YES]];
+        [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+    }else{
+        [resultDictionary setObject:[[NSNull alloc] init] forKey:@"selfieImageData"];
+        result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                messageAsDictionary:resultDictionary];
+        [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+    }
+}
+-(UIImage*)imageForFacialBackButton{
+    return nil;
+}
+
+-(int)facialRecognitionTimeout{
+    return [_facialTimeout intValue];
+}
+-(NSAttributedString*)messageToBeShownAfterFaceRectangleAppears{
+    NSMutableAttributedString* subAttrStr = [[NSMutableAttributedString alloc] initWithString:_subInstructionString];
+    if(_facialSubInstructionFontColor!=nil){
+        UIColor* fontColor = [self colorWithHexString:_facialSubInstructionFontColor];
+        [subAttrStr addAttribute:NSForegroundColorAttributeName value:fontColor range:NSMakeRange(0, subAttrStr.length)];
+    }
+    return subAttrStr;
+}
+-(CGRect)frameWhereMessageToBeShownAfterFaceRectangleAppears{
+    if(_facialSubInstructionLeft!=nil && _facialSubInstructionTop!=nil){
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        _facialSubMessageFrame = CGRectMake([_facialSubInstructionLeft doubleValue],[_facialSubInstructionTop doubleValue],screenWidth,20);
+    }else{
+        _facialSubMessageFrame = CGRectZero;
+    }
+    return _facialSubMessageFrame;
+}
 
 @end

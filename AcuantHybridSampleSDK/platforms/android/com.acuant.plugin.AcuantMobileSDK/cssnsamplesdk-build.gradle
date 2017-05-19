@@ -8,10 +8,10 @@ repositories{
 
 dependencies {
     compile (name:'acuantMobileSDK', ext:'aar')
-    compile('com.microblink:pdf417.mobi:6.2.1@aar') {
+    compile('com.microblink:pdf417.mobi:6.4.0@aar') {
         transitive = true
     }
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.google.code.gson:gson:2.5'
 }

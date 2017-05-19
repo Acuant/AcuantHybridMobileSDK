@@ -415,6 +415,20 @@ typedef enum{
  */
 -(void)setCanCropBarcode:(BOOL)canCropBarcode;
 
+
+/**
+ Use it to enable or disable the capturing of original Image
+ @param canCaptureOriginal boolean enable or disable capturing original Image
+ */
+
+-(void)setCanCaptureOriginalImage:(BOOL)canCaptureOriginal;
+
+/**
+ Use get if the original image is allowed to capture
+ */
+
+-(BOOL)getCanCaptureOriginalImage;
+
 /**
  Use it to enable or disable the Initial Message on Barcode Camera
  @param canShowMessage boolean enable or disable the Initial Message

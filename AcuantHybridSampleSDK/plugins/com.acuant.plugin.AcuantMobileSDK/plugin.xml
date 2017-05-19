@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.acuant.plugin.AcuantMobileSDK"
-        version="2.3">
+        version="2.4.0">
 
   <name>AcuantMobileSDK</name>
 
@@ -51,6 +51,8 @@
       <activity
               android:name="com.acuant.mobilesdk.detect.PDF417.CameraPDF417">
       </activity>
+      <activity android:name="com.acuant.mobilesdk.detect.Camera2FacialRecognitionManual" />
+      
     </config-file>
 
     <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
