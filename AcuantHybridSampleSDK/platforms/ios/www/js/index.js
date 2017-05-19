@@ -648,7 +648,9 @@ var showFacialInterface = function() {
     AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
     AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
     if(isAndroid){
-    	AcuantMobileSDK.setFacialInstructionLocation(success, failure,100,200);
+    	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
+    	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);
+    	AcuantMobileSDK.setFacialSubInstructionColor(success, failure,'#FF0000');
     }else if(isIOS){
         AcuantMobileSDK.setFacialInstructionLocation(success, failure,0,50);
         AcuantMobileSDK.setFacialSubInstructionString(success, failure,'Analyzing');

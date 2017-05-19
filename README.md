@@ -112,6 +112,13 @@ If git-lfs is not setup, then GitHub doesn't download of large files. Therefore,
 	ld: symbol(s) not found for architecture armv7
 	clang: error: linker command failed with exit code 1 (use -v to see invocation)
 	
+
+Sometimes for iOS framework the shorcut files don't get copied.Make sure the shortcut files are present as highlighed in the image below.
+
+![](document_images/ios_plugin_structure.png)
+
+If the shortcuts are not present the the entire "AcuantMobileSDK.embeddedframework" folder from cordova-plugin-AcuantHybridSDK folder into the projects "plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs" folder.Then remove the ios platform and add again.
+
 ## Add AcuantMobileSDK Plugin on each project 
 
 In order to add the plugin to your project, follow the below two steps:
