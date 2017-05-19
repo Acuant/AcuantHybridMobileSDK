@@ -19,16 +19,16 @@
 - (void)initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController:(CDVInvokedUrlCommand*)command;
 
 /**
-Use this method to present the card capture interface.
-@param command CDVInvokedUrlCommand
-@discussion a valid viewController is required
-*/
+ Use this method to present the card capture interface.
+ @param command CDVInvokedUrlCommand
+ @discussion a valid viewController is required
+ */
 - (void)showManualCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command;
 /**
-Use this method to present the card capture interface.
-@param command CDVInvokedUrlCommand
-@discussion a valid viewController is required
-*/
+ Use this method to present the card capture interface.
+ @param command CDVInvokedUrlCommand
+ @discussion a valid viewController is required
+ */
 - (void)showBarcodeCameraInterfaceInViewController:(CDVInvokedUrlCommand*)command;
 
 /**
@@ -90,7 +90,7 @@ Use this method to present the card capture interface.
  Use this method to set the width of the cropped image
  @param command CDVInvokedUrlCommand
  @discussion you need to set the height with setHeight:(int)height to crop the image with these values
-*/
+ */
 -(void)setWidth:(CDVInvokedUrlCommand*)command;
 
 /**
@@ -98,6 +98,8 @@ Use this method to present the card capture interface.
  @param command CDVInvokedUrlCommand
  */
 -(void)setCanCropBarcode:(CDVInvokedUrlCommand*)command;
+
+-(void)setCaptureOriginalImage:(CDVInvokedUrlCommand*)command;
 
 /**
  Use it to enable or disable the Initial Message on Barcode Camera
@@ -128,7 +130,7 @@ Use this method to present the card capture interface.
  @discussion you should call this method only once and wait until your delegate is informed. If you call this method while we're already processing a card, we'll ignore your second call.
  @discussion The recommended size to this images is 1009 width and relative height to the width.
  */
- - (void)processCardImage:(CDVInvokedUrlCommand*)command;
+- (void)processCardImage:(CDVInvokedUrlCommand*)command;
 
 /**
  These methods control the attributes of the status bar when this view controller is shown.
@@ -190,7 +192,7 @@ Use this method to present the card capture interface.
  */
 - (void)imageForBackButton:(CDVInvokedUrlCommand*)command;
 
- /**
+/**
  Called to show or not show the iPad brackets on the card capture interface
  @param command CDVInvokedUrlCommand
  @return show or not show the iPad brackets
@@ -225,4 +227,14 @@ Use this method to present the card capture interface.
 
 -(void)setCropBarcodeOnCancel:(CDVInvokedUrlCommand*)command;
 
+
+-(void)showFacialInterface:(CDVInvokedUrlCommand*)command;
+-(void)setFacialInstructionText:(CDVInvokedUrlCommand*)command;
+-(void)setFacialInstructionLocation:(CDVInvokedUrlCommand*)command;
+-(void)setFacialSubInstructionString:(CDVInvokedUrlCommand*)command;
+-(void)setFacialSubInstructionLocation:(CDVInvokedUrlCommand*)command;
+-(void)setFacialSubInstructionColor:(CDVInvokedUrlCommand*)command;
+-(void)setFacialInstructionTextStyle:(CDVInvokedUrlCommand*)command;
+-(void)setFacialRecognitionTimeout:(CDVInvokedUrlCommand*)command;
+-(void)processFacialImageValidation:(CDVInvokedUrlCommand*)command;
 @end

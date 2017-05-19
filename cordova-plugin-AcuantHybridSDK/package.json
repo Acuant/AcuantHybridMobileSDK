@@ -1,0 +1,22 @@
+{
+  "name": "com.acuant.plugin.acuantmobilesdk",
+  "version": "2.4.0",
+  "description": "Acuant Hybrid Mobile SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Acuant",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Acuant/AcuantHybridMobileSDK.git"
+  },
+  "keywords": [
+    "AcuantMobileSDK"
+  ],
+  "bugs": {
+    "url": "https://github.com/Acuant/AcuantHybridMobileSDK/issues"
+  },
+  "homepage": "https://github.com/Acuant/AcuantHybridMobileSDK#readme"
+}

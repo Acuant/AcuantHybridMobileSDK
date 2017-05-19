@@ -8,7 +8,7 @@
 //
 
 #import "AcuantFacialCaptureDelegate.h"
-#import "AcuantMobileSDKController.h"
+@class AcuantMobileSDKController;
 
 @interface AcuantFacialRecognitionViewController
 

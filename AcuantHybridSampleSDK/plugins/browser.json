@@ -24,9 +24,6 @@
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-        },
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },
     "dependent_plugins": {}

@@ -50,7 +50,7 @@
     "com.acuant.plugin.AcuantMobileSDK": {
         "source": {
             "type": "local",
-            "path": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK"
+            "path": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules/com.acuant.plugin.acuantmobilesdk"
         },
         "is_top_level": true,
         "variables": {}

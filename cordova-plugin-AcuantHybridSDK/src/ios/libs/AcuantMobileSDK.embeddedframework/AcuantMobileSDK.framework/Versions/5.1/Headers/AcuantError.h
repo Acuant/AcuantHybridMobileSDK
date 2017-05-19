@@ -23,7 +23,8 @@ typedef enum {
     AcuantErrorOnActiveLicenseKey = 12, //there was an error on activation key.
     AcuantErrorValidatingLicensekey = 13, //The validation is still in process.
     AcuantErrorCameraUnauthorized = 14, //The privacy settings are preventing us from accessing your camera.
-    AcuantErrorOpenCamera = 15 //There are an error when the camera is opened.
+    AcuantErrorOpenCamera = 15, //There are an error when the camera is opened.
+    AcuantErrorIncorrectDocumentScanned = 16
     
 } AcuantErrorType;
 
