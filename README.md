@@ -874,6 +874,9 @@ ionic
 Mobile Angular UI
 
 # Change Log
+
+Acuant Hybrid MobileSDK version 2.4
+
 	
 - Improved cropping of ID and Passports
 - Added Facial Liveliness and Matching feature.
