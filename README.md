@@ -445,7 +445,6 @@ The original image returned came under base 64 format.
     
  Note : By default the capture of original image is disabled. To enable capturing original image please set it as below :
  
- 		AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
 
 ## Get the barcode data from the success callback.
 
