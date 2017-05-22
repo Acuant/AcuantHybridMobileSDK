@@ -125,13 +125,13 @@ In order to add the plugin to your project, follow the below two steps:
 
 Step - 1 : After cloning the Git repository , find the path to cordova-plugin-AcuantMobileSDK 
 
-Step - 2 : Execute the following command
+Step - 2 : Execute the following command (To add the plugin from local folder)
 
 	cordova plugin add < path to cordova-plugin-AcuantMobileSDK>
 
 	For example :
 
-	cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK`
+	cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK --nofetch
 	
 Step - 3 : Add the following path to framework search path
 
