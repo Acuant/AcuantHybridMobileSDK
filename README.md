@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 04/25/2017
+Last updated on – 05/22/2017
 
 # Introduction
 
@@ -442,6 +442,10 @@ The original image returned came under base 64 format.
 
      }
     }
+    
+ Note : By default the capture of original image is disabled. To enable capturing original image please set it as below :
+ 
+ 		AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
 
 ## Get the barcode data from the success callback.
 
@@ -777,8 +781,85 @@ Below are the location test fields to the AcuantCardResult class
 		idLocationCountryTestResult // if ID/Passport Country matched with Device Country
 		idLocationCityTestResult // if ID/Passport City matched with Device City
 		idLocationZipcodeTestResult // if ID/Passport zip code matched with Device zip code
-		
 
+# Facial Recognition and Match Feature
+
+Acuant FRM (Facial Recognition Match) is a person authentication solution for mobile devices based on biometric face recognition.
+
+Acuant FRM
+
+* Opens the front camera
+* Ensures the user is correctly placed in front of the camera
+* Detects a live person
+* Detects spoofing attacks by presenting eye blink challenge
+* Acquires biometric samples
+* Verifies the identity of a user
+* All the steps are done in real time.
+
+Benefits of Acuant FRM
+
+* Helps in reducing fraud by matching the face biometrics to the face image on the driver’s license or passport.
+* Easy to integrate
+* Secure
+* Fast and convenient
+* Real time checks and processing within seconds
+
+The Acuant FRM performs following checks to recognize a live face and match face biometrics to the face picture on the driver’s license or passport.
+
+1. Face position checks: check that the face is well detected, correctly centered and in a good distance from the camera.
+
+	* Distance to person algorithm ensures that person’s face is at optimal distance from the front camera.
+	* Ensures that person is only presenting frontal face (Side faces are rejected).
+
+2. Tracks eye blinks as an added layer to check for face liveliness and avoid spoofing attacks.
+
+3. Captures face biometrics and matches it to the face picture on the driver’s license or passport.
+
+Following are the APIs to use the Facial Match feature. 	
+
+* 	setFacialRecognitionTimeout : Set the timeout in seconds for facial recognition.
+
+		AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
+		
+* 	setFacialInstructionText : Set the instruction text for the user.
+
+		AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
+    
+* 	setFacialInstructionLocation : Sets the location for instruction text.
+
+		AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
+		// The location will vary based on different device types.
+		
+* 	setFacialInstructionTextStyle : Sets the color and size of the instruction text.
+
+		AcuantMobileSDK.setFacialInstructionTextStyle(success,failure,'#ffffff',13);
+		
+* 	setFacialSubInstructionString : Set the text for message that appears while red rectangle appears.
+
+		AcuantMobileSDK.setFacialSubInstructionString(success, failure,'Analyzing');
+        
+        
+* 	setFacialSubInstructionColor : Color of the text that appears while red rectangle appears.
+
+		AcuantMobileSDK.setFacialSubInstructionColor(success, failure,'#FF0000');
+        
+        
+* 	showFacialInterface: Presents the facial capture interface.
+
+		AcuantMobileSDK.showFacialInterface(success, failure);
+	
+	
+Following are the methos those are called from the facial capture interface 
+
+* onFacialRecognitionCanceled : When user cancels facial capture interface.
+* onFacialRecognitionTimedOut : When facial capture interface times out.
+* onFacialRecognitionCompleted : When facial capture interface finishes capturing selfie image successfully.
+
+Following is the method to match the selfie image with a face image :
+
+	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
+	
+	
 # Supported Hybrid Frameworks
 
 Acuant Hybrid Mobile SDK supports following hybrid frameworks:
@@ -797,7 +878,7 @@ Mobile Angular UI
 	
 - Improved cropping of ID and Passports
 - Added Facial Liveliness and Matching feature.
-- Add the following method to enable capturing the original image.By default the original image capture is disbaled to reduce runtime memory footprint.
+- Add the following method to enable capturing of the original uncropped image. By default the original uncropped image capture is disbaled to reduce runtime memory footprint.
 	
 		AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
             	

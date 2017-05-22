@@ -803,7 +803,7 @@ var app = {
             	AcuantMobileSDK.setCanCropBarcode(success, failure, false);
             	AcuantMobileSDK.setCropBarcodeOnCancel(success, failure, true);
             	AcuantMobileSDK.setCanShowMessage(success, failure, false);
-            	AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,false);
+            	AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
             	AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
             	AcuantMobileSDK.enableLocationTracking(null,null);
             log("end onDeviceReady");
