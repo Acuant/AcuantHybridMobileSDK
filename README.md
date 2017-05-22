@@ -796,5 +796,8 @@ Mobile Angular UI
 # Change Log
 	
 - Improved cropping of ID and Passports
-- Memory optimization
-- Resolved focus issue for Samsung Galaxy S7
+- Added Facial Liveliness and Matching feature.
+- Add the following method to enable capturing the original image.By default the original image capture is disbaled to reduce runtime memory footprint.
+	
+		AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
+            	

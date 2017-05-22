@@ -44,6 +44,9 @@
 @property(nonatomic,strong) NSNumber* facialInstructionFontSize;
 //Framework Process
 @property (strong, nonatomic) NSString *callbackId;
+@property (strong, nonatomic) NSString *callbackIdImageProcess;
+@property (strong, nonatomic) NSString *callbackIdFacialProcess;
+
 @property AcuantCardType cardType;
 @property BOOL isBackSide;
 @property AcuantCardRegion region;
@@ -415,7 +418,8 @@
  */
 - (void)processCardImage:(CDVInvokedUrlCommand*)command{
     _methodId = @"processCardImage";
-    
+    _callbackId = [command callbackId];
+    _callbackIdImageProcess = [command callbackId];
     UIImage *frontImage;
     NSString *frontImageEcodedString = [command.arguments objectAtIndex:0];
     if (frontImageEcodedString && ![frontImageEcodedString isKindOfClass:[NSNull class]]) {
@@ -928,7 +932,7 @@
     [resultDictionary setObject:cardResult forKey:@"data"];
     CDVPluginResult* resultPlugin =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDictionary];
     [resultPlugin setKeepCallback:[NSNumber numberWithBool:YES]];
-    
+    _callbackId = _callbackIdImageProcess;
     [self.commandDelegate sendPluginResult:resultPlugin callbackId:_callbackId];
 }
 
@@ -946,6 +950,7 @@
     [resultDictionary setObject:cardResult forKey:@"data"];
     CDVPluginResult* resultPlugin =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDictionary];
     [resultPlugin setKeepCallback:[NSNumber numberWithBool:YES]];
+    _callbackId = _callbackIdFacialProcess;
     [self.commandDelegate sendPluginResult:resultPlugin callbackId:_callbackId];
 }
 
@@ -1068,6 +1073,7 @@
 
 -(void)processFacialImageValidation:(CDVInvokedUrlCommand*)command;{
     _callbackId = [command callbackId];
+    _callbackIdFacialProcess = [command callbackId];
     NSString *selfiImageString = [command.arguments objectAtIndex:0];
     UIImage* selfieImage = nil;
     if (selfiImageString && ![selfiImageString isKindOfClass:[NSNull class]]) {

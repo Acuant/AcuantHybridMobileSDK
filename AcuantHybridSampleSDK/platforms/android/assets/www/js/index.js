@@ -54,6 +54,7 @@ var cardAspectRatio;
 var isAssureIDAllowed = false;
 var showBarcodeImage = false;
 var isFacialAllowed = false;
+var dataCaptured = false;
 
 var log = function (message) {
     if (debbug) {
@@ -409,19 +410,13 @@ var success = function (data) {
             }
         }
         if (data.id == 'didFinishProcessingCardWithResult') {
+        	dataCaptured = true;
             $("#progress_modal").toggleClass("hdn");
             $('#progress_modal').nsProgress('dismiss');
             cardResult = data.data;
             log("success: " + JSON.stringify(cardResult));
-            if(isFacialAllowed && !isWindows && cardType!=1){
-            	navigator.notification.alert(
-                                'Please position your face in front of the front camera and blink when red rectangle appears.',
-                                showFacialInterface,
-                                'AcuantHybridSampleSDK',
-                                'OK'
-                                );
-            }else{
-                loadResultScreen();
+            if(!isFacialAllowed || isWindows || cardType==1){
+            	loadResultScreen();
             }
         }
         if(data.id=='didFinishProcessingFacialMatchWithResult'){
@@ -475,26 +470,29 @@ var success = function (data) {
         
         
         if(data.id=='onFacialRecognitionCanceled'){
-        	$("#progress_modal").toggleClass("hdn");
-            $('#progress_modal').nsProgress('dismiss');
-            AcuantMobileSDK.dismissCardCaptureInterface();
+        	AcuantMobileSDK.dismissCardCaptureInterface();
             loadResultScreen();
         }
         
         if(data.id=='onFacialRecognitionTimedOut'){
-        	$("#progress_modal").toggleClass("hdn");
-            $('#progress_modal').nsProgress('dismiss');
-            AcuantMobileSDK.dismissCardCaptureInterface();
+        	AcuantMobileSDK.dismissCardCaptureInterface();
             selfieImageData = data.selfieImageData;
-            processFacialMatch();
+            $("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear');
+            waitfor(dataCaptureStatus, true, 1, 0, 'waiting for data capture to finish.', function() {
+    			processFacialMatch();
+			});
+            
         }
         
         if(data.id=='onFacialRecognitionCompleted'){
-        	$("#progress_modal").toggleClass("hdn");
-            $('#progress_modal').nsProgress('dismiss');
-            AcuantMobileSDK.dismissCardCaptureInterface();
+        	AcuantMobileSDK.dismissCardCaptureInterface();
             selfieImageData = data.selfieImageData;
-            processFacialMatch();
+            $("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear');
+            waitfor(dataCaptureStatus, true, 1, 0, 'waiting for data capture to finish.', function() {
+    			processFacialMatch();
+			});
         }
     }
 };
@@ -624,22 +622,32 @@ var backAction = function () {
 };
 
 var processAction = function () {
+	dataCaptured = false;
     log('processAction');
     if (frontCardImage) {
-        $("#progress_modal").toggleClass("hdn");
-        $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data', 'clear');
         AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 50, false, true, true, cardRegion, 101);
+        if(isFacialAllowed && !isWindows && cardType!=1){
+            	navigator.notification.alert(
+                                'Please position your face in front of the front camera and blink when red rectangle appears.',
+                                showFacialInterface,
+                                'AcuantHybridSampleSDK',
+                                'OK'
+                                );
+        }else{
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear');
+        }
     }
 };
 
 var processFacialMatch = function () {
-    log('processFacialMatch');
-    $("#progress_modal").toggleClass("hdn");
-    $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data', 'clear');
+	log('processFacialMatch');
     faceImageResult = cardResult.faceImage;
     if(faceImageResult===null){
     	loadResultScreen();
     }else{
+    	$("#progress_modal").toggleClass("hdn");
+        $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear'); 
     	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
     }
 };
@@ -711,6 +719,36 @@ var adjustCardHolder = function () {
     $("#back-image-result").height(heightResult);
     log(height);
 };
+
+//**********************************************************************
+// function waitfor - Wait until a condition is met
+//        
+// Needed parameters:
+//    test: function that returns a value
+//    expectedValue: the value of the test function we are waiting for
+//    msec: delay between the calls to test
+//    callback: function to execute when the condition is met
+// Parameters for debugging:
+//    count: used to count the loops
+//    source: a string to specify an ID, a message, etc
+//**********************************************************************
+function waitfor(test, expectedValue, msec, count, source, callback) {
+    // Check if condition met. If not, re-check later (msec).
+    while (test() !== expectedValue) {
+        count++;
+        setTimeout(function() {
+            waitfor(test, expectedValue, msec, count, source, callback);
+        }, msec);
+        return;
+    }
+    // Condition finally met. callback() can be executed.
+    console.log(source + ': ' + test() + ', expected: ' + expectedValue + ', ' + count + ' loops.');
+    callback();
+}
+
+var dataCaptureStatus = function (){
+	return dataCaptured;
+}
 
 var app = {
     // Application Constructor

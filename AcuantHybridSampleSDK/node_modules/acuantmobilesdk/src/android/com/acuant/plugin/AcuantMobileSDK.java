@@ -52,6 +52,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private boolean canShowMessage;
     private boolean canShowStatusBar;
     private CallbackContext callbackId;
+    private CallbackContext callbackIdImageProcess;
+    private CallbackContext callbackIdFacialProcess;
     private AcuantAndroidMobileSDKController acuantAndroidMobileSDKController = null;
     private static AcuantAndroidMobileSDKController sdkController = null;
     
@@ -372,7 +374,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case processCardImage:
                 methodId = "processCardImage";
                 callbackId = callbackContext;
-                
+                callbackIdImageProcess = callbackContext;
                 String frontImageEcodedString = data.getString(0);
                 byte[] frontImageDecodedString = Base64.decode(frontImageEcodedString, Base64.DEFAULT);
                 Bitmap frontImageDecodedByte = BitmapFactory.decodeByteArray(frontImageDecodedString, 0, frontImageDecodedString.length);
@@ -573,6 +575,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case processFacialImageValidation:
                 methodId = "processFacialImageValidation";
                 callbackId = callbackContext;
+                callbackIdFacialProcess = callbackContext;
                 cardType = CardType.FACIAL_RECOGNITION;
                 String selfieImageEcodedString = data.getString(0);
                 byte[] selfieImageDecodedString = Base64.decode(selfieImageEcodedString, Base64.DEFAULT);
@@ -736,21 +739,25 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                         obj.put("id", "didFinishProcessingCardWithResult");
                         switch (cardType) {
                             case CardType.DRIVERS_LICENSE:
+                                callbackId = callbackIdImageProcess;
                                 DriversLicenseCard driversLicenseCard = (DriversLicenseCard) card;
                                 obj.put("data", DLCardWithCard(driversLicenseCard));
                                 sendCardData(PluginResult.Status.OK, obj, handler);
                                 break;
                             case CardType.MEDICAL_INSURANCE:
+                                callbackId = callbackIdImageProcess;
                                 MedicalCard medicalCard = (MedicalCard) card;
                                 obj.put("data", MICardWithCard(medicalCard));
                                 sendCardData(PluginResult.Status.OK, obj, handler);
                                 break;
                             case CardType.PASSPORT:
+                                callbackId = callbackIdImageProcess;
                                 PassportCard passportCard = (PassportCard) card;
                                 obj.put("data", PCardWithCard(passportCard));
                                 sendCardData(PluginResult.Status.OK, obj, handler);
                                 break;
                             case CardType.FACIAL_RECOGNITION:
+                                callbackId = callbackIdFacialProcess;
                                 FacialData facialData = (FacialData) card;
                                 obj.put("id", "didFinishProcessingFacialMatchWithResult");
                                 obj.put("data", FacialDataWithCard(facialData));
