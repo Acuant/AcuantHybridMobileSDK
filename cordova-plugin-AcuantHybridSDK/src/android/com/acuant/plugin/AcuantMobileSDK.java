@@ -1,6 +1,8 @@
 package com.acuant.plugin;
 
 import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -8,12 +10,16 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.nfc.NfcAdapter;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
 
 import com.acuant.mobilesdk.AcuantAndroidMobileSDKController;
 import com.acuant.mobilesdk.AcuantErrorListener;
+import com.acuant.mobilesdk.AcuantNFCCardDetails;
+import com.acuant.mobilesdk.AcuantTagReadingListener;
 import com.acuant.mobilesdk.Card;
 import com.acuant.mobilesdk.CardCroppingListener;
 import com.acuant.mobilesdk.CardType;
@@ -27,6 +33,7 @@ import com.acuant.mobilesdk.MedicalCard;
 import com.acuant.mobilesdk.PassportCard;
 import com.acuant.mobilesdk.ProcessImageRequestOptions;
 import com.acuant.mobilesdk.WebServiceListener;
+import com.cssn.cssnsamplesdk.R;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -38,7 +45,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener, CardCroppingListener, AcuantErrorListener,FacialRecognitionListener {
+public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener, CardCroppingListener, AcuantErrorListener,FacialRecognitionListener,AcuantTagReadingListener {
     
     private String key = "";
     private String cloudAddressString = "";
@@ -79,9 +86,16 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private int yFlashlight = 0;
     private int widthFlashlight = 0;
     private int heightFlashlight = 0;
-    
+
+    NfcAdapter nfcAdapter;
+    private String echip_docNumber = null;
+    private String echip_dateOfBirth = null;
+    private String echip_dateOfExpiry = null;
+
+    private Intent nfcIntent = null;
+
     private enum Action {
-        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, activateLicenseKey, setWidth, setCanCropBarcode,setCanCaptureOriginalImage, setCropBarcodeOnCancel,setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton,enableLocationAuthentication,showFacialInterface,setFacialInstructionText,setFacialInstructionLocation,setFacialInstructionTextStyle,setFacialRecognitionTimeout,processFacialImageValidation,setFacialSubInstructionString,setFacialSubInstructionColor,setFacialSubInstructionLocation;
+        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, activateLicenseKey, setWidth, setCanCropBarcode,setCanCaptureOriginalImage, setCropBarcodeOnCancel,setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton,enableLocationAuthentication,showFacialInterface,setFacialInstructionText,setFacialInstructionLocation,setFacialInstructionTextStyle,setFacialRecognitionTimeout,processFacialImageValidation,setFacialSubInstructionString,setFacialSubInstructionColor,setFacialSubInstructionLocation,scanEChip,readEChip;
     }
     
     @Override
@@ -386,6 +400,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 Drawable backImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), backImageDecodedByte);
                 
                 String stringData = data.getString(2);
+                if(stringData!=null && stringData.equalsIgnoreCase("null")){
+                    stringData = null;
+                }
                 
                 ProcessImageRequestOptions options = ProcessImageRequestOptions.getInstance();
                 options.autoDetectState = data.getBoolean(3);
@@ -401,7 +418,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 }else{
                     options.iRegion = 0;
                 }
-                options.imageSource = data.getInt(12);
+                options.logTransaction = data.getBoolean(12);
+                options.imageSettings = data.getInt(13);
                 options.acuantCardType = cardType;
                 acuantAndroidMobileSDKController.callProcessImageServices(frontImageDecodedByte, backImageDecodedByte, stringData, cordova.getActivity(), options);
                 break;
@@ -587,6 +605,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
 
 
                 ProcessImageRequestOptions facialOptions = ProcessImageRequestOptions.getInstance();
+                facialOptions.logTransaction = data.getBoolean(2);
+                
                 facialOptions.acuantCardType = CardType.FACIAL_RECOGNITION;
                 acuantAndroidMobileSDKController.callProcessImageServices(selfieImageDecodedByte, faceImageDecodedByte, null, cordova.getActivity(), facialOptions);
                 break;
@@ -605,6 +625,63 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 callbackId = callbackContext;
                 facialSubInstLeft=data.getInt(0);
                 facialSubInstTop= data.getInt(1);
+                break;
+                
+            case scanEChip:
+                methodId = "scanEChip";
+                if(nfcAdapter==null){
+                    nfcAdapter = NfcAdapter.getDefaultAdapter(cordova.getActivity());
+                }
+
+                if(nfcAdapter==null){
+                    JSONObject errorObj = new JSONObject();
+                    errorObj.put("id","nfcError");
+                    errorObj.put("errorMessage","NFC is not available for this device");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
+                    pluginResult.setKeepCallback(true);
+                    callbackId.sendPluginResult(pluginResult);
+                }else if(this.nfcAdapter!=null && !this.nfcAdapter.isEnabled()){
+                    JSONObject errorObj = new JSONObject();
+                    errorObj.put("id","nfcError");
+                    errorObj.put("errorMessage","In order to use scan eChip, the NFC sensor must be turned on.");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
+                    pluginResult.setKeepCallback(true);
+                    callbackId.sendPluginResult(pluginResult);
+                }else {
+                    acuantAndroidMobileSDKController.listenNFC(cordova.getActivity(),nfcAdapter);
+                    JSONObject errorObj = new JSONObject();
+                    errorObj.put("id","nfcReady");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, errorObj);
+                    pluginResult.setKeepCallback(true);
+                    callbackId.sendPluginResult(pluginResult);
+                }
+                break;
+
+            case readEChip:
+                methodId = "readEChip";
+                if(nfcAdapter==null){
+                    JSONObject errorObj = new JSONObject();
+                    errorObj.put("id","nfcError");
+                    errorObj.put("errorMessage","NFC is not available for this device");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
+                    pluginResult.setKeepCallback(true);
+                    callbackId.sendPluginResult(pluginResult);
+                }else if(this.nfcAdapter!=null && !this.nfcAdapter.isEnabled()){
+                    JSONObject errorObj = new JSONObject();
+                    errorObj.put("id","nfcError");
+                    errorObj.put("errorMessage","In order to use scan eChip, the NFC sensor must be turned on.");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
+                    pluginResult.setKeepCallback(true);
+                    callbackId.sendPluginResult(pluginResult);
+                }else {
+                    nfcIntent.setAction("android.nfc.action.TECH_DISCOVERED");
+                    Intent intent  = nfcIntent;
+                    echip_docNumber = data.getString(1);
+                    echip_dateOfBirth = data.getString(2);
+                    echip_dateOfExpiry = data.getString(3);
+                    acuantAndroidMobileSDKController.setAcuantTagReadingListener(this);
+                    acuantAndroidMobileSDKController.readNFCTag(intent, echip_docNumber, echip_dateOfBirth, echip_dateOfExpiry);
+                }
                 break;
 
             default:
@@ -865,6 +942,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void onCardCroppingFinish(final Bitmap bitmap,int detectedType) {
+
         if (bitmap != null){
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -909,8 +987,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     @Override
     public void onCardCroppingFinish(final Bitmap bitmap, final boolean scanBackSide,int detectedType) {
         if (bitmap != null){
-            
-            
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -1117,9 +1193,21 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             dlCard.put("documentDetectedName", sResult.getDocumentDetectedName());
             dlCard.put("documentDetectedNameShort", sResult.getDocumentDetectedNameShort());
             dlCard.put("templateType", sResult.getTemplateType());
-            dlCard.put("isBarcodeRead", sResult.getIsBarcodeRead());
-            dlCard.put("isIDVerified", sResult.getIsIDVerified());
-            dlCard.put("isOcrRead", sResult.getIsOcrRead());
+            try {
+                dlCard.put("isBarcodeRead", sResult.getIsBarcodeRead());
+            }catch (NullPointerException e){
+                dlCard.put("isBarcodeRead", false);
+            }
+            try {
+                dlCard.put("isIDVerified", sResult.getIsIDVerified());
+            }catch (NullPointerException e){
+                dlCard.put("isIDVerified", false);
+            }
+            try {
+                dlCard.put("isOcrRead", sResult.getIsOcrRead());
+            }catch(NullPointerException e){
+                dlCard.put("isOcrRead",false);
+            }
             dlCard.put("authenticationResult", sResult.getAuthenticationResult());
             dlCard.put("authenticationObject", sResult.getAuthenticationObject());
             ArrayList<String> authResultList = new ArrayList<String>();
@@ -1350,7 +1438,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             facialData.put("FaceLivelinessDetection",sResult.faceLivelinessDetection);
             facialData.put("FacialMatch",sResult.facialMatch);
             facialData.put("FacialMatchConfidenceRating",sResult.facialMatchConfidenceRating);
-            facialData.put("IsFacialEnabled",sResult.isFacialEnabled);
             facialData.put("TransactionId",sResult.transactionId);
             return facialData;
         } catch (JSONException e) {
@@ -1358,4 +1445,92 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             return null;
         }
     }
+
+    private static JSONObject EChipDataWithCard(AcuantNFCCardDetails cardDetails) {
+        try{
+            JSONObject nfcData = new JSONObject();
+            nfcData.put("PrimaryIdentifier",cardDetails.getPrimaryIdentifier());
+            nfcData.put("SecondaryIdentifier",cardDetails.getSecondaryIdentifier());
+            nfcData.put("Gender",cardDetails.getGender());
+            nfcData.put("DateOfBirth",cardDetails.getDateOfBirth());
+            nfcData.put("Nationality",cardDetails.getNationality());
+            nfcData.put("DateOfExpiry",cardDetails.getDateOfExpiry());
+            nfcData.put("DocumentCode",cardDetails.getDocumentCode());
+            nfcData.put("DocumentType",cardDetails.getDocumentType());
+            nfcData.put("IssuingState",cardDetails.getIssuingState());
+            nfcData.put("DocumentNumber",cardDetails.getDocumentNumber());
+            nfcData.put("PersonalNumber",cardDetails.getPersonalNumber());
+            nfcData.put("OptionalData1",cardDetails.getOptionalData1());
+            nfcData.put("OptionalData2",cardDetails.getOptionalData2());
+            nfcData.put("SupportedAuths",cardDetails.supportedMethodsString());
+            nfcData.put("UnsupportedAuths",cardDetails.notSupportedMethodsString());
+            nfcData.put("DocumentSignerValidity",cardDetails.getDocSignerValidity());
+            nfcData.put("BACAunthenticated",cardDetails.bacAunthenticated);
+            nfcData.put("AuthenticDataGroupHashes",cardDetails.authenticDataGroupHashes);
+            nfcData.put("AuthenticDocSignature",cardDetails.authenticDocSignature);
+            nfcData.put("AAAunthenticated",cardDetails.aaAunthenticated);
+            return nfcData;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public void tagReadSucceeded(final AcuantNFCCardDetails cardDetails, final Bitmap face_image, final Bitmap sign_image){
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject obj=new JSONObject();
+                    obj.put("id", "tagReadSucceeded");
+                    if (face_image != null) {
+                        ByteArrayOutputStream faceImageByteArrayOutputStream = new ByteArrayOutputStream();
+                        face_image.compress(Bitmap.CompressFormat.JPEG, 100, faceImageByteArrayOutputStream);
+                        byte[] faceImageByte = faceImageByteArrayOutputStream.toByteArray();
+                        obj.put("faceImage", Base64.encodeToString(faceImageByte, Base64.DEFAULT));
+                    }
+                    if (sign_image != null) {
+                        ByteArrayOutputStream faceImageByteArrayOutputStream = new ByteArrayOutputStream();
+                        sign_image.compress(Bitmap.CompressFormat.JPEG, 100, faceImageByteArrayOutputStream);
+                        byte[] signImageByte = faceImageByteArrayOutputStream.toByteArray();
+                        obj.put("signImage", Base64.encodeToString(signImageByte, Base64.DEFAULT));
+                    }
+                    JSONObject dataObject = EChipDataWithCard(cardDetails);
+                    obj.put("EChipData",dataObject);
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+                    result.setKeepCallback(true);
+                    callbackId.sendPluginResult(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    @Override
+    public void tagReadFailed(final String tag_read_error_message){
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject obj=new JSONObject();
+                    obj.put("id", "tagReadFailed");
+                    obj.put("errorType", ErrorType.AcuantErrorUnknown);
+                    obj.put("errorMessage", tag_read_error_message);
+                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
+                    result.setKeepCallback(true);
+                    callbackId.sendPluginResult(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(nfcIntent);
+        nfcIntent = intent;
+    }
+
 }

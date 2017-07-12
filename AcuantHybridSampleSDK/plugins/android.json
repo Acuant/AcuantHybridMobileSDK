@@ -10,6 +10,9 @@
         "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
+        "com.napolitano.cordova.plugin.intent": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },

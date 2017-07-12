@@ -492,7 +492,7 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCapturingMessage", [capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation]);
         }
     },
-    processCardImage: function (successCallback, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource) {
+    processCardImage: function (successCallback, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings) {
         if ((typeof faceDetection !== 'boolean')) {
             failure({
                 "id": "processCardImage",
@@ -535,13 +535,6 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
             });
             return;
         }
-        if ((typeof imageSource !== 'number')) {
-            failure({
-                "id": "processCardImage",
-                "error": "ImageSource Must Be Int"
-            });
-            return;
-        }
         if ((typeof region !== 'number') && (cardType == 2)) {
             failure({
                 "id": "processCardImage",
@@ -561,6 +554,20 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
             failure({
                 "id": "processCardImage",
                 "error": "ReformatImageColor Must Be Int"
+            });
+            return;
+        }
+        if ((typeof logtransaction !== 'boolean')) {
+            failure({
+                "id": "processCardImage",
+                "error": "logtransaction Must Be boolean"
+            });
+            return;
+        }
+    	if ((typeof imageSettings !== 'number')) {
+            failure({
+                "id": "processCardImage",
+                "error": "imageSettings Must Be Int"
             });
             return;
         }
@@ -775,7 +782,7 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
                 });
             }
         } else {
-            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processCardImage", [frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource]);
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processCardImage", [frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings]);
         }
     },
     cameraPrefersStatusBarHidden: function (successCallback, failure, hiddenStatusBar) {
@@ -1000,7 +1007,7 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
             }
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialRecognitionTimeout",[timeoutInSeconds]);
         }
-    },processFacialImageValidation:function (successCallback, failure,selfieImage,faceImage) {
+    },processFacialImageValidation:function (successCallback, failure,selfieImage,faceImage,logtransaction) {
         if (isWindows) {
             
         } else {
@@ -1011,7 +1018,14 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
                         });
                 return;
             }
-            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processFacialImageValidation",[selfieImage,faceImage]);
+            if ((typeof logtransaction !== 'boolean')) {
+            	failure({
+                	"id": "processFacialImageValidation",
+                	"error": "logtransaction Must Be boolean"
+           	 	});
+            	return;
+        	}
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processFacialImageValidation",[selfieImage,faceImage,logtransaction]);
         }
     },setFacialSubInstructionString:function (successCallback, failure,subInstructionString) {
         if (isWindows) {
@@ -1052,6 +1066,40 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
             }
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setFacialSubInstructionColor",[fontColor]);
         }
+    },scanEChip:function (successCallback, failure) {
+        if (isAndroid) {
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "scanEChip",[]);
+    	}else{
+    		failure({
+                        "id": "scanEChip",
+                        "error": "Not supported in this platform."
+                        });
+                return;
+    	}
+    },readEChip:function (successCallback, failure,intent,documentNumber,dateOfBirth,dateOfExpiry) {
+        if (isAndroid) {
+        	if(intent===null){
+        		failure({
+                        "id": "readEChip",
+                        "error": "Please enter a valid Intent object."
+                        });
+                return;
+        	}
+            if (documentNumber===null || documentNumber==='' || dateOfBirth===null || dateOfBirth==='' || dateOfExpiry===null || dateOfExpiry==='') {
+                failure({
+                        "id": "readEChip",
+                        "error": "Please enter correct document number,date of birth and date of expiry."
+                        });
+                return;
+            }
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "readEChip",[intent,documentNumber,dateOfBirth,dateOfExpiry]);
+    	}else{
+    		failure({
+                        "id": "readEChip",
+                        "error": "Not supported in this platform."
+                        });
+                return;
+    	}
     }
 };
 

@@ -9,6 +9,14 @@ module.exports = [
         ]
     },
     {
+        "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
+        "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
+        "pluginId": "com.napolitano.cordova.plugin.intent",
+        "clobbers": [
+            "IntentPlugin"
+        ]
+    },
+    {
         "id": "cordova-plugin-camera.Camera",
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "pluginId": "cordova-plugin-camera",
@@ -77,7 +85,8 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.acuant.plugin.AcuantMobileSDK": "2.4.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
+    "com.napolitano.cordova.plugin.intent": "0.1.3",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
     "cordova-plugin-console": "1.0.3",

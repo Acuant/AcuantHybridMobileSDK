@@ -464,7 +464,9 @@
     NSNumber *faceDetection = [command.arguments objectAtIndex:9];
     NSNumber *signatureDetection = [command.arguments objectAtIndex:10];
     NSNumber *region = [command.arguments objectAtIndex:11];
-    NSNumber *imageSource = [command.arguments objectAtIndex:12];
+    NSNumber *canLogTransaction = [command.arguments objectAtIndex:12];
+    BOOL logtransaction = canLogTransaction.boolValue;
+    NSNumber *imageSettings = [command.arguments objectAtIndex:13];
     
     options.autoDetectState = autoDetectState.boolValue;
     options.stateID = stateID.intValue;
@@ -475,7 +477,10 @@
     options.faceDetection = faceDetection.boolValue;
     options.signatureDetection = signatureDetection.boolValue;
     options.region = region.intValue;
-    options.imageSource = imageSource.intValue;
+    options.logtransaction = logtransaction;
+    if(imageSettings!=nil){
+        options.imageSettings=[imageSettings intValue];
+    }
     
     // Now, perform the request
     [_instance processFrontCardImage:frontImage
@@ -1098,7 +1103,12 @@
         //faceImage = [UIImage imageWithData:faceImageData];
     }
     
+    
+    NSNumber *canLogTransaction = [command.arguments objectAtIndex:2];
+    BOOL logtransaction = canLogTransaction.boolValue;
+    
     AcuantCardProcessRequestOptions *options = [AcuantCardProcessRequestOptions defaultRequestOptionsForCardType:AcuantCardTypeFacial];
+    options.logtransaction = logtransaction;
     _cardType = AcuantCardTypeFacial;
     // Now, perform the request
     [_instance validatePhotoOne:selfieImage withImage:faceImageData withDelegate:self withOptions:options];

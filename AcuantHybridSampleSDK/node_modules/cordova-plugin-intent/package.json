@@ -1,0 +1,92 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "https://github.com/napolitano/cordova-plugin-intent",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/napolitano/cordova-plugin-intent",
+        "spec": "git+https://github.com/napolitano/cordova-plugin-intent.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:napolitano/cordova-plugin-intent.git",
+          "sshUrl": "git+ssh://git@github.com/napolitano/cordova-plugin-intent.git",
+          "httpsUrl": "git+https://github.com/napolitano/cordova-plugin-intent.git",
+          "gitUrl": "git://github.com/napolitano/cordova-plugin-intent.git",
+          "shortcut": "github:napolitano/cordova-plugin-intent",
+          "directUrl": "https://raw.githubusercontent.com/napolitano/cordova-plugin-intent/master/package.json"
+        }
+      },
+      "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules"
+    ]
+  ],
+  "_from": "git+https://github.com/napolitano/cordova-plugin-intent.git",
+  "_id": "cordova-plugin-intent@0.1.3",
+  "_inCache": true,
+  "_location": "/cordova-plugin-intent",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "https://github.com/napolitano/cordova-plugin-intent",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "https://github.com/napolitano/cordova-plugin-intent",
+    "spec": "git+https://github.com/napolitano/cordova-plugin-intent.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:napolitano/cordova-plugin-intent.git",
+      "sshUrl": "git+ssh://git@github.com/napolitano/cordova-plugin-intent.git",
+      "httpsUrl": "git+https://github.com/napolitano/cordova-plugin-intent.git",
+      "gitUrl": "git://github.com/napolitano/cordova-plugin-intent.git",
+      "shortcut": "github:napolitano/cordova-plugin-intent",
+      "directUrl": "https://raw.githubusercontent.com/napolitano/cordova-plugin-intent/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/napolitano/cordova-plugin-intent.git#0a47226e64da1e349e2ab2f5e9e0cc2a4e1c5555",
+  "_shasum": "a53a9dce2466f167c008306e4c10ee71e68b93be",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/napolitano/cordova-plugin-intent",
+  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules",
+  "author": {
+    "name": "Axel Naolitano, Napolitano Business Solutions"
+  },
+  "bugs": {
+    "url": "https://github.com/napolitano/cordova-plugin-intent/issues"
+  },
+  "cordova": {
+    "id": "com.napolitano.cordova.plugin.intent",
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova Plugin for Android to access intent",
+  "devDependencies": {},
+  "gitHead": "0a47226e64da1e349e2ab2f5e9e0cc2a4e1c5555",
+  "homepage": "https://github.com/napolitano/cordova-plugin-intent#readme",
+  "keywords": [
+    "cordova",
+    "intent",
+    "share",
+    "send",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-intent",
+  "optionalDependencies": {},
+  "readme": "# Cordova Plugin for accessing the Cordova Intent and handling onNewIntent (Android Only)\n\n__This plugin is not longer maintained.__\n\nThis plugin allows you to add functionality for receiving content sent from other apps. To enable receiving sent content add the following XML to the MainActivity section of your AndroidManifest.xml\n\n```xml\n<intent-filter>\n    <action android:name=\"android.intent.action.SEND\" />\n    <action android:name=\"android.intent.action.SEND_MULTIPLE\" />\n    <category android:name=\"android.intent.category.DEFAULT\" />\n    <data android:mimeType=\"*/*\" />\n</intent-filter>\n```\n\nYou can adjust the mime types your application accepts by defining them explicitly. The above example allows any mime type.\n\nThe following example limits allowed mime types to JPG-Images. \n\n```xml\n<intent-filter>\n    <action android:name=\"android.intent.action.SEND\" />\n    <action android:name=\"android.intent.action.SEND_MULTIPLE\" />\n    <category android:name=\"android.intent.category.DEFAULT\" />\n    <data android:mimeType=\"image/jpeg\" />\n</intent-filter>\n```\n\nIf you do not want to handle multiple files at once, you can remove the following tag:\n \n```xml\n<action android:name=\"android.intent.action.SEND_MULTIPLE\" />\n```\n\nIt is recommended to use a hook or the custom config plugin to ensure that the above XML will automatically added in case you want to have a fresh checkout or remove/add the platform.\n\nA very quick and much more dirty example hook (tested on Mac OS-X, requires Ruby):\n\n```ruby\n#!/usr/bin/env ruby\n\nreplace=\"\n            </intent-filter>\n            <intent-filter>\n                <action android:name='android.intent.action.SEND' />\n                <action android:name='android.intent.action.SEND_MULTIPLE'/>\n                <category android:name='android.intent.category.DEFAULT' />\n                <data android:mimeType='*/*' />\n    \"\n\nfilename = \"platforms/android/AndroidManifest.xml\"\noutdata = File.read(filename).gsub(/<category android\\:name=\\\"android\\.intent\\.category\\.LAUNCHER\\\" \\/>([^<]*)<\\/intent-filter>([^<]*)<\\/activity>/, \"<category android\\:name=\\\"android\\.intent\\.category\\.LAUNCHER\\\" \\/>#{replace}<\\/intent-filter><\\/activity>\")\n\nFile.open(filename, 'w') do |out|\n    out << outdata\nend\n```\n\n### Note\n\nBy default the launch mode of the MainActivity of cordova based applications is set to \"singleTop\". This is ok for most situations. However you may prefer having the launch mode set to \"singleTask\" instead. Please read this article to get an idea about the different launch modes: https://www.mobomo.com/2011/06/android-understanding-activity-launchmode/\n \nSetting the launch mode to \"singleTask\" ensures that your app cannot run in multiple instances as it might happen if launch mode is set to \"singleTop\" for example if your application is already running and you try to share a webpage from the browser to it.\n\n#### Example of MainActivity section in AndroidManifest.xml\n\n```xml\n<activity android:configChanges=\"orientation|keyboardHidden|keyboard|screenSize|locale\" \n          android:label=\"@string/activity_name\" \n          android:launchMode=\"singleTask\" \n          android:name=\"MainActivity\" \n          android:theme=\"@android:style/Theme.Holo.Light\" \n          android:windowSoftInputMode=\"adjustResize\">\n          \n    <intent-filter android:label=\"@string/launcher_name\">\n        <action android:name=\"android.intent.action.MAIN\" />\n        <category android:name=\"android.intent.category.LAUNCHER\" />\n    </intent-filter>\n    \n    <intent-filter>\n        <action android:name=\"android.intent.action.SEND\" />\n        <action android:name=\"android.intent.action.SEND_MULTIPLE\" />\n        <category android:name=\"android.intent.category.DEFAULT\" />\n        <data android:mimeType=\"*/*\" />\n    </intent-filter>\n    \n</activity>\n```\n\nCordova >= 6.0.0 apparently requires the launchMode to be set in ``config.xml`` as well:\n```xml\n<platform name=\"android\">\n    ...\n    <preference name=\"AndroidLaunchMode\" value=\"singleTask\"/>\n</platform>\n```\n\n## Installation\n\nAdd the plugin to your project using Cordova CLI:\n\n```bash\ncordova plugin add https://github.com/napolitano/cordova-plugin-intent\n```\n\nOr using PhoneGap CLI:\n\n```bash\nphonegap local plugin add https://github.com/napolitano/cordova-plugin-intent\n```\n\n## Usage\n\n```js\nwindow.plugins.intent.setNewIntentHandler(function (intent) {\n    // Do things\n});\n```\n\n```js\nwindow.plugins.intent.getCordovaIntent(function (intent) {}, function () {});\n```\n\n```js\nwindow.plugins.intent.getRealPathFromContentUrl(contentUrl, function (realPath) {}, function () {});\n```\n\n## Example Intent passed from plugin\n\n```json\n{\n    \"action\": \"android.intent.action.SEND_MULTIPLE\",\n    \"clipItems\": [\n        {\n            \"uri\": \"file:///storage/emulated/0/Download/example-document.pdf\",\n            \"type\": \"application/pdf\",\n            \"extension\": \"pdf\"\n        },\n        {\n            \"uri\": \"file:///storage/emulated/0/Download/example-archive.zip\",\n            \"type\": \"application/zip\",\n            \"extension\": \"zip\"\n        }\n        {\n            \"uri\": \"content://media/external/images/media/29\",\n            \"type\": \"image/jpeg\",\n            \"extension\": \"jpeg\"\n        }\n\n    ],\n    \"flags\": 390070273,\n    \"type\": \"*/*\",\n    \"component\": \"ComponentInfo{com.example.droid/com.example.droid.MainActivity}\",\n    \"extras\": \"Bundle[mParcelledData.dataSize=596]\"\n}\n```\n\nWhile this example shows an JSON representation, you'll actually receive a ready-to-use object (of course with the attributes shown above).\n\n## Methods\n\n### getCordovaIntent() - Android\nGet limited access to intent properties\n\n### getRealPathFromContentUrl(contentUrl, successCallback, failureCallback) - Android\nGet the real path for the contentUrl\n\n## Events\n\n### setNewIntentHandler(method) - Android\nMethod passed will be triggered on new intent. Provides limited access to the new intent. \n\n\n### Supported Platforms\n\n- Android (>= API Level 19 / Kitkat)\n\n\n### Basic example\n\n#### Get cordova intent\n\n```js\ndocument.addEventListener('deviceReady', function(){\n    window.plugins.intent.getCordovaIntent(function (Intent) {\n        console.log(Intent);\n    }, function () {\n        console.log('Error');\n    });\n}\n```\n\n#### Get real path from content URL\n\n```js\ndocument.addEventListener('deviceReady', function(){\n    window.plugins.intent.getRealPathFromContentUrl(\n        'content://media/external/images/media/81',\n        function (realPath) {\n            console.log(realPath);\n        }, \n        function () {\n            console.log('Error');\n        }\n    );\n}\n```\n\n#### Handle new intent\n\n```js\ndocument.addEventListener('deviceReady', function(){\n    window.plugins.intent.setNewIntentHandler(function (Intent) {\n        console.log(Intent);\n    });\n}\n```\n\n## Limitations\n\nThe plugin is a bare-bones implementation to help me with __my__ projects. The intent passed to JavaScript is not a complete serialized object. The code should receive some refactorings and would benefit from a better JSON library like gson or similar. Test would be nice too.\n\n## Example App\n\n![Screenshot](/example/screenshot/screenshot.jpg?raw=true \"Screenshot of Example App\")\n\nAn example app for Android (made with cordova 5.4.1) was added to the project. The app shows basic usage of the plugin. \n\n\n# iOS\n\nOn iOS the method \"window.handleOpenURL\" is your friend. This method will be triggered if someone uses \"Open in\" to share content to your app.\n\nA basic implementation could look like:\n\n```js\nwindow.handleOpenURL = function (url) {\n    window.resolveLocalFileSystemURI (\n        url, \n        function (fileEntry) {\n            fileEntry.file (\n                function (file) {\n                    console.log ('Successfully received file: ' + file.name);\n                },\n                function (error) {\n                    console.log (error);\n                }\n            )\n        }, \n        function (error) {\n            console.log(error);\n        }\n    )\n};\n```\n\nIn order to get this working and make your app a \"Open in\"-Target on iOS, you have to add some XML to your info.plist\n\n```xml\n<plist version=\"1.0\">\n    <dict>\n  \n  <!-- whatever else -->\n  \n  \n    <key>UIFileSharingEnabled</key>\n    <true/>\n    \n    <key>CFBundleDocumentTypes</key>\n        <array>\n            <dict>\n                <key>CFBundleTypeIconFiles</key>\n                <array>\n                    <string>icon-small</string>\n                </array>\n                <key>CFBundleTypeName</key>\n                <string>${PRODUCT_NAME}</string>\n                <key>CFBundleTypeRole</key>\n                <string>Viewer</string>\n                <key>LSHandlerRank</key>\n                <string>Alternate</string>\n                <key>LSItemContentTypes</key>\n                <array>\n                    <string>public.data</string>\n                    <string>public.text</string>\n                    <string>public.image</string>\n                    <string>public.audio</string>\n                    <string>public.audiovisual-content</string>\n                    <string>public.xml</string>\n                    <string>public.movie</string>\n                    <string>public.font</string>\n                    <string>com.adobe.postscript</string>\n                    <string>com.adobe.pdf</string>\n                    <string>org.gnu.gnu-zip-archve</string>\n                </array>\n            </dict>\n        </array>\n      </dict>\n</plist>    \n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/napolitano/cordova-plugin-intent.git"
+  },
+  "version": "0.1.3"
+}

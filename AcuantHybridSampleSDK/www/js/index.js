@@ -191,12 +191,19 @@ var clearCardHolder = function () {
 var loadResultScreen = function () {
     log('loadResultScreen: ' + cardResult);
     var resultString = "";
-
+	$("#div-button-eChip").hide();
     if (cardType == 1) {
         frontCardImageResult = cardResult.reformattedImage;
         backCardImageResult = cardResult.reformattedImageTwo;
         resultString = "First Name - " + cardResult.firstName + "</br>Last Name -  " + cardResult.lastName + "</br>Middle Name -  " + cardResult.middleName + "</br>MemberID -  " + cardResult.memberId + "</br>Group No. -  " + cardResult.groupNumber + "</br>Contract Code -  " + cardResult.contractCode + "</br>Copay ER -  " + cardResult.copayEr + "</br>Copay OV -  " + cardResult.copayOv + "</br>Copay SP -  " + cardResult.copaySp + "</br>Copay UC -  " + cardResult.copayUc + "</br>Coverage -  " + cardResult.coverage + "</br>Date of Birth -  " + cardResult.dateOfBirth + "</br>Deductible -  " + cardResult.deductible + "</br>Effective Date -  " + cardResult.effectiveDate + "</br>Employer -  " + cardResult.employer + "</br>Expire Date -  " + cardResult.expirationDate + "</br>Group Name -  " + cardResult.groupName + "</br>Issuer Number -  " + cardResult.issuerNumber + "</br>Other -  " + cardResult.other + "</br>Payer ID -  " + cardResult.payerId + "</br>Plan Admin -  " + cardResult.planAdmin + "</br>Plan Provider -  " + cardResult.planProvider + "</br>Plan Type -  " + cardResult.planType + "</br>RX Bin -  " + cardResult.rxBin + "</br>RX Group -  " + cardResult.rxGroup + "</br>RX ID -  " + cardResult.rxId + "</br>RX PCN -  " + cardResult.rxPcn + "</br>Telephone -  " + cardResult.phoneNumber + "</br>Web -  " + cardResult.webAddress + "</br>Email -  " + cardResult.email + "</br>Address -  " + cardResult.fullAddress + "</br>City -  " + cardResult.city + "</br>Zip -  " + cardResult.zip + "</br>State -  " + cardResult.state;
     } else if (cardType == 3) {
+    	if(isAndroid){
+    		 $("#eChipDocNum").val(cardResult.passportNumber);
+    		 $("#eChipDOB").val(cardResult.dateOfBirth4);
+    		 $("#eChipDOE").val(cardResult.expirationDate4);
+    		 
+    		 $("#div-button-eChip").show();
+    	}
         frontCardImageResult = cardResult.passportImage;
         faceImageResult = cardResult.faceImage;
         signatureImageResult = cardResult.signImage;
@@ -315,6 +322,19 @@ var loadResultScreen = function () {
     adjustCardHolder();
 };
 
+function loadEChipData(data){
+	
+	var echipfaceImage = "data:image/png;base64," + data.faceImage;
+    $("#EChipFaceImage").empty();
+    $("#EChipFaceImage").prepend(echipfaceImage);
+    
+    var eChipData = data.EChipData;
+                    
+	$("#page1").toggleClass("hdn");
+	$("#page2").toggleClass("hdn");
+    $("#page3").toggleClass("hdn");
+}
+
 var success = function (data) {
     log("success: " + JSON.stringify(data));
     if (typeof data === 'object') {
@@ -340,6 +360,19 @@ var success = function (data) {
                     convertImgToBase64URL("img/PDF417.png", PDF417ImageBase64Callback);
                 }
             }
+        }
+        if(data.id=='nfcReady'){
+        	navigator.notification.alert(
+                "Searching for passport chip...\n\nTap and place the phone on top of passport chip.",
+                alertCallback,
+                'AcuantHybridSampleSDK',
+                'OK'
+                );
+        }
+        if(data.id=='tagReadSucceeded'){
+        	$("#progress_modal").toggleClass("hdn");
+            $('#progress_modal').nsProgress('dismiss');
+            loadEChipData(data);
         }
         if (data.id == 'didCaptureCropImage') {
             $("#progress_modal").toggleClass("hdn");
@@ -509,6 +542,14 @@ var failure = function (data) {
                 );
             }
         }
+        if(data.id=='tagReadFailed'){
+        	navigator.notification.alert(
+               data.errorMessage,
+               alertCallback,
+               'AcuantHybridSampleSDK',
+               'OK'
+               );
+        }
         if (data.id == "activateLicenseKey") {
             navigator.notification.alert(
                data.errorMessage,
@@ -621,11 +662,46 @@ var backAction = function () {
     adjustCardHolder();
 };
 
+var scanEChipAction = function () {
+	AcuantMobileSDK.scanEChip(success, failure);
+};
+
+function readEChipAction(Intent) {
+	var documentNumber = $("#eChipDocNum").val();
+	var dateOfBirth = $("#eChipDOB").val();
+	var dateOfExpiry = $("#eChipDOE").val();
+	dateOfBirth = echipFormat(dateOfBirth);
+	dateOfExpiry = echipFormat(dateOfExpiry); 
+	if(documentNumber && documentNumber.length>0 && dateOfBirth && dateOfBirth.length===6 && dateOfExpiry && dateOfExpiry.length===6){
+		$("#progress_modal").toggleClass("hdn");
+        $("#progress_modal").nsProgress('showWithStatusAndMaskType', "Reading chip...", 'clear'); 
+		AcuantMobileSDK.readEChip(success, failure,Intent,documentNumber,dateOfBirth,dateOfExpiry);
+	}else{
+		navigator.notification.alert(
+                "Please enter a valid document number, date of birth and date of expiry.",
+                alertCallback,
+                'AcuantHybridSampleSDK',
+                'OK'
+                );
+	}
+};
+
+function echipFormat(dateStr){
+	var arr = dateStr.split("-");
+	var mm = arr[0];
+	var dd = arr[1];
+	var yyyy = arr[2];
+	var yy = yyyy.substring(2,4);
+	var ret = yy.concat(mm);
+	ret = ret.concat(dd);
+	return ret;
+}
+
 var processAction = function () {
 	dataCaptured = false;
     log('processAction');
     if (frontCardImage) {
-        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 50, false, true, true, cardRegion, 101);
+        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, cardRegion,true,390);
         if(isFacialAllowed && !isWindows && cardType!=1){
             	navigator.notification.alert(
                                 'Please position your face in front of the front camera and blink when red rectangle appears.',
@@ -648,7 +724,7 @@ var processFacialMatch = function () {
     }else{
     	$("#progress_modal").toggleClass("hdn");
         $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear'); 
-    	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
+    	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult,true);
     }
 };
 
@@ -720,6 +796,12 @@ var adjustCardHolder = function () {
     log(height);
 };
 
+function handleIntent(Intent){
+	if(isAndroid){
+        readEChipAction(Intent);
+	}
+}
+
 //**********************************************************************
 // function waitfor - Wait until a condition is met
 //        
@@ -781,6 +863,15 @@ var app = {
             window.shouldRotateToOrientation = function (degrees) {
                 return true;
             }
+            window.plugins.intent.getCordovaIntent(function (Intent) {
+        			console.log(Intent);
+    		}, function () {
+        			console.log('Error');
+    		});
+    		window.plugins.intent.setNewIntentHandler(function (Intent) {
+        		console.log(Intent);
+        		handleIntent(Intent);
+    		});
             $("#driver-license-btn").click(driverLicenseAction);
             $("#passport-btn").click(passportAction);
             $("#medical-insurance-btn").click(medicalInsuranceAction);
@@ -790,6 +881,7 @@ var app = {
             $("#back-image").click(showCameraInterfaceBack);
             $("#process-btn").click(processAction);
             $("#back-btn").click(backAction);
+            $("#eChipButton").click(scanEChipAction);
             $('.button-region').click(function () {
                 log("selectedRegionAction");
                 selectedRegionAction(this.id);

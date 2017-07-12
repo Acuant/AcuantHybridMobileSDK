@@ -50,7 +50,15 @@
     "com.acuant.plugin.AcuantMobileSDK": {
         "source": {
             "type": "local",
-            "path": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules/com.acuant.plugin.acuantmobilesdk"
+            "path": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.napolitano.cordova.plugin.intent": {
+        "source": {
+            "type": "registry",
+            "id": "https://github.com/napolitano/cordova-plugin-intent"
         },
         "is_top_level": true,
         "variables": {}

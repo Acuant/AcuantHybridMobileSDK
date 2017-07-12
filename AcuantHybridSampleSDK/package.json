@@ -29,7 +29,9 @@
         "cordova-plugin-compat": "~1.0.0",
         "cordova-plugin-console": "~1.0.3",
         "cordova-plugin-dialogs": "~1.2.1",
+        "cordova-plugin-intent": "git+https://github.com/napolitano/cordova-plugin-intent.git",
         "cordova-plugin-network-information": "~1.2.1",
-        "cordova-plugin-whitelist": "1"
+        "cordova-plugin-whitelist": "1",
+        "ios": "0.0.1"
     }
 }

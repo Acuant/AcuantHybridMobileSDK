@@ -141,6 +141,27 @@ body {
 #driver-license-duplex-btn, #passport-btn, #medical-insurance-btn{
     padding-left: 20px;
 }
+
+#div-button-eChip{
+	border-style: groove;
+}
+#eChipButton{
+	width: 80%;
+	text-align:center;
+    padding-left: 20px;
+    color: #247AFE;  
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+#eChipInstruction,#eChipDocNumberLabel,#eChipDocNum,#eChipDOBLabel,#eChipDOB,#eChipDOELabel,#eChipDOE{
+    padding-left: 20px;
+    padding-top: 10px;
+    
+}
+#eChipDocNum,#eChipDOB,#eChipDOE{
+    width: 40%;
+    
+}
 #driver-license-duplex-btn, #passport-btn, #medical-insurance-btn, #driver-license-btn{
     color: #247AFE;  
     font-weight: bold;

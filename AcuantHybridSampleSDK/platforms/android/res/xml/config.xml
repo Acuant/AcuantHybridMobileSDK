@@ -3,6 +3,9 @@
     <feature name="AcuantMobileSDK">
         <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
     </feature>
+    <feature name="IntentPlugin">
+        <param name="android-package" value="com.napolitano.cordova.plugin.intent.IntentPlugin" />
+    </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>

@@ -13,6 +13,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"IntentPlugin\"><param name=\"android-package\" value=\"com.napolitano.cordova.plugin.intent.IntentPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
@@ -119,6 +123,9 @@
         "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
+        "com.napolitano.cordova.plugin.intent": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
@@ -146,6 +153,14 @@
             "pluginId": "com.acuant.plugin.AcuantMobileSDK",
             "clobbers": [
                 "AcuantMobileSDK"
+            ]
+        },
+        {
+            "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
+            "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
+            "pluginId": "com.napolitano.cordova.plugin.intent",
+            "clobbers": [
+                "IntentPlugin"
             ]
         },
         {
@@ -215,7 +230,8 @@
         }
     ],
     "plugin_metadata": {
-        "com.acuant.plugin.AcuantMobileSDK": "2.4.0",
+        "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
+        "com.napolitano.cordova.plugin.intent": "0.1.3",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-console": "1.0.3",

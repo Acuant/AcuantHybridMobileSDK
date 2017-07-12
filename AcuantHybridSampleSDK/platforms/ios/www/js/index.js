@@ -625,7 +625,7 @@ var processAction = function () {
 	dataCaptured = false;
     log('processAction');
     if (frontCardImage) {
-        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 50, false, true, true, cardRegion, 101);
+        AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, cardRegion,true,390);
         if(isFacialAllowed && !isWindows && cardType!=1){
             	navigator.notification.alert(
                                 'Please position your face in front of the front camera and blink when red rectangle appears.',
@@ -648,7 +648,7 @@ var processFacialMatch = function () {
     }else{
     	$("#progress_modal").toggleClass("hdn");
         $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear'); 
-    	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
+    	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult,true);
     }
 };
 
@@ -803,7 +803,7 @@ var app = {
             	AcuantMobileSDK.setCanCropBarcode(success, failure, false);
             	AcuantMobileSDK.setCropBarcodeOnCancel(success, failure, true);
             	AcuantMobileSDK.setCanShowMessage(success, failure, false);
-            	AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
+            	AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,false);
             	AcuantMobileSDK.cameraPrefersStatusBarHidden(success, failure, false);
             	AcuantMobileSDK.enableLocationTracking(null,null);
             log("end onDeviceReady");
