@@ -33,6 +33,7 @@ var isBarcodeSide;
 var isFrontSide;
 var debbug = false;
 var cardType;
+var prevCardType;
 var cardRegion = 0;
 var cardWidth;
 var frontCardImage;
@@ -55,6 +56,7 @@ var isAssureIDAllowed = false;
 var showBarcodeImage = false;
 var isFacialAllowed = false;
 var dataCaptured = false;
+
 
 var log = function (message) {
     if (debbug) {
@@ -237,7 +239,6 @@ var loadResultScreen = function () {
         if(isFacialAllowed){
         	resultString = resultString + "</br>FacialMatch -  " + facialResult.FacialMatch;
         	resultString = resultString + "</br>FacialMatchConfidenceRating -  " + facialResult.FacialMatchConfidenceRating;
-        	resultString = resultString + "</br>IsFacialEnabled -  " + facialResult.IsFacialEnabled;
         	resultString = resultString + "</br>TransactionId -  " + facialResult.TransactionId;
         	resultString = resultString + "</br>FaceLivelinessDetection -  " + facialResult.FaceLivelinessDetection;
         }
@@ -286,7 +287,6 @@ var loadResultScreen = function () {
         if(isFacialAllowed){
         	resultString = resultString + "</br>FacialMatch -  " + facialResult.FacialMatch;
         	resultString = resultString + "</br>FacialMatchConfidenceRating -  " + facialResult.FacialMatchConfidenceRating;
-        	resultString = resultString + "</br>IsFacialEnabled -  " + facialResult.IsFacialEnabled;
         	resultString = resultString + "</br>TransactionId -  " + facialResult.TransactionId;
         	resultString = resultString + "</br>FaceLivelinessDetection -  " + facialResult.FaceLivelinessDetection;
         }
@@ -324,15 +324,56 @@ var loadResultScreen = function () {
 
 function loadEChipData(data){
 	
-	var echipfaceImage = "data:image/png;base64," + data.faceImage;
-    $("#EChipFaceImage").empty();
-    $("#EChipFaceImage").prepend(echipfaceImage);
+	$("#EChipFaceImage").attr('src', "data:image/png;base64," + data.faceImage);
     
     var eChipData = data.EChipData;
-                    
-	$("#page1").toggleClass("hdn");
+    
+    var table = document.getElementById("nfcDataTable");
+    clearTable(table);
+	
+    
+    addEChipResultRow(table,0,"Primary Identifier",eChipData.PrimaryIdentifier);
+    addEChipResultRow(table,1,"Secondary Identifier",eChipData.SecondaryIdentifier);
+    addEChipResultRow(table,2,"Gender",eChipData.Gender);
+    addEChipResultRow(table,3,"Date Of Birth",eChipData.DateOfBirth);
+	addEChipResultRow(table,4,"Nationality",eChipData.Nationality);
+	addEChipResultRow(table,5,"Date Of Expiry",eChipData.DateOfExpiry);
+	addEChipResultRow(table,6,"Document Code",eChipData.DocumentCode);
+	addEChipResultRow(table,7,"Document Type",eChipData.DocumentType);
+	addEChipResultRow(table,8,"Issuing State",eChipData.IssuingState);
+	addEChipResultRow(table,9,"Document Number",eChipData.DocumentNumber);
+	addEChipResultRow(table,10,"Personal Number",eChipData.PersonalNumber);
+	addEChipResultRow(table,11,"OptionalData1",eChipData.OptionalData1);
+	addEChipResultRow(table,12,"Supported Authorizations",eChipData.SupportedAuths);
+	addEChipResultRow(table,13,"Unsupported Authorizations",eChipData.UnsupportedAuths);
+	addEChipResultRow(table,14,"DocumentSignerValidity",eChipData.DocumentSignerValidity);
+	addEChipResultRow(table,15,"BAC Authenticated",eChipData.BACAuthenticated);
+    addEChipResultRow(table,16,"Authentic Data Groups",eChipData.AuthenticDataGroupHashes);
+    addEChipResultRow(table,17,"Authentic Document Signature",eChipData.AuthenticDocSignature);
+    addEChipResultRow(table,18,"Active Authentication",eChipData.AAAuthenticated);
+                  
 	$("#page2").toggleClass("hdn");
-    $("#page3").toggleClass("hdn");
+    $("#page4").toggleClass("hdn");
+}
+
+function clearTable(table){
+	var numOfRow = table.rows.length;
+	for(var i =0;i<numOfRow;i++){
+		table.deleteRow(i);
+	}
+}
+function addEChipResultRow(table,index,key,value){
+	
+	// Create an empty <tr> element and add it to the 1st position of the table:
+	var row = table.insertRow(index);
+
+	// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+
+	// Add some text to the new cells:
+	cell1.innerHTML = key;
+	cell2.innerHTML = value;
 }
 
 var success = function (data) {
@@ -657,9 +698,15 @@ var medicalInsuranceAction = function () {
 };
 
 var backAction = function () {
+	clearCardHolder();
     $("#page1").toggleClass("hdn");
     $("#page2").toggleClass("hdn");
     adjustCardHolder();
+};
+
+var eChipBackAction = function () {
+    $("#page2").toggleClass("hdn");
+    $("#page4").toggleClass("hdn");
 };
 
 var scanEChipAction = function () {
@@ -673,6 +720,7 @@ function readEChipAction(Intent) {
 	dateOfBirth = echipFormat(dateOfBirth);
 	dateOfExpiry = echipFormat(dateOfExpiry); 
 	if(documentNumber && documentNumber.length>0 && dateOfBirth && dateOfBirth.length===6 && dateOfExpiry && dateOfExpiry.length===6){
+		$('html,body').scrollTop(0);
 		$("#progress_modal").toggleClass("hdn");
         $("#progress_modal").nsProgress('showWithStatusAndMaskType', "Reading chip...", 'clear'); 
 		AcuantMobileSDK.readEChip(success, failure,Intent,documentNumber,dateOfBirth,dateOfExpiry);
@@ -699,7 +747,7 @@ function echipFormat(dateStr){
 
 var processAction = function () {
 	dataCaptured = false;
-    log('processAction');
+	log('processAction');
     if (frontCardImage) {
         AcuantMobileSDK.processCardImage(success, failure, frontCardImage, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, cardRegion,true,390);
         if(isFacialAllowed && !isWindows && cardType!=1){
@@ -735,6 +783,7 @@ var showFacialInterface = function() {
     	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
     	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);
     	AcuantMobileSDK.setFacialSubInstructionColor(success, failure,'#FF0000');
+    	AcuantMobileSDK.setFacialInstructionTextStyle(success,failure,'#ffffff',50);
     }else if(isIOS){
         AcuantMobileSDK.setFacialInstructionLocation(success, failure,0,50);
         AcuantMobileSDK.setFacialSubInstructionString(success, failure,'Analyzing');
@@ -881,6 +930,7 @@ var app = {
             $("#back-image").click(showCameraInterfaceBack);
             $("#process-btn").click(processAction);
             $("#back-btn").click(backAction);
+            $("#echip-back-btn").click(eChipBackAction);
             $("#eChipButton").click(scanEChipAction);
             $('.button-region').click(function () {
                 log("selectedRegionAction");
@@ -888,6 +938,7 @@ var app = {
             });
 
             licenseKey = localStorage.getItem("license-key");
+            firstLoad = true;
             $("#license-key").val(licenseKey);
             	AcuantMobileSDK.initAcuantMobileSDK(success, failure, licenseKey, null);
             	AcuantMobileSDK.stringForWatermarkLabel(success, failure, "Powered By Acuant");

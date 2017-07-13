@@ -26,22 +26,22 @@
 		CA8F96F6FC224684AA34A96B /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F57446572EB402F8DDF8FD7 /* CDVConnection.m */; };
 		D13DEE8B45BE4D6690636EE5 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 576C2E21761747B89A43CF5F /* CDVNotification.m */; };
 		E01D454D69984315B5B3B080 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ECC77B601244798BF1F9F83 /* CDVLogger.m */; };
-		9F7167871A684EAEB80A5F6A /* AcuantMobileSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = F22CF59580604811A051FA9F /* AcuantMobileSDK.m */; };
-		D970EB4A43EF42D5823BE3AA /* AcuantMobileSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B99A728D0A4406AA4A6394 /* AcuantMobileSDK.framework */; };
-		C53E631EEEAC476FAC30FB8D /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E39C13FF99FE425D95BD85F4 /* libc++.dylib */; };
-		2C370DD4EF4A4EEABABD167A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F596786D69934CC999FED5B7 /* libz.dylib */; };
-		8908C205E2A74E18970FABB1 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1628EC99A5BD4C6585084C50 /* libiconv.dylib */; };
-		4A605C95C72A4073AE9D760B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE9607EAE53440E9A6A998C /* SystemConfiguration.framework */; };
-		D6EDCAF4712B4E50B8082944 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF073529DFDC46EAA2D56825 /* AudioToolbox.framework */; };
-		3707EE3074BA4ECFA7490021 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBE31666CA0478998E4CF3A /* AVFoundation.framework */; };
-		E620122801D9468B9F117CA0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC3EC0EC898343B7B2BFFA0B /* CoreMedia.framework */; };
-		706AD55A62E549B1A0176FB8 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AFF69DBE279454FA26D2374 /* CoreVideo.framework */; };
-		599038A7830140088F00F798 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAF6F14020644D19A1DE1BD /* QuartzCore.framework */; };
-		76CC1741EC2D4E28B47A5A41 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A67FD849B3A4B17B82F66F2 /* CoreMotion.framework */; };
-		FEA79C946E7D4EEA871C86A2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2DADC001BAE440C9271093B /* Accelerate.framework */; };
-		3D9F477EB32E4B69A2388AAB /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 965E179F4E19488DAB2A971B /* CoreText.framework */; };
-		9E9B2DA62F8E40668B6A3C32 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF34668928554950B5745CF4 /* CoreLocation.framework */; };
-		9983ECDFC9444A12854C6A8D /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D74EC8DECA04108A41CB155 /* ImageIO.framework */; };
+		0FF5B6B19B984009B1DCB0AD /* AcuantMobileSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 87636EA3A40B449F9B0EE372 /* AcuantMobileSDK.m */; };
+		9A80C88DEB824EFE9F361025 /* AcuantMobileSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DCBFA90817B4797BD17F66F /* AcuantMobileSDK.framework */; };
+		72CE71A1671641A6B0BFD358 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A9FEC3381A4ABD98304F59 /* libc++.dylib */; };
+		A20D9DFAF6A942E4884C76EF /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 796435DA72B84C388A9A46E4 /* libz.dylib */; };
+		884F2E3A0A4F4C2D9BB4DB48 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C0FB58E553466B97847C11 /* libiconv.dylib */; };
+		2D824FF0504D47218A1BF829 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98419D17A5FA41AB8B8E1996 /* SystemConfiguration.framework */; };
+		913C900B3D9246958785A2C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3257C85A297497BA8FD0BCC /* AudioToolbox.framework */; };
+		134FE52D68484D9883EB0BEE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0844B1215CC74CB98B471000 /* AVFoundation.framework */; };
+		387956932DD14A189BC46749 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC7A04A67C841B3AE7D6C58 /* CoreMedia.framework */; };
+		8B7A778951054BC0AB80E5A6 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5B3D8967F2943C989E30E08 /* CoreVideo.framework */; };
+		68A078124D00490BAD4073F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5421C4D6A3C412BA67DE199 /* QuartzCore.framework */; };
+		025A01199E84432BBFEF1C04 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B0E115221574DEBAB82FA3D /* CoreMotion.framework */; };
+		4A6CD53956FB411DBEF4D91F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BC3C7D674747D890FFD0D2 /* Accelerate.framework */; };
+		AD464005257B44F7A604285C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19E22D749CED445FA2AD308F /* CoreText.framework */; };
+		3B86B61DDF7D40F9988C2214 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40341D62E3624E4CB4144923 /* CoreLocation.framework */; };
+		9964E889E0DB47A8B584C9A0 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2D280D4AA04ECA8619C50F /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,23 +122,23 @@
 		F68194CD68AF4835AAFB2E95 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = AcuantHybridSampleSDK/config.xml; sourceTree = "<group>"; };
 		FDFBBA9178FE413CB92BAE9E /* CDVReachability.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVReachability.m; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; };
-		F22CF59580604811A051FA9F /* AcuantMobileSDK.m */ = {isa = PBXFileReference; name = "AcuantMobileSDK.m"; path = "com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		47E8D875ED3F42439255E490 /* AcuantMobileSDK.h */ = {isa = PBXFileReference; name = "AcuantMobileSDK.h"; path = "com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		41B99A728D0A4406AA4A6394 /* AcuantMobileSDK.framework */ = {isa = PBXFileReference; name = "AcuantMobileSDK.framework"; path = "AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		E39C13FF99FE425D95BD85F4 /* libc++.dylib */ = {isa = PBXFileReference; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
-		F596786D69934CC999FED5B7 /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
-		1628EC99A5BD4C6585084C50 /* libiconv.dylib */ = {isa = PBXFileReference; name = "libiconv.dylib"; path = "usr/lib/libiconv.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
-		0AE9607EAE53440E9A6A998C /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		DF073529DFDC46EAA2D56825 /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		8BBE31666CA0478998E4CF3A /* AVFoundation.framework */ = {isa = PBXFileReference; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		EC3EC0EC898343B7B2BFFA0B /* CoreMedia.framework */ = {isa = PBXFileReference; name = "CoreMedia.framework"; path = "System/Library/Frameworks/CoreMedia.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		4AFF69DBE279454FA26D2374 /* CoreVideo.framework */ = {isa = PBXFileReference; name = "CoreVideo.framework"; path = "System/Library/Frameworks/CoreVideo.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		4FAF6F14020644D19A1DE1BD /* QuartzCore.framework */ = {isa = PBXFileReference; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		9A67FD849B3A4B17B82F66F2 /* CoreMotion.framework */ = {isa = PBXFileReference; name = "CoreMotion.framework"; path = "System/Library/Frameworks/CoreMotion.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		E2DADC001BAE440C9271093B /* Accelerate.framework */ = {isa = PBXFileReference; name = "Accelerate.framework"; path = "System/Library/Frameworks/Accelerate.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		965E179F4E19488DAB2A971B /* CoreText.framework */ = {isa = PBXFileReference; name = "CoreText.framework"; path = "System/Library/Frameworks/CoreText.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		DF34668928554950B5745CF4 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
-		6D74EC8DECA04108A41CB155 /* ImageIO.framework */ = {isa = PBXFileReference; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		87636EA3A40B449F9B0EE372 /* AcuantMobileSDK.m */ = {isa = PBXFileReference; name = "AcuantMobileSDK.m"; path = "com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		2B052827829A446A855BB20A /* AcuantMobileSDK.h */ = {isa = PBXFileReference; name = "AcuantMobileSDK.h"; path = "com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		4DCBFA90817B4797BD17F66F /* AcuantMobileSDK.framework */ = {isa = PBXFileReference; name = "AcuantMobileSDK.framework"; path = "AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		91A9FEC3381A4ABD98304F59 /* libc++.dylib */ = {isa = PBXFileReference; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		796435DA72B84C388A9A46E4 /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		71C0FB58E553466B97847C11 /* libiconv.dylib */ = {isa = PBXFileReference; name = "libiconv.dylib"; path = "usr/lib/libiconv.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		98419D17A5FA41AB8B8E1996 /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		F3257C85A297497BA8FD0BCC /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		0844B1215CC74CB98B471000 /* AVFoundation.framework */ = {isa = PBXFileReference; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		2BC7A04A67C841B3AE7D6C58 /* CoreMedia.framework */ = {isa = PBXFileReference; name = "CoreMedia.framework"; path = "System/Library/Frameworks/CoreMedia.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A5B3D8967F2943C989E30E08 /* CoreVideo.framework */ = {isa = PBXFileReference; name = "CoreVideo.framework"; path = "System/Library/Frameworks/CoreVideo.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		A5421C4D6A3C412BA67DE199 /* QuartzCore.framework */ = {isa = PBXFileReference; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		0B0E115221574DEBAB82FA3D /* CoreMotion.framework */ = {isa = PBXFileReference; name = "CoreMotion.framework"; path = "System/Library/Frameworks/CoreMotion.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		58BC3C7D674747D890FFD0D2 /* Accelerate.framework */ = {isa = PBXFileReference; name = "Accelerate.framework"; path = "System/Library/Frameworks/Accelerate.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		19E22D749CED445FA2AD308F /* CoreText.framework */ = {isa = PBXFileReference; name = "CoreText.framework"; path = "System/Library/Frameworks/CoreText.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		40341D62E3624E4CB4144923 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		5B2D280D4AA04ECA8619C50F /* ImageIO.framework */ = {isa = PBXFileReference; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,21 +150,21 @@
 				13D19C901F0EF6430075F488 /* MicroBlink.framework in Frameworks */,
 				13D19C8F1F0EF6300075F488 /* MicroBlink.framework in Frameworks */,
 				891C96E946FE4686BE4533E9 /* CoreTelephony.framework in Frameworks */,
-				D970EB4A43EF42D5823BE3AA /* AcuantMobileSDK.framework in Frameworks */,
-				C53E631EEEAC476FAC30FB8D /* libc++.dylib in Frameworks */,
-				2C370DD4EF4A4EEABABD167A /* libz.dylib in Frameworks */,
-				8908C205E2A74E18970FABB1 /* libiconv.dylib in Frameworks */,
-				4A605C95C72A4073AE9D760B /* SystemConfiguration.framework in Frameworks */,
-				D6EDCAF4712B4E50B8082944 /* AudioToolbox.framework in Frameworks */,
-				3707EE3074BA4ECFA7490021 /* AVFoundation.framework in Frameworks */,
-				E620122801D9468B9F117CA0 /* CoreMedia.framework in Frameworks */,
-				706AD55A62E549B1A0176FB8 /* CoreVideo.framework in Frameworks */,
-				599038A7830140088F00F798 /* QuartzCore.framework in Frameworks */,
-				76CC1741EC2D4E28B47A5A41 /* CoreMotion.framework in Frameworks */,
-				FEA79C946E7D4EEA871C86A2 /* Accelerate.framework in Frameworks */,
-				3D9F477EB32E4B69A2388AAB /* CoreText.framework in Frameworks */,
-				9E9B2DA62F8E40668B6A3C32 /* CoreLocation.framework in Frameworks */,
-				9983ECDFC9444A12854C6A8D /* ImageIO.framework in Frameworks */,
+				9A80C88DEB824EFE9F361025 /* AcuantMobileSDK.framework in Frameworks */,
+				72CE71A1671641A6B0BFD358 /* libc++.dylib in Frameworks */,
+				A20D9DFAF6A942E4884C76EF /* libz.dylib in Frameworks */,
+				884F2E3A0A4F4C2D9BB4DB48 /* libiconv.dylib in Frameworks */,
+				2D824FF0504D47218A1BF829 /* SystemConfiguration.framework in Frameworks */,
+				913C900B3D9246958785A2C7 /* AudioToolbox.framework in Frameworks */,
+				134FE52D68484D9883EB0BEE /* AVFoundation.framework in Frameworks */,
+				387956932DD14A189BC46749 /* CoreMedia.framework in Frameworks */,
+				8B7A778951054BC0AB80E5A6 /* CoreVideo.framework in Frameworks */,
+				68A078124D00490BAD4073F8 /* QuartzCore.framework in Frameworks */,
+				025A01199E84432BBFEF1C04 /* CoreMotion.framework in Frameworks */,
+				4A6CD53956FB411DBEF4D91F /* Accelerate.framework in Frameworks */,
+				AD464005257B44F7A604285C /* CoreText.framework in Frameworks */,
+				3B86B61DDF7D40F9988C2214 /* CoreLocation.framework in Frameworks */,
+				9964E889E0DB47A8B584C9A0 /* ImageIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,21 +239,21 @@
 				13D19C8E1F0EF6300075F488 /* MicroBlink.framework */,
 				13D19C8C1F0EF61C0075F488 /* MicroBlink.bundle */,
 				F68194CD68AF4835AAFB2E95 /* CoreTelephony.framework */,
-				41B99A728D0A4406AA4A6394 /* AcuantMobileSDK.framework */,
-				E39C13FF99FE425D95BD85F4 /* libc++.dylib */,
-				F596786D69934CC999FED5B7 /* libz.dylib */,
-				1628EC99A5BD4C6585084C50 /* libiconv.dylib */,
-				0AE9607EAE53440E9A6A998C /* SystemConfiguration.framework */,
-				DF073529DFDC46EAA2D56825 /* AudioToolbox.framework */,
-				8BBE31666CA0478998E4CF3A /* AVFoundation.framework */,
-				EC3EC0EC898343B7B2BFFA0B /* CoreMedia.framework */,
-				4AFF69DBE279454FA26D2374 /* CoreVideo.framework */,
-				4FAF6F14020644D19A1DE1BD /* QuartzCore.framework */,
-				9A67FD849B3A4B17B82F66F2 /* CoreMotion.framework */,
-				E2DADC001BAE440C9271093B /* Accelerate.framework */,
-				965E179F4E19488DAB2A971B /* CoreText.framework */,
-				DF34668928554950B5745CF4 /* CoreLocation.framework */,
-				6D74EC8DECA04108A41CB155 /* ImageIO.framework */,
+				4DCBFA90817B4797BD17F66F /* AcuantMobileSDK.framework */,
+				91A9FEC3381A4ABD98304F59 /* libc++.dylib */,
+				796435DA72B84C388A9A46E4 /* libz.dylib */,
+				71C0FB58E553466B97847C11 /* libiconv.dylib */,
+				98419D17A5FA41AB8B8E1996 /* SystemConfiguration.framework */,
+				F3257C85A297497BA8FD0BCC /* AudioToolbox.framework */,
+				0844B1215CC74CB98B471000 /* AVFoundation.framework */,
+				2BC7A04A67C841B3AE7D6C58 /* CoreMedia.framework */,
+				A5B3D8967F2943C989E30E08 /* CoreVideo.framework */,
+				A5421C4D6A3C412BA67DE199 /* QuartzCore.framework */,
+				0B0E115221574DEBAB82FA3D /* CoreMotion.framework */,
+				58BC3C7D674747D890FFD0D2 /* Accelerate.framework */,
+				19E22D749CED445FA2AD308F /* CoreText.framework */,
+				40341D62E3624E4CB4144923 /* CoreLocation.framework */,
+				5B2D280D4AA04ECA8619C50F /* ImageIO.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -295,8 +295,8 @@
 				FDFBBA9178FE413CB92BAE9E /* CDVReachability.m */,
 				302726B2DA8548888D16E70F /* CDVConnection.h */,
 				741E49A35DE942FF94475ADC /* CDVReachability.h */,
-				F22CF59580604811A051FA9F /* AcuantMobileSDK.m */,
-				47E8D875ED3F42439255E490 /* AcuantMobileSDK.h */,
+				87636EA3A40B449F9B0EE372 /* AcuantMobileSDK.m */,
+				2B052827829A446A855BB20A /* AcuantMobileSDK.h */,
 			);
 			name = Plugins;
 			path = AcuantHybridSampleSDK/Plugins;
@@ -434,7 +434,7 @@
 				D13DEE8B45BE4D6690636EE5 /* CDVNotification.m in Sources */,
 				CA8F96F6FC224684AA34A96B /* CDVConnection.m in Sources */,
 				35BEED32C84C4E138CA63113 /* CDVReachability.m in Sources */,
-				9F7167871A684EAEB80A5F6A /* AcuantMobileSDK.m in Sources */,
+				0FF5B6B19B984009B1DCB0AD /* AcuantMobileSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +465,20 @@
 					AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK,
 					"$(PROJECT_DIR)/../../plugins/**",
 					"$(PROJECT_DIR)",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
@@ -514,6 +528,20 @@
 					AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK,
 					"$(PROJECT_DIR)/../../plugins/**",
 					"$(PROJECT_DIR)",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
+					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",
 					"\"AcuantHybridSampleSDK/Plugins/com.acuant.plugin.AcuantMobileSDK\"",

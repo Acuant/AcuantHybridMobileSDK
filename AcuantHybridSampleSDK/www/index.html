@@ -78,15 +78,23 @@
             	<label id="eChipInstruction">Verify the 3 fields and Scan eChip</label>
             	<br>
             	<br>
-                <label id="eChipDocNumberLabel">Document Number:</label>
-            	<input type="text" id="eChipDocNum" />
-            	<br>
-            	<label id="eChipDOBLabel">Date of Birth(MM-dd-yyyy): </label>
-            	<input type="text" id="eChipDOB" />
-            	<br>
-            	<label id="eChipDOELabel">Date of Expiry(MM-dd-yyyy):</label>
-            	<input type="text" id="eChipDOE" />
-            	<br>
+            	<Table style="width:100%">
+            		<tr>
+                		<td style="width:40%"><label id="eChipDocNumberLabel">Document Number</label></td>
+                		<td style="width:35%"><label> </label></td>
+            			<td style="width:25%"><input type="text"  style="text-align:left" id="eChipDocNum" /></td>
+            		</tr>
+            		<tr>
+            			<td style="width:40%"><label id="eChipDOBLabel">Date of Birth</label></td>
+            			<td style="width:35%"><label>(MM-dd-yyyy)</label></td>
+            			<td style="width:25%"><input type="text" style="text-align:left" id="eChipDOB" /></td>
+            		</tr>
+            		<tr>
+            			<td style="width:40%"><label id="eChipDOELabel">Date of Expiry</label></td>
+            			<td style="width:35%"><label>(MM-dd-yyyy)</label></td>
+            			<td style="width:25%"><input type="text" style="text-align:left" id="eChipDOE" /></td>
+            		</tr>
+            	</Table>
             	<br>
             	<br>
             	<label class="buttons" id="eChipButton">Scan eChip</label>
@@ -125,6 +133,9 @@
         </div>
     </div>
 	<div id="page4" class="hdn">
+		<div class="div-echip-back">
+            <label class="buttons" id="echip-back-btn" >Back</label>
+        </div>
         <p>
             <div class="div-images">
                 <p class="p4"><img class="card-image-result" id="EChipFaceImage" alt=""/></p>
@@ -133,11 +144,6 @@
         <p>
             <div id="div-result-eChip">
             	<table id="nfcDataTable" style="width:100%"></table>	
-            </div>
-        </p>
-        <p>
-            <div class="div-text-result">
-                <label class="result" id="result-label" >Result</label>
             </div>
         </p>
     </div>

@@ -73,7 +73,7 @@
 }
 .div-back{
     text-align:right;
-}
+}div-echip-back
 .div-images{
     padding-left: 10px;
     text-align:left;
@@ -144,6 +144,7 @@ body {
 
 #div-button-eChip{
 	border-style: groove;
+	width: 100%;
 }
 #eChipButton{
 	width: 80%;
@@ -152,16 +153,9 @@ body {
     color: #247AFE;  
     font-weight: bold;
     padding-bottom: 20px;
+    margin: 0 auto;
 }
-#eChipInstruction,#eChipDocNumberLabel,#eChipDocNum,#eChipDOBLabel,#eChipDOB,#eChipDOELabel,#eChipDOE{
-    padding-left: 20px;
-    padding-top: 10px;
-    
-}
-#eChipDocNum,#eChipDOB,#eChipDOE{
-    width: 40%;
-    
-}
+
 #driver-license-duplex-btn, #passport-btn, #medical-insurance-btn, #driver-license-btn{
     color: #247AFE;  
     font-weight: bold;
@@ -215,8 +209,28 @@ body {
     font-size: 14px;
     font-weight: bold;
 }
+
+#echip-back-btn{
+    color: #247AFE;  
+    padding-right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div-echip-back{
+    text-align:right;
+}
+
+#EChipFaceImage{
+    width:105px;
+    height:119px;
+}
  
 #page3 {
+    height : 100%
+}
+
+#page4 {
     height : 100%
 }
 

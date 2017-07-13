@@ -79,6 +79,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private String facialSubInstHexColor=null;
     private int facialSubInstLeft=0;
     private int facialSubInstTop=0;
+    private String facialInstructionTextFontColor = "#ffffff";
+    private int facialInstructionTextFontSize = 50;
 
     private int facialTimeOut = 20;
     
@@ -558,7 +560,14 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                     subInstPaint.setTypeface(bold);
                 }
                 if(facialInstrunctionText!=null){
-                    acuantAndroidMobileSDKController.setInstructionText(facialInstrunctionText,facialInstructionLeft,facialInstructionTop,null);
+                    Paint InstPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+                    Typeface currentTypeFace =   InstPaint.getTypeface();
+                    Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
+                    InstPaint.setColor(Color.parseColor(facialInstructionTextFontColor));
+                    InstPaint.setTextSize(facialInstructionTextFontSize);
+                    InstPaint.setTextAlign(Paint.Align.LEFT);
+                    InstPaint.setTypeface(bold);
+                    acuantAndroidMobileSDKController.setInstructionText(facialInstrunctionText,facialInstructionLeft,facialInstructionTop,InstPaint);
                 }
                 acuantAndroidMobileSDKController.setSubInstructionText(facialSubInstructionString,facialSubInstLeft,facialSubInstTop,subInstPaint);
                 acuantAndroidMobileSDKController.showManualFacialCameraInterface(cordova.getActivity());
@@ -581,8 +590,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case setFacialInstructionTextStyle:
                 methodId = "setFacialInstructionTextStyle";
                 callbackId = callbackContext;
-                
-                
+                facialInstructionTextFontColor = data.getString(0);
+                facialInstructionTextFontSize = data.getInt(1);
                 break;
             case setFacialRecognitionTimeout:
                 methodId = "setFacialRecognitionTimeout";
@@ -1465,10 +1474,10 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             nfcData.put("SupportedAuths",cardDetails.supportedMethodsString());
             nfcData.put("UnsupportedAuths",cardDetails.notSupportedMethodsString());
             nfcData.put("DocumentSignerValidity",cardDetails.getDocSignerValidity());
-            nfcData.put("BACAunthenticated",cardDetails.bacAunthenticated);
+            nfcData.put("BACAuthenticated",cardDetails.bacAunthenticated);
             nfcData.put("AuthenticDataGroupHashes",cardDetails.authenticDataGroupHashes);
             nfcData.put("AuthenticDocSignature",cardDetails.authenticDocSignature);
-            nfcData.put("AAAunthenticated",cardDetails.aaAunthenticated);
+            nfcData.put("AAAuthenticated",cardDetails.aaAunthenticated);
             return nfcData;
         } catch (JSONException e) {
             e.printStackTrace();
