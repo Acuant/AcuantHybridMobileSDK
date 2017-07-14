@@ -357,9 +357,13 @@ function loadEChipData(data){
 }
 
 function clearTable(table){
-	var numOfRow = table.rows.length;
-	for(var i =0;i<numOfRow;i++){
-		table.deleteRow(i);
+	try{
+		var numOfRow = table.rows.length;
+		for(var i =0;i<numOfRow;i++){
+			table.deleteRow(0);
+		}
+	}catch(e){
+		
 	}
 }
 function addEChipResultRow(table,index,key,value){
@@ -591,6 +595,14 @@ var failure = function (data) {
                'OK'
                );
         }
+        if(data.id=='nfcError'){
+        	navigator.notification.alert(
+               data.errorMessage,
+               alertCallback,
+               'AcuantHybridSampleSDK',
+               'OK'
+               );
+        }
         if (data.id == "activateLicenseKey") {
             navigator.notification.alert(
                data.errorMessage,
@@ -714,6 +726,7 @@ var scanEChipAction = function () {
 };
 
 function readEChipAction(Intent) {
+	navigator.notification.dismissAlertView();
 	var documentNumber = $("#eChipDocNum").val();
 	var dateOfBirth = $("#eChipDOB").val();
 	var dateOfExpiry = $("#eChipDOE").val();
@@ -912,15 +925,18 @@ var app = {
             window.shouldRotateToOrientation = function (degrees) {
                 return true;
             }
-            window.plugins.intent.getCordovaIntent(function (Intent) {
+            
+            if(isAndroid){
+            	window.plugins.intent.getCordovaIntent(function (Intent) {
+        				console.log(Intent);
+    				}, function () {
+        				console.log('Error');
+    			});
+    			window.plugins.intent.setNewIntentHandler(function (Intent) {
         			console.log(Intent);
-    		}, function () {
-        			console.log('Error');
-    		});
-    		window.plugins.intent.setNewIntentHandler(function (Intent) {
-        		console.log(Intent);
-        		handleIntent(Intent);
-    		});
+        			handleIntent(Intent);
+    			});
+    		}
             $("#driver-license-btn").click(driverLicenseAction);
             $("#passport-btn").click(passportAction);
             $("#medical-insurance-btn").click(medicalInsuranceAction);

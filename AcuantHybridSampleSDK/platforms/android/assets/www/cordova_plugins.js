@@ -49,22 +49,6 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova-plugin-dialogs.notification",
-        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
-        "merges": [
-            "navigator.notification"
-        ]
-    },
-    {
-        "id": "cordova-plugin-dialogs.notification_android",
-        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
-        "merges": [
-            "navigator.notification"
-        ]
-    },
-    {
         "id": "cordova-plugin-network-information.network",
         "file": "plugins/cordova-plugin-network-information/www/network.js",
         "pluginId": "cordova-plugin-network-information",
@@ -80,19 +64,35 @@ module.exports = [
         "clobbers": [
             "Connection"
         ]
+    },
+    {
+        "id": "sdgc-cordova-native-dialogs.notification",
+        "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
+        "pluginId": "sdgc-cordova-native-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "id": "sdgc-cordova-native-dialogs.notification_android",
+        "file": "plugins/sdgc-cordova-native-dialogs/www/android/notification.js",
+        "pluginId": "sdgc-cordova-native-dialogs",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
-    "com.napolitano.cordova.plugin.intent": "0.1.3",
+    "com.napolitano.cordova.plugin.intent": "0.1.2",
     "cordova-plugin-compat": "1.0.0",
     "cordova-plugin-camera": "2.2.0",
     "cordova-plugin-console": "1.0.3",
-    "cordova-plugin-dialogs": "1.2.1",
     "cordova-plugin-network-information": "1.2.1",
-    "cordova-plugin-whitelist": "1.2.2"
+    "cordova-plugin-whitelist": "1.2.2",
+    "sdgc-cordova-native-dialogs": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

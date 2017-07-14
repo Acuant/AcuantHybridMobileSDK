@@ -646,12 +646,14 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                     JSONObject errorObj = new JSONObject();
                     errorObj.put("id","nfcError");
                     errorObj.put("errorMessage","NFC is not available for this device");
+                    errorObj.put("errorType",ErrorType.AcuantErrorUnknown);
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
                 }else if(this.nfcAdapter!=null && !this.nfcAdapter.isEnabled()){
                     JSONObject errorObj = new JSONObject();
                     errorObj.put("id","nfcError");
+                    errorObj.put("errorType",ErrorType.AcuantErrorUnknown);
                     errorObj.put("errorMessage","In order to use scan eChip, the NFC sensor must be turned on.");
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);

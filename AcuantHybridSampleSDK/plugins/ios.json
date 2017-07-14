@@ -7,6 +7,12 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
+        "com.napolitano.cordova.plugin.intent": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
@@ -16,16 +22,13 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "com.acuant.plugin.AcuantMobileSDK": {
+        "sdgc-cordova-native-dialogs": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },

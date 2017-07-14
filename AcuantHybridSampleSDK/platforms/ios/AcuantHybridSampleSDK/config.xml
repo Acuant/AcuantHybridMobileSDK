@@ -15,17 +15,20 @@
         <param name="ios-package" value="CDVGestureHandler" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="AcuantMobileSDK">
+        <param name="ios-package" value="AcuantMobileSDK" />
+    </feature>
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
-    <feature name="Notification">
-        <param name="ios-package" value="CDVNotification" />
-    </feature>
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
     </feature>
     <name>AcuantHybridSampleSDK</name>
     <description>
@@ -76,7 +79,4 @@
     <preference name="orientation" value="default" />
     <preference name="webviewbounce" value="false" />
     <preference name="deployment-target" value="8.0" />
-    <feature name="AcuantMobileSDK">
-        <param name="ios-package" value="AcuantMobileSDK" />
-    </feature>
 </widget>

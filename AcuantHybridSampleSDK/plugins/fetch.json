@@ -23,14 +23,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-dialogs": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-dialogs"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-console": {
         "source": {
             "type": "registry",
@@ -47,6 +39,14 @@
         "is_top_level": true,
         "variables": {}
     },
+    "com.napolitano.cordova.plugin.intent": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-intent@^0.1.2"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
     "com.acuant.plugin.AcuantMobileSDK": {
         "source": {
             "type": "local",
@@ -55,10 +55,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.napolitano.cordova.plugin.intent": {
+    "sdgc-cordova-native-dialogs": {
         "source": {
             "type": "registry",
-            "id": "https://github.com/napolitano/cordova-plugin-intent"
+            "id": "sdgc-cordova-native-dialogs@^1.0.0"
         },
         "is_top_level": true,
         "variables": {}

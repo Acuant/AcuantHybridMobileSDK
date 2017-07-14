@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 05/22/2017
+Last updated on – 07/19/2017
 
 # Introduction
 
@@ -136,6 +136,17 @@ Step - 2 : Execute the following command (To add the plugin from local folder)
 Step - 3 : Add the following path to framework search path
 
 	"$(PROJECT_DIR)/../../plugins/**"
+	
+![](document_images/frameowrk-search-path.png)
+	
+Step - 4 : Add Microblink.bundle and Microblink.framework to the project as shown in the below image. (These files are avilable in "<Project folder>/plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs")
+
+![](document_images/microblink-1.png)
+	
+Step - 5 : Add Microblink.framework as Embedded Binaries as below.
+	
+![](document_images/microblink-2.png)
+ 
 
 
 *Note : In Windows please make sure the zcard.dll is present in “<Project folder>\platforms\windows\plugins\com.acuant.plugin.AcuantMobileSDK” in folder.Otherwise copy it from cordova-plugin-AcuantHybridSDK plugin folder.*
@@ -144,9 +155,13 @@ Also make sure the following cordova plugins are installed.
 
 - cordova-plugin-compat
 - cordova-plugin-console
-- cordova-plugin-dialogs
+- sdgc-cordova-native-dialogs
 - cordova-plugin-network-information
 - cordova-plugin-whitelist
+
+Android Specific :
+
+- cordova-plugin-intent  (cordova plugin add https://github.com/napolitano/cordova-plugin-intent )
 
 
 For Windows platform the following plugin is also required.
@@ -466,17 +481,17 @@ interface must use the following method:
 
 ## Add the card processing method.
 
-	processCardImage(successCallback, failureCallback, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
+	processCardImage(successCallback, failureCallback, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logTransaction,imageSettings);
 
 ### For Driver's License Cards
 
 In order to setup Driver License Card, set the following values.
 
-	AcuantMobileSDK.processCardImage(success, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, imageSource);
+	AcuantMobileSDK.processCardImage(success, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region,logTransaction,imageSettings);
 
 Eg:
 
-	AcuantMobileSDK.processCardImage(success, failure, 2, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, 0, 101);
+	AcuantMobileSDK.processCardImage(success, failure, 2, backCardImage, barcodeStringData, true, -1, true, 0, 150, false, true, true, 0, true,-1);
 
 **Explanation of the parameters:**
 
@@ -859,6 +874,47 @@ Following is the method to match the selfie image with a face image :
 	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult);
 	
 	
+# Reading e-Passports Chips (Android only)
+
+If AssureID is enabled on your licenseKey then information from the chip in an e-Passport can be read by using Acuant Hybrid mobile SDK.
+
+To scan and read information from a e-passport chip , follow the steps below .
+
+-	Ensure the following permission is enter in the application manifest file.
+		
+		<uses-permission android:name="android.permission.NFC" />
+
+- Ensure NFC is turned on in the device.
+		
+-	The following SDK API can be used to listen to NFC tags available in an e-Passport
+		
+		AcuantMobileSDK.scanEChip(success, failure);
+		
+- If a NFC Tag is successfully discovered , onNewIntent of the cordova Android activity will be called.This event can be captured as below :
+
+		- onDeviceReady set as below to handle the Android intent. (Please refer sample app)
+
+			window.plugins.intent.setNewIntentHandler(function (Intent) {
+        		console.log(Intent);
+        		handleIntent(Intent);
+    		});
+    	
+    	- If the above intent handler is set then the new intent control will come to the following method.(Please refer sample app)
+
+		function handleIntent(Intent){
+			if(isAndroid){
+        		readEChipAction(Intent);
+			}
+		}
+        
+-	Inside the above handler method , call the following API to read the NFC e-Passport chip.
+			
+		 //	documentNumber : Non empty string
+	     // dateOfBirth : (yyMMdd)
+	     // dateOfExpiry :(yyMMdd)
+        AcuantMobileSDK.readEChip(success,failure,Intent,documentNumber,
+        dateOfBirth,dateOfExpiry);	
+	
 # Supported Hybrid Frameworks
 
 Acuant Hybrid Mobile SDK supports following hybrid frameworks:
@@ -875,12 +931,10 @@ Mobile Angular UI
 
 # Change Log
 
-Acuant Hybrid MobileSDK version 2.4
+Acuant Hybrid MobileSDK version 2.5
 
 	
-- Improved cropping of ID and Passports
-- Added Facial Liveliness and Matching feature.
-- Add the following method to enable capturing of the original uncropped image. By default the original uncropped image capture is disbaled to reduce runtime memory footprint.
-	
-		AcuantMobileSDK.setCanCaptureOriginalImage(success,failure,true);
-            	
+- Removed the parameter imageSource from the API processCardImage.
+- Added the parameter logTransaction and imageSetting to the API processCardImage.If logging is enabled for the license then setting logTransaction will save images in the server.The default value for imageSetting is -1.Please set this value to -1 always unless any special instucton is provided.
+- Added the e-Passport chip reading feature for Android.
+- Removed "IsFacialEnabled" from the Facial Match Response.

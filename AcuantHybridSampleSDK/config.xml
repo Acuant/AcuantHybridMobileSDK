@@ -55,11 +55,12 @@
     <plugin name="cordova-plugin-camera" spec="~2.2.0" />
     <plugin name="cordova-plugin-compat" spec="~1.0.0" />
     <plugin name="cordova-plugin-console" spec="~1.0.3" />
-    <plugin name="cordova-plugin-dialogs" spec="~1.2.1" />
+    <plugin name="cordova-plugin-intent" spec="~0.1.2" />
     <plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <engine name="browser" spec="~4.1.0" />
-    <engine name="ios" spec="~4.4.0" />
     <plugin name="com.acuant.plugin.AcuantMobileSDK" spec="/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK" />
+    <plugin name="sdgc-cordova-native-dialogs" spec="^1.0.0" />
+    <engine name="ios" spec="~4.4.0" />
     <engine name="android" spec="~6.2.3" />
 </widget>

@@ -30,7 +30,13 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
-        "cordova-plugin-dialogs": {
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "com.napolitano.cordova.plugin.intent": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "sdgc-cordova-native-dialogs": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         }
     },
@@ -93,19 +99,19 @@
             ]
         },
         {
-            "id": "cordova-plugin-dialogs.notification",
-            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-            "pluginId": "cordova-plugin-dialogs",
-            "merges": [
-                "navigator.notification"
+            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+            "clobbers": [
+                "AcuantMobileSDK"
             ]
         },
         {
-            "id": "cordova-plugin-dialogs.NotificationProxy",
-            "file": "plugins/cordova-plugin-dialogs/src/windows/NotificationProxy.js",
-            "pluginId": "cordova-plugin-dialogs",
+            "id": "sdgc-cordova-native-dialogs.notification",
+            "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
+            "pluginId": "sdgc-cordova-native-dialogs",
             "merges": [
-                ""
+                "navigator.notification"
             ]
         }
     ],
@@ -114,6 +120,8 @@
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-whitelist": "1.2.2",
         "cordova-plugin-console": "1.0.3",
-        "cordova-plugin-dialogs": "1.2.1"
+        "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
+        "com.napolitano.cordova.plugin.intent": "0.1.2",
+        "sdgc-cordova-native-dialogs": "1.0.0"
     }
 }

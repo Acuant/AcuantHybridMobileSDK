@@ -27,19 +27,6 @@ IntentPlugin.prototype.setNewIntentHandler = function(method) {
     );
 };
 
-IntentPlugin.prototype.getRealPathFromContentUrl = function(uri, successCallback, failureCallback) {
-    'use strict'
-
-    cordova.exec (
-        successCallback,
-        failureCallback,
-        'IntentPlugin',
-        'getRealPathFromContentUrl',
-        [uri]
-    );
-
-}
-
 var intentInstance = new IntentPlugin();
 module.exports = intentInstance;
 
@@ -50,5 +37,4 @@ if (!window.plugins) {
 if (!window.plugins.intent) {
     window.plugins.intent = intentInstance;
 }
-
 });

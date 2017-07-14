@@ -22,13 +22,13 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-        },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
+        "sdgc-cordova-native-dialogs": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },
