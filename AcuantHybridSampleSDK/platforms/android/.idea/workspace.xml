@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="f6e22a5d-cda6-4dfb-9ee1-766f12c3a4da" name="Default" comment="" />
+    <list default="true" readonly="true" id="7d5830be-ba54-4539-847b-ed8bc5f95976" name="Default" comment="" />
     <ignored path="android.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1594,7 +1594,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="7500291450000" />
+        <entry key="$PROJECT_DIR$" value="7501552975000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2016,7 +2016,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="828" />
+    <option name="height" value="824" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -2043,7 +2043,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2054,9 +2055,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2272,16 +2272,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f6e22a5d-cda6-4dfb-9ee1-766f12c3a4da" name="Default" comment="" />
-      <created>1500058292135</created>
+      <changelist id="7d5830be-ba54-4539-847b-ed8bc5f95976" name="Default" comment="" />
+      <created>1500310587802</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1500058292135</updated>
+      <updated>1500310587802</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="828" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="824" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />

@@ -791,7 +791,7 @@ var processFacialMatch = function () {
 
 var showFacialInterface = function() {
     AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
-    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
+    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until\nRed Rectangle appears and\nBlink");
     if(isAndroid){
     	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
     	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);

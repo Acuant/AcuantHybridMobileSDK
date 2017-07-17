@@ -22,13 +22,13 @@
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "AcuantHybridSampleSDK"
-        },
         "com.napolitano.cordova.plugin.intent": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         },
         "sdgc-cordova-native-dialogs": {
+            "PACKAGE_NAME": "AcuantHybridSampleSDK"
+        },
+        "com.acuant.plugin.AcuantMobileSDK": {
             "PACKAGE_NAME": "AcuantHybridSampleSDK"
         }
     },

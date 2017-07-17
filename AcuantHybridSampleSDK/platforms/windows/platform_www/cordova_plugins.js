@@ -57,19 +57,19 @@ module.exports = [
         ]
     },
     {
-        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-        "clobbers": [
-            "AcuantMobileSDK"
-        ]
-    },
-    {
         "id": "sdgc-cordova-native-dialogs.notification",
         "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
         "pluginId": "sdgc-cordova-native-dialogs",
         "merges": [
             "navigator.notification"
+        ]
+    },
+    {
+        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+        "clobbers": [
+            "AcuantMobileSDK"
         ]
     }
 ];
@@ -80,9 +80,9 @@ module.exports.metadata =
     "cordova-plugin-camera": "2.2.0",
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-console": "1.0.3",
-    "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
     "com.napolitano.cordova.plugin.intent": "0.1.2",
-    "sdgc-cordova-native-dialogs": "1.0.0"
+    "sdgc-cordova-native-dialogs": "1.0.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.5.0"
 };
 // BOTTOM OF METADATA
 });

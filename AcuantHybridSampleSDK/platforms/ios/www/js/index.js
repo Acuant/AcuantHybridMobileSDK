@@ -357,9 +357,13 @@ function loadEChipData(data){
 }
 
 function clearTable(table){
-	var numOfRow = table.rows.length;
-	for(var i =0;i<numOfRow;i++){
-		table.deleteRow(i);
+	try{
+		var numOfRow = table.rows.length;
+		for(var i =0;i<numOfRow;i++){
+			table.deleteRow(0);
+		}
+	}catch(e){
+		
 	}
 }
 function addEChipResultRow(table,index,key,value){
@@ -787,7 +791,7 @@ var processFacialMatch = function () {
 
 var showFacialInterface = function() {
     AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
-    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
+    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until \nRed Rectangle appears and Blink");
     if(isAndroid){
     	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
     	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);
