@@ -572,6 +572,10 @@ var success = function (data) {
     			processFacialMatch();
 			});
         }
+        if(data.id=='onCardImageCaptured'){
+        	log("success: " + JSON.stringify(data));
+    	}
+    
     }
 };
 var failure = function (data) {
@@ -791,7 +795,7 @@ var processFacialMatch = function () {
 
 var showFacialInterface = function() {
     AcuantMobileSDK.setFacialRecognitionTimeout(success, failure,20);
-    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until \nRed Rectangle appears and Blink");
+    AcuantMobileSDK.setFacialInstructionText(success, failure,"Get closer until Red Rectangle appears and Blink");
     if(isAndroid){
     	AcuantMobileSDK.setFacialInstructionLocation(success, failure,120,100);
     	AcuantMobileSDK.setFacialSubInstructionLocation(success, failure,450,150);

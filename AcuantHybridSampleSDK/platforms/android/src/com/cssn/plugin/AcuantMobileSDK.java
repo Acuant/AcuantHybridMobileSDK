@@ -932,6 +932,24 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void onCardImageCaptured() {
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("id", "onCardImageCaptured");
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+                    result.setKeepCallback(true);
+                    callbackId.sendPluginResult(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     
     @Override
     public void onCardCroppingStart(Activity activity) {

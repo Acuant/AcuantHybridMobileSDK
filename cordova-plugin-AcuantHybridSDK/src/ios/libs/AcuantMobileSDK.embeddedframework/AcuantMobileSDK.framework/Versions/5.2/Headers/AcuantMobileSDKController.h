@@ -52,6 +52,11 @@ typedef enum{
 @optional
 
 /**
+ Called to inform the delegate that a card image photo is taken even happened
+ */
+- (void)didTakeCardPhoto;
+
+/**
  Called to inform the delegate that a card image was captured
  @param cardImage the card image
  */

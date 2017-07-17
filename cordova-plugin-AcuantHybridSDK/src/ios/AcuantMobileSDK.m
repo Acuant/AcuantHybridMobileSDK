@@ -723,6 +723,14 @@
 #pragma mark -
 #pragma mark AcuantMobileSDK Delegate Methods
 
+- (void)didTakeCardPhoto{
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"onCardImageCaptured" forKey:@"id"];
+    CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                             messageAsDictionary:resultDictionary];
+    [result setKeepCallback:[NSNumber numberWithBool:YES]];
+    [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
+
 /**
  Called to inform the delegate that a card image was captured
  @param cardImage the card image

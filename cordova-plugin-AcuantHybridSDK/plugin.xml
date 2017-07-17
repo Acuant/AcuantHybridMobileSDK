@@ -7,7 +7,7 @@
   <name>AcuantMobileSDK</name>
 
   <engines>
-    <engine name="cordova" version=">=6.3.1"/>
+    <engine name="cordova" version=">=7.0.1"/>
   </engines>
 
   <asset src="www/AcuantMobileSDK.js" target="AcuantMobileSDK.js"/>
