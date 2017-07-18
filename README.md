@@ -3,7 +3,7 @@
 Acuant Hybrid SDK API
 ======================
 
-Last updated on – 07/19/2017
+Last updated on – 07/18/2017
 
 # Introduction
 
@@ -358,6 +358,16 @@ By default it is disabled.
 ### Optional method to show or not show the iPad brackets on the card capture interface
 
 	AcuantMobileSDK.showiPadBrackets(success, failure, true);
+	
+## Get the image capture event from the success callback.
+When the image capture process starts after user taps on the camera screen, the event can be caputred as below :
+
+var success = function (data) {
+	if(data.id=='onCardImageCaptured')
+		{ 
+			// Custom code here
+		}
+};
 
 ## Get the crop image from the success callback.
 
@@ -476,6 +486,7 @@ interface must use the following method:
          }
      }
     }
+    
 
 # Processing a card
 
@@ -935,6 +946,17 @@ Acuant Hybrid MobileSDK version 2.5
 
 	
 - Removed the parameter imageSource from the API processCardImage.
-- Added the parameter logTransaction and imageSetting to the API processCardImage.If logging is enabled for the license then setting logTransaction will save images in the server.The default value for imageSetting is -1.Please set this value to -1 always unless any special instucton is provided.
+- Added the parameter logTransaction to the API processCardImage. If logging is enabled on the license key and logTransaction is set to true then transaction response is saved on the Acuant cloud for future retrieval. 
+- Added the parameter imageSetting to the API processCardImage. The default value for imageSetting is -1. Please set this value to -1 always unless any special instruction is provided.
 - Added the e-Passport chip reading feature for Android.
 - Removed "IsFacialEnabled" from the Facial Match Response.
+- Fixed the bug in setFacialInstructionTextStyle for Android
+- Line breaks can be added in Facial Instruction text by adding '\n'.
+- When the image capture process starts after user taps on the camera screen, the event can be caputred as below :
+
+		var success = function (data) {
+			if(data.id=='onCardImageCaptured')
+			{ 
+				// Custom code here
+			}
+		};
