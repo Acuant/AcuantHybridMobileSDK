@@ -10,7 +10,7 @@
         "spec": ">=0.1.2 <0.2.0",
         "type": "range"
       },
-      "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules"
+      "/Users/tapasbehera/Desktop/Test/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules"
     ]
   ],
   "_from": "cordova-plugin-intent@>=0.1.2 <0.2.0",
@@ -41,7 +41,7 @@
   "_shasum": "80bff1bf7daad248ba3e89a6b0c9e157a01a885f",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-intent@^0.1.2",
-  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules",
+  "_where": "/Users/tapasbehera/Desktop/Test/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules",
   "author": {
     "name": "Axel Naolitano, Napolitano Business Solutions"
   },
