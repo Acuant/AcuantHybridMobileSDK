@@ -380,7 +380,7 @@ module.exports.help = function help() {
     console.log('    build ');
     console.log('    build --debug');
     console.log('    build --release');
-    console.log('    build --codeSignIdentity="iPhone Distribution" --provisioningProfile="926c2bd6-8de9-4c2f-8407-1016d2d12954"');
+    console.log('    build --codeSignIdentity="iPhone Distribution" --provisioningProfile="Automatic"');
     // TODO: add support for building different archs
     // console.log("    build --release --archs=\"armv7\"");
     console.log('');
