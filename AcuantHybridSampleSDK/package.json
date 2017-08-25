@@ -5,8 +5,7 @@
     "cordova": {
         "platforms": [
             "android",
-            "browser",
-            "ios"
+            "browser"
         ],
         "plugins": {
             "cordova-plugin-whitelist": {},
@@ -14,10 +13,10 @@
             "cordova-plugin-compat": {},
             "cordova-plugin-console": {},
             "cordova-plugin-network-information": {},
-            "com.acuant.plugin.AcuantMobileSDK": {},
             "cordova-plugin-intent": {},
             "com.napolitano.cordova.plugin.intent": {},
-            "sdgc-cordova-native-dialogs": {}
+            "sdgc-cordova-native-dialogs": {},
+            "com.acuant.plugin.AcuantMobileSDK": {}
         }
     },
     "dependencies": {
@@ -26,7 +25,6 @@
         "com.acuant.plugin.acuantmobilesdk": "file:///Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK",
         "cordova-android": "^6.2.3",
         "cordova-browser": "~4.1.0",
-        "cordova-ios": "^4.4.0",
         "cordova-plugin-camera": "~2.2.0",
         "cordova-plugin-compat": "~1.0.0",
         "cordova-plugin-console": "~1.0.3",
@@ -34,6 +32,7 @@
         "cordova-plugin-network-information": "~1.2.1",
         "cordova-plugin-whitelist": "1",
         "ios": "0.0.1",
+        "phonegap-plugin-barcodescanner": "^6.0.8",
         "sdgc-cordova-native-dialogs": "^1.0.0"
     }
 }

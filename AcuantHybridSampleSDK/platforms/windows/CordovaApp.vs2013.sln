@@ -31,6 +31,8 @@ Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "CordovaApp.Phone", "Cordova
 EndProject
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "CordovaApp.Windows10", "CordovaApp.Windows10.jsproj", "{F9B0AE20-C91C-42B9-9C6E-D3BC28B4509E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinRTBarcodeReader", "..\..\plugins\phonegap-plugin-barcodescanner\src\windows\lib\WinRTBarcodeReader.csproj", "{01412F36-3781-4AF0-903C-ACEA7552C99C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		CordovaApp.projitems*{58950fb6-2f93-4963-b9cd-637f83f3efbf}*SharedItemsImports = 5

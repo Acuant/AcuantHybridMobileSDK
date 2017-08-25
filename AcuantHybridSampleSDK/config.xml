@@ -54,7 +54,6 @@
     </platform>
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="~4.1.0" />
-    <engine name="ios" spec="^4.4.0" />
     <plugin name="com.acuant.plugin.AcuantMobileSDK" spec="/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK" />
     <plugin name="com.napolitano.cordova.plugin.intent" />
     <plugin name="cordova-plugin-camera" spec="~2.2.0" />
