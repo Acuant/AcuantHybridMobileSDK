@@ -95,6 +95,9 @@ After cloning the repository execute the following command to make sure all file
 
 	git lfs pull
 	
+
+[![Check the video tutorial](document_images/video_image.png)](https://youtu.be/jHKzRedcRb8)
+	
 ## Common Error
 
 If git-lfs is not setup, then GitHub doesn't download of large files. Therefore, if the following build error appears while building the iOS app, that means some of the files are missing. 
