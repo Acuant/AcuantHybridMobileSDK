@@ -66,7 +66,7 @@
     "com.acuant.plugin.AcuantMobileSDK": {
         "source": {
             "type": "local",
-            "path": "/Users/tapasbehera/Desktop/Test/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK"
+            "path": "../cordova-plugin-AcuantHybridSDK"
         },
         "is_top_level": true,
         "variables": {}
@@ -77,6 +77,8 @@
             "id": "phonegap-plugin-barcodescanner"
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "CAMERA_USAGE_DESCRIPTION": " "
+        }
     }
 }

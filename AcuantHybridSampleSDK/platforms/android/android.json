@@ -9,6 +9,10 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"IntentPlugin\"><param name=\"android-package\" value=\"com.napolitano.cordova.plugin.intent.IntentPlugin\" /></feature>",
                             "count": 1
                         },
@@ -25,11 +29,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -44,7 +48,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
@@ -68,7 +72,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
@@ -84,6 +88,10 @@
                         },
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.camera.flash\" android:required=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
                             "count": 1
                         }
                     ],
@@ -103,6 +111,14 @@
                         {
                             "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2FacialRecognitionManual\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden|screenSize\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"Share\" android:name=\"com.google.zxing.client.android.encode.EncodeActivity\" />",
+                            "count": 1
                         }
                     ],
                     "/*": [
@@ -120,6 +136,9 @@
         }
     },
     "installed_plugins": {
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+        },
         "com.napolitano.cordova.plugin.intent": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
@@ -138,15 +157,23 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "sdgc-cordova-native-dialogs": {
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         },
-        "com.acuant.plugin.AcuantMobileSDK": {
+        "sdgc-cordova-native-dialogs": {
             "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+            "clobbers": [
+                "AcuantMobileSDK"
+            ]
+        },
         {
             "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
             "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
@@ -205,6 +232,14 @@
             ]
         },
         {
+            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+            "pluginId": "phonegap-plugin-barcodescanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
+        },
+        {
             "id": "sdgc-cordova-native-dialogs.notification",
             "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
             "pluginId": "sdgc-cordova-native-dialogs",
@@ -219,24 +254,17 @@
             "merges": [
                 "navigator.notification"
             ]
-        },
-        {
-            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-            "clobbers": [
-                "AcuantMobileSDK"
-            ]
         }
     ],
     "plugin_metadata": {
+        "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
         "com.napolitano.cordova.plugin.intent": "0.1.2",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-console": "1.0.3",
         "cordova-plugin-network-information": "1.2.1",
         "cordova-plugin-whitelist": "1.2.2",
-        "sdgc-cordova-native-dialogs": "1.0.0",
-        "com.acuant.plugin.AcuantMobileSDK": "2.5.0"
+        "phonegap-plugin-barcodescanner": "6.0.8",
+        "sdgc-cordova-native-dialogs": "1.0.0"
     }
 }

@@ -1,13 +1,8 @@
 <component name="libraryTable">
   <library name="acuantMobileSDK-">
     <CLASSES>
-<<<<<<< HEAD
-      <root url="file://$USER_HOME$/.android/build-cache/a2be163183ba66cfcd13f4740c1373aea462b415/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/a2be163183ba66cfcd13f4740c1373aea462b415/output/jars/classes.jar!/" />
-=======
-      <root url="jar://$USER_HOME$/.android/build-cache/4c52fc8db935c4d8a2bfa5243c4aff7b3874a610/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/4c52fc8db935c4d8a2bfa5243c4aff7b3874a610/output/res" />
->>>>>>> 043851749c32cecf5c07ee4890c989598dfadb0e
+      <root url="file://$USER_HOME$/.android/build-cache/567c4f19030c64a767d07e5d40bd3376bb6564ab/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/567c4f19030c64a767d07e5d40bd3376bb6564ab/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

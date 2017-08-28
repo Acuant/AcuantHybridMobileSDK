@@ -133,17 +133,12 @@ Step - 2 : Execute the following command (To add the plugin from local folder)
 
 	cordova plugin add Users/user/Desktop/AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK --nofetch
 	
-Step - 3 : Add the following path to framework search path - (ios only)
-
-	"$(PROJECT_DIR)/../../plugins/**"
 	
-![](document_images/frameowrk-search-path.png)
-	
-Step - 4 : Add Microblink.bundle and Microblink.framework to the project as shown in the below image. (These files are avilable in "<Project folder>/plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs") - (ios only)
+Step - 3 : Add Microblink.bundle and Microblink.framework to the project as shown in the below image. (These files are avilable in "<Project folder>/plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs") - (ios only)
 
 ![](document_images/microblink-1.png)
 	
-Step - 5 : Add Microblink.framework as Embedded Binaries as below. - (ios only)
+Step - 4 : Add Microblink.framework as Embedded Binaries as below. - (ios only)
 	
 ![](document_images/microblink-2.png)
  
