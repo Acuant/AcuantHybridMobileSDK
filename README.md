@@ -96,7 +96,7 @@ After cloning the repository execute the following command to make sure all file
 	git lfs pull
 	
 
-[![Check the video tutorial](document_images/video_image.png)](https://youtu.be/jHKzRedcRb8)
+[![Check the video tutorial](document_images/videoimage.png)](https://youtu.be/jHKzRedcRb8)
 	
 ## Common Error
 
