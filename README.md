@@ -97,6 +97,8 @@ After cloning the repository execute the following command to make sure all file
 	
 
 [![Check the video tutorial](document_images/videoimage.png)](https://youtu.be/jHKzRedcRb8)
+
+[![Check the video tutorial](document_images/videoimageionic.png)](https://youtu.be/1SlpJ912sJU)
 	
 ## Common Error
 
