@@ -124,6 +124,16 @@ Sometimes for iOS framework the shorcut files don't get copied.Make sure the sho
 
 If the shortcuts are not present , then copy the entire "AcuantMobileSDK.embeddedframework" folder from cordova-plugin-AcuantHybridSDK folder into the projects "plugins/com.acuant.plugin.AcuantMobileSDK/src/ios/libs" folder.Then remove the ios platform and add again.
 
+
+While publishing the app if the following error is observed that means in XCode build setting the architectures are not set correctly.Please set valid cpu architectures or use the "lipo" command line tool to remove the unsupported architecture library.
+
+![](document_images/unsupported_architecture.png)
+
+	
+		lipo -remove i386 <Path to the file> -o <Output file path>
+		lipo -remove x86_64 <Path to the file> -o <Output file path>
+
+
 ## Add AcuantMobileSDK Plugin on each project 
 
 In order to add the plugin to your project, follow the below two steps:
