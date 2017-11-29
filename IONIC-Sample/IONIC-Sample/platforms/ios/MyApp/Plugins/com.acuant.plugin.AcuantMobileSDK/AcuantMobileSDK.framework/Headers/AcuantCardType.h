@@ -11,4 +11,5 @@ typedef enum {
 	AcuantCardTypeDriversLicenseCard = 2,
 	AcuantCardTypePassportCard = 3,
     AcuantCardTypeFacial = 4,
+    AcuantCardTypeAuto = 5,
 } AcuantCardType;

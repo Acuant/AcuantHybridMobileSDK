@@ -1099,5 +1099,7 @@
                         });
                 return;
     	}
+    },isSDKValidated:function (successCallback, failure) {  
+        cordova.exec(successCallback, failure, "AcuantMobileSDK", "isSDKValidated",[]);	
     }
 };

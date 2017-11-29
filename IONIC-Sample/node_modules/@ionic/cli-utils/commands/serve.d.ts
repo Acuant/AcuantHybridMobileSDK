@@ -1,0 +1,21 @@
+import { CommandLineInputs, CommandLineOptions, IonicEnvironment, ServeDetails } from '../definitions';
+export declare function serve(env: IonicEnvironment, inputs: CommandLineInputs, options: CommandLineOptions): Promise<ServeDetails>;
+export declare function cliOptionsToServeOptions(options: CommandLineOptions): {
+    address: string;
+    port: number;
+    livereloadPort: number;
+    notificationPort: number;
+    consolelogs: boolean;
+    serverlogs: boolean;
+    livereload: boolean;
+    proxy: boolean;
+    lab: boolean;
+    open: boolean;
+    browser: string | undefined;
+    browserOption: string | undefined;
+    basicAuth: [string, string] | undefined;
+    env: string | undefined;
+    devapp: boolean;
+    externalAddressRequired: boolean;
+    iscordovaserve: boolean;
+};

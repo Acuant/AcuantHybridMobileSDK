@@ -22,7 +22,7 @@
   "_resolved": "https://registry.npmjs.org/cordova-plugin-intent/-/cordova-plugin-intent-0.1.2.tgz",
   "_shasum": "80bff1bf7daad248ba3e89a6b0c9e157a01a885f",
   "_spec": "cordova-plugin-intent@^0.1.2",
-  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/AcuantHybridSampleSDK/node_modules",
+  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/Cordova-Sample",
   "author": {
     "name": "Axel Naolitano, Napolitano Business Solutions"
   },

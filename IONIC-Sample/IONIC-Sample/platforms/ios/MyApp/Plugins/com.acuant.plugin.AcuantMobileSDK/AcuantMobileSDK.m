@@ -239,19 +239,6 @@
     _callbackId = [command callbackId];
     [_instance setCloudAddress:_cloudAddressString];
 }
-/**
- Use this method to activate the license key
- @param command CDVInvokedUrlCommand
- */
-- (void)activateLicenseKey:(CDVInvokedUrlCommand*)command{
-    _methodId = @"activateLicenseKey";
-    if ([command.arguments objectAtIndex:0])
-    {
-        _key = [command.arguments objectAtIndex:0];
-    }
-    _callbackId = [command callbackId];
-    [_instance activateLicenseKey:_key];
-}
 
 -(void)enableLocationTracking:(CDVInvokedUrlCommand*)command{
     _methodId = @"enableLocationTracking";
@@ -953,7 +940,6 @@
 - (void)didFinishValidatingImageWithResult:(AcuantCardResult*)result{
     AcuantFacialData* facialData = (AcuantFacialData*)result;
     NSMutableDictionary *cardResult = [NSMutableDictionary dictionary];
-    [cardResult setObject:[facialData valueForKey:@"isFacialEnabled"]  forKey:@"IsFacialEnabled"];
     [cardResult setObject:[facialData valueForKey:@"isMatch"]  forKey:@"FacialMatch"];
     [cardResult setObject:[facialData valueForKey:@"facialMatchConfidenceRating"] forKey:@"FacialMatchConfidenceRating"];
     [cardResult setObject:[facialData valueForKey:@"faceLivelinessDetection"] forKey:@"FaceLivelinessDetection"];

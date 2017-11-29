@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.acuant.plugin.AcuantMobileSDK"
-        version="2.5.0">
+        version="2.5.1">
 
   <name>AcuantMobileSDK</name>
 
@@ -80,6 +80,7 @@
     </config-file>
     
     <framework src="src/ios/Libs/AcuantMobileSDK.embeddedframework/AcuantMobileSDK.framework" custom="true"/>
+    <framework src="src/ios/libs/AcuantMobileSDK.embeddedframework/Resources/Frameworks/MicroBlink.framework" custom="true" embed="true" link="true"/>
     
     <framework src="libc++.dylib" />
     <framework src="libz.dylib" />
@@ -101,6 +102,7 @@
     
     <header-file src="src/ios/AcuantMobileSDK.h"/>
     <source-file src="src/ios/AcuantMobileSDK.m"/>
+    <resource-file src="src/ios/libs/AcuantMobileSDK.embeddedframework/Resources/MicroBlink.bundle"/>
  
   </platform>
 

@@ -1100,6 +1100,8 @@ cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(req
                         });
                 return;
     	}
+    },isSDKValidated:function (successCallback, failure) {  
+        cordova.exec(successCallback, failure, "AcuantMobileSDK", "isSDKValidated",[]);	
     }
 };
 

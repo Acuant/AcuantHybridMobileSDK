@@ -12,7 +12,6 @@
 @interface AcuantFacialData : AcuantCardResult
 
 @property (nonatomic, assign) BOOL  isMatch;
-@property (nonatomic, assign) BOOL  isFacialEnabled;
 @property (nonatomic, assign) BOOL  faceLivelinessDetection;
 @property (nonatomic, strong) NSString  *transactionId;
 @property (nonatomic, strong) NSString  *errorMessage;

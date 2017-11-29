@@ -14,7 +14,7 @@
         <activity android:name="com.acuant.mobilesdk.detect.PDF417.CameraPDF417" />
         <activity android:name="com.acuant.mobilesdk.detect.Camera2FacialRecognitionManual" />
     </application>
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="25" />
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="26" />
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
     <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 </manifest>

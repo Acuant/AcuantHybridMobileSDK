@@ -28,7 +28,7 @@ var isSmallScreen = (screen.width < 767 || (isAndroid && deviceWidth < 450));
 var isUnknownMobile = (isWebkit && isSmallScreen);
 var isMobile = (isIOS || isAndroid || isUnknownMobile);
 var isTablet = (isIPad || (isMobile && !isSmallScreen));
-var licenseKey = "";
+var licenseKey = "XXXXXXXXXXXXX";
 var isBarcodeSide;
 var isFrontSide;
 var debbug = false;
@@ -56,6 +56,7 @@ var isAssureIDAllowed = false;
 var showBarcodeImage = false;
 var isFacialAllowed = false;
 var dataCaptured = false;
+var sdkWasValidated = false;
 
 
 var log = function (message) {
@@ -384,6 +385,7 @@ var success = function (data) {
     log("success: " + JSON.stringify(data));
     if (typeof data === 'object') {
         if (data.id == 'mobileSDKWasValidated') {
+        	AcuantMobileSDK.isSDKValidated(success, failure);
             $("#progress_modal").toggleClass("hdn");
             $('#progress_modal').nsProgress('dismiss');
             if (data.data === true) {
@@ -404,6 +406,13 @@ var success = function (data) {
                     log("PDF417 Image iOS");
                     convertImgToBase64URL("img/PDF417.png", PDF417ImageBase64Callback);
                 }
+            }
+        }
+        if (data.id == 'isSDKValidated') {
+            if (data.data === true) {
+            	sdkWasValidated = true;
+            } else {
+                sdkWasValidated = false;
             }
         }
         if(data.id=='nfcReady'){
@@ -607,14 +616,6 @@ var failure = function (data) {
                'OK'
                );
         }
-        if (data.id == "activateLicenseKey") {
-            navigator.notification.alert(
-               data.errorMessage,
-               alertCallback,
-               'AcuantHybridSampleSDK',
-               'OK'
-               );
-        }
         if (data.errorType == 8) {
             var srcFront = "data:image/png;base64," + originalImage;
             var img = $('<img class="bordered" src="' + srcFront + '">');
@@ -811,10 +812,19 @@ var showFacialInterface = function() {
 }
 
 var showCameraInterfaceFront = function () {
-    log('showCameraInterfaceFront');
-    isFrontSide = true;
-    AcuantMobileSDK.setWidth(success, failure, cardWidth);
-    AcuantMobileSDK.showManualCameraInterfaceInViewController(success, failure, cardType, cardRegion, false);
+	if(sdkWasValidated){
+    	log('showCameraInterfaceFront');
+    	isFrontSide = true;
+   	 	AcuantMobileSDK.setWidth(success, failure, cardWidth);
+    	AcuantMobileSDK.showManualCameraInterfaceInViewController(success, failure, cardType, cardRegion, false);
+    }else{
+    	navigator.notification.alert(
+                                'SDK is not yet validated.',
+                                alertCallback,
+                                'AcuantHybridSampleSDK',
+                                'OK'
+                                );
+    }
 };
 var showCameraInterfaceBack = function () {
     log('showCameraInterfaceBack');
@@ -835,18 +845,6 @@ var showCameraInterfaceDLBack = function () {
         AcuantMobileSDK.setWidth(success, failure, cardWidth);
         AcuantMobileSDK.showManualCameraInterfaceInViewController(success, failure, cardType, cardRegion, isBarcodeSide);
     }
-};
-
-
-var activateAction = function () {
-	log('activateAction');
-	AcuantMobileSDK.activateLicenseKey(success, failure, licenseKey);
-};
-var getLicenseKey = function () {
-    log('getLicenseKey');
-    licenseKey = $('#license-key').val();
-    localStorage.setItem("license-key", licenseKey);
-    AcuantMobileSDK.setLicenseKey(success, failure, licenseKey);
 };
 
 var adjustCardHolder = function () {
@@ -944,8 +942,6 @@ var app = {
             $("#driver-license-btn").click(driverLicenseAction);
             $("#passport-btn").click(passportAction);
             $("#medical-insurance-btn").click(medicalInsuranceAction);
-            $("#activate-btn").click(activateAction);
-            $("#license-key").change(getLicenseKey);
             $("#front-image").click(showCameraInterfaceFront);
             $("#back-image").click(showCameraInterfaceBack);
             $("#process-btn").click(processAction);
@@ -957,9 +953,7 @@ var app = {
                 selectedRegionAction(this.id);
             });
 
-            licenseKey = localStorage.getItem("license-key");
-            firstLoad = true;
-            $("#license-key").val(licenseKey);
+            	firstLoad = true;
             	AcuantMobileSDK.initAcuantMobileSDK(success, failure, licenseKey, null);
             	AcuantMobileSDK.stringForWatermarkLabel(success, failure, "Powered By Acuant");
             	//set Customization methods

@@ -33,7 +33,6 @@ import com.acuant.mobilesdk.MedicalCard;
 import com.acuant.mobilesdk.PassportCard;
 import com.acuant.mobilesdk.ProcessImageRequestOptions;
 import com.acuant.mobilesdk.WebServiceListener;
-import com.cssn.cssnsamplesdk.R;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -97,7 +96,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     private Intent nfcIntent = null;
 
     private enum Action {
-        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, activateLicenseKey, setWidth, setCanCropBarcode,setCanCaptureOriginalImage, setCropBarcodeOnCancel,setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton,enableLocationAuthentication,showFacialInterface,setFacialInstructionText,setFacialInstructionLocation,setFacialInstructionTextStyle,setFacialRecognitionTimeout,processFacialImageValidation,setFacialSubInstructionString,setFacialSubInstructionColor,setFacialSubInstructionLocation,scanEChip,readEChip;
+        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, setWidth, setCanCropBarcode,setCanCaptureOriginalImage, setCropBarcodeOnCancel,setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton,enableLocationAuthentication,showFacialInterface,setFacialInstructionText,setFacialInstructionLocation,setFacialInstructionTextStyle,setFacialRecognitionTimeout,processFacialImageValidation,setFacialSubInstructionString,setFacialSubInstructionColor,setFacialSubInstructionLocation,scanEChip,readEChip;
     }
     
     @Override
@@ -302,33 +301,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                     cloudAddressString = "cssnwebservices.com";
                 }
                 acuantAndroidMobileSDKController.setCloudUrl(cloudAddressString);
-                break;
-            case activateLicenseKey:
-                methodId = "activateLicenseKey";
-                callbackId = callbackContext;
-                if (data.getString(0) != null && data.getString(0).trim().length() > 0){
-                    key = data.getString(0);
-                }else{
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                if (key.contains(" ")){
-                    obj.put("id", methodId);
-                    obj.put("data", false);
-                    obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                    obj.put("errorMessage", "The license key cannot be empty.");
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                    result.setKeepCallback(true);
-                    callbackId.sendPluginResult(result);
-                    break;
-                }
-                acuantAndroidMobileSDKController.callActivateLicenseKeyService(key);
                 break;
             case setWidth:
                 methodId = "setWidth";
@@ -879,31 +851,6 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 callbackId.sendPluginResult(resultCallback);
             }
         });
-    }
-    
-    @Override
-    public void activateLicenseKeyCompleted(LicenseActivationDetails details) {
-        JSONObject obj=new JSONObject();
-        try {
-            if (details != null && details.isIsLicenseKeyActivated()) {
-                obj.put("id", methodId);
-                obj.put("data", true);
-                obj.put("message", details.getIsLicenseKeyActivatedDescscription());
-                PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
-                result.setKeepCallback(true);
-                callbackId.sendPluginResult(result);
-            }else {
-                obj.put("id", "didFailWithError");
-                obj.put("data", false);
-                obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
-                obj.put("errorMessage", details.getIsLicenseKeyActivatedDescscription());
-                PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
-                result.setKeepCallback(true);
-                callbackId.sendPluginResult(result);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
     
     @Override

@@ -86,10 +86,10 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.acuant.plugin.AcuantMobileSDK": "2.5.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.5.1",
     "com.napolitano.cordova.plugin.intent": "0.1.2",
     "cordova-plugin-compat": "1.1.0",
-    "cordova-plugin-console": "1.0.5",
+    "cordova-plugin-console": "1.1.0",
     "cordova-plugin-device": "1.1.4",
     "cordova-plugin-network-information": "1.3.3",
     "cordova-plugin-splashscreen": "4.0.3",

@@ -46,6 +46,7 @@
 @property (strong, nonatomic) NSString *callbackId;
 @property (strong, nonatomic) NSString *callbackIdImageProcess;
 @property (strong, nonatomic) NSString *callbackIdFacialProcess;
+@property (nonatomic) BOOL sdkValidated;
 
 @property AcuantCardType cardType;
 @property BOOL isBackSide;
@@ -212,6 +213,20 @@
 }
 
 /**
+ 
+Use this method to check if the SDK is already validated with the license key
+*/
+
+- (void)isSDKValidated:(CDVInvokedUrlCommand*)command{
+    NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"isSDKValidated" forKey:@"id"];
+    [resultDictionary setObject:[NSNumber numberWithBool:_sdkValidated] forKey:@"data"];
+    CDVPluginResult* result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                             messageAsDictionary:resultDictionary];
+    [result setKeepCallback:[NSNumber numberWithBool:YES]];
+    [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
+}
+
+/**
  Use this method to configure the License key
  @param command CDVInvokedUrlCommand
  @discussion you are in charge of setting License key on each application launch as part of the setup of the framework
@@ -238,19 +253,6 @@
     }
     _callbackId = [command callbackId];
     [_instance setCloudAddress:_cloudAddressString];
-}
-/**
- Use this method to activate the license key
- @param command CDVInvokedUrlCommand
- */
-- (void)activateLicenseKey:(CDVInvokedUrlCommand*)command{
-    _methodId = @"activateLicenseKey";
-    if ([command.arguments objectAtIndex:0])
-    {
-        _key = [command.arguments objectAtIndex:0];
-    }
-    _callbackId = [command callbackId];
-    [_instance activateLicenseKey:_key];
 }
 
 -(void)enableLocationTracking:(CDVInvokedUrlCommand*)command{
@@ -882,6 +884,7 @@
  Called to inform the delegate that the framework was validated
  */
 -(void)mobileSDKWasValidated:(BOOL)wasValidated{
+    _sdkValidated = wasValidated;
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"mobileSDKWasValidated" forKey:@"id"];
     NSNumber *wasValidatedNumber = [NSNumber numberWithBool:wasValidated];
     [resultDictionary setObject:[NSNumber numberWithBool:_instance.isAssureIDAllowed] forKey:@"isAssureIDAllowed"];
@@ -953,7 +956,6 @@
 - (void)didFinishValidatingImageWithResult:(AcuantCardResult*)result{
     AcuantFacialData* facialData = (AcuantFacialData*)result;
     NSMutableDictionary *cardResult = [NSMutableDictionary dictionary];
-    [cardResult setObject:[facialData valueForKey:@"isFacialEnabled"]  forKey:@"IsFacialEnabled"];
     [cardResult setObject:[facialData valueForKey:@"isMatch"]  forKey:@"FacialMatch"];
     [cardResult setObject:[facialData valueForKey:@"facialMatchConfidenceRating"] forKey:@"FacialMatchConfidenceRating"];
     [cardResult setObject:[facialData valueForKey:@"faceLivelinessDetection"] forKey:@"FaceLivelinessDetection"];

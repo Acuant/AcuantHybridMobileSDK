@@ -1,40 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>AcuantIONICSampleSDK Sample</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/nsProgress.css">
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="webviewbounce" value="false" />
 
-  <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" type="text/css" href="css/nsProgress.css">
-  <meta name="theme-color" content="#4e8ef7">
-
-  <!-- cordova.js required for cordova apps -->
-  <script src="cordova.js"></script>
-
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.error('Error', err));
-    }
-  </script>-->
-
-  <link href="build/main.css" rel="stylesheet">
-
+    <title>AcuantHybridSampleSDK Sample</title>
 </head>
 <body>
     <div id="page1">
-        <div class="div-top">
-            <label id="license-key-label">License key</label>
-            <input type="text" id="license-key" />
-            <input type="submit" id="activate-btn" value="Activate" />
-        </div>
         <p>
             <div class="div-buttons">
                 <label class="buttons" id="driver-license-btn" >Driver License</label>
@@ -96,7 +93,7 @@
             	<br>
             	<br>
             	<label class="buttons" id="eChipButton">Scan eChip</label>
-
+                
             </div>
         </p>
         <p>
@@ -141,7 +138,7 @@
         </p>
         <p>
             <div id="div-result-eChip">
-            	<table id="nfcDataTable" style="width:100%"></table>
+            	<table id="nfcDataTable" style="width:100%"></table>	
             </div>
         </p>
     </div>

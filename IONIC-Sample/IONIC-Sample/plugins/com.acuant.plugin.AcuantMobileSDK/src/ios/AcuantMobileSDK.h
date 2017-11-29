@@ -81,12 +81,6 @@
 - (void)setCloudAddress:(CDVInvokedUrlCommand*)command;
 
 /**
- Use this method to activate the license key
- @param command CDVInvokedUrlCommand
- */
-- (void)activateLicenseKey:(CDVInvokedUrlCommand*)command;
-
-/**
  Use this method to set the width of the cropped image
  @param command CDVInvokedUrlCommand
  @discussion you need to set the height with setHeight:(int)height to crop the image with these values

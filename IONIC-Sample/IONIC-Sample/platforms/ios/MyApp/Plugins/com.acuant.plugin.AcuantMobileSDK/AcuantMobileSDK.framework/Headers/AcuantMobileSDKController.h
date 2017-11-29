@@ -399,11 +399,8 @@ typedef enum{
  */
 - (void)setCloudAddress:(NSString *)serverBaseURL;
 
-/**
- Use this method to activate the license key
- @param key the license key
- */
-- (void)activateLicenseKey:(NSString*)key;
+
+-(BOOL)isSDKValidated;
 
 /**
  Use this method to set the width of the cropped image
@@ -411,7 +408,6 @@ typedef enum{
  @discussion you need to set the height with setHeight:(int)height to crop the image with these values
  */
 -(void)setWidth:(int)width;
-
 -(int)getWidth;
 
 /**
