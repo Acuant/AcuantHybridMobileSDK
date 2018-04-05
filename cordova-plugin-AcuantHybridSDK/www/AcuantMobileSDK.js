@@ -1,4 +1,5 @@
 /*global cordova, module*/
+    var agent = navigator.userAgent;
     var isWindows = (cordova.platformId.localeCompare("windows") == 0);
     var isAndroid = (agent.indexOf("Android") > 0);
     var isIOS = (agent.indexOf("iPhone") > 0 || agent.indexOf("iPod") > 0 || agent.indexOf("iPad") > 0);
@@ -491,7 +492,7 @@
             cordova.exec(successCallback, failure, "AcuantMobileSDK", "setCapturingMessage", [capturingMessage, frameX, frameY, frameWidth, frameHeight, backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha, duration, orientation]);
         }
     },
-    processCardImage: function (successCallback, failure, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings) {
+    processCardImage: function (successCallback, failure,cardType, frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings) {
         if ((typeof faceDetection !== 'boolean')) {
             failure({
                 "id": "processCardImage",
@@ -781,7 +782,7 @@
                 });
             }
         } else {
-            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processCardImage", [frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings]);
+            cordova.exec(successCallback, failure, "AcuantMobileSDK", "processCardImage", [frontImage, backImage, barcodeStringData, autoDetectState, stateID, reformatImage, reformatImageColor, DPI, cropImage, faceDetection, signatureDetection, region, logtransaction,imageSettings,cardType]);
         }
     },
     cameraPrefersStatusBarHidden: function (successCallback, failure, hiddenStatusBar) {

@@ -388,6 +388,15 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 options.cropImage = data.getBoolean(8);
                 options.faceDetec = data.getBoolean(9);
                 options.signDetec = data.getBoolean(10);
+
+                if (data.getInt(14) == 1) {
+                    cardType = CardType.MEDICAL_INSURANCE;
+                }else if(data.getInt(14) == 2){
+                    cardType = CardType.DRIVERS_LICENSE;
+                }else if(data.getInt(14) == 3){
+                    cardType = CardType.PASSPORT;
+                }
+
                 if (cardType == CardType.DRIVERS_LICENSE) {
                     options.iRegion = data.getInt(11);
                 }else{
@@ -395,7 +404,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 }
                 options.logTransaction = data.getBoolean(12);
                 options.imageSettings = data.getInt(13);
+
                 options.acuantCardType = cardType;
+                
                 acuantAndroidMobileSDKController.callProcessImageServices(frontImageDecodedByte, backImageDecodedByte, stringData, cordova.getActivity(), options);
                 break;
             case cameraPrefersStatusBarHidden:
