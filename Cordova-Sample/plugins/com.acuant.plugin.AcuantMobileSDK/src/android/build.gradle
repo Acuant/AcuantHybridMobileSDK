@@ -1,6 +1,5 @@
 repositories{
   jcenter()
-  google()
   maven { url 'http://maven.microblink.com' }
   flatDir{
     dirs "libs"

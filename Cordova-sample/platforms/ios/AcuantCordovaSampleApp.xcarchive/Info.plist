@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationProperties</key>
+	<dict>
+		<key>ApplicationPath</key>
+		<string>Applications/AcuantCordovaSampleApp.app</string>
+		<key>CFBundleIdentifier</key>
+		<string>io.cordova.hellocordova</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.0.0</string>
+		<key>CFBundleVersion</key>
+		<string>1.0.0</string>
+		<key>SigningIdentity</key>
+		<string>iPhone Developer: Tapas Behera (E3N4E9X7A6)</string>
+	</dict>
+	<key>ArchiveVersion</key>
+	<integer>2</integer>
+	<key>CreationDate</key>
+	<date>2018-04-09T17:29:48Z</date>
+	<key>Name</key>
+	<string>AcuantCordovaSampleApp</string>
+	<key>SchemeName</key>
+	<string>AcuantCordovaSampleApp</string>
+</dict>
+</plist>

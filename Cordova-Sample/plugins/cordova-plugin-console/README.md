@@ -1,3 +1,7 @@
+---
+title: Console
+description: Get JavaScript logs in your native logs.
+---
 <!---
 # license: Licensed to the Apache Software Foundation (ASF) under one
 #         or more contributor license agreements.  See the NOTICE file
@@ -17,9 +21,18 @@
 #         under the License.
 -->
 
-[![Build Status](https://travis-ci.org/apache/cordova-plugin-console.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-console)
+|AppVeyor|Travis CI|
+|:-:|:-:|
+|[![Build status](https://ci.appveyor.com/api/projects/status/github/apache/cordova-plugin-console?branch=master)](https://ci.appveyor.com/project/ApacheSoftwareFoundation/cordova-plugin-console)|[![Build Status](https://travis-ci.org/apache/cordova-plugin-console.svg?branch=master)](https://travis-ci.org/apache/cordova-plugin-console)|
 
 # cordova-plugin-console
+
+## Deprecated
+
+> This plugin is no longer being worked on as the functionality provided by this plugin is now included in cordova-ios 4.5.0 or greater, and support is already built in to cordova-windows > 5.0.0. You should upgrade your application to use version 2.0.0 of this plugin. It will detect whether or not the plugin is required based on the version of cordova-ios and cordova-windows your app uses.
+> Please file issues for this plugin against their respective platforms (cordova-ios, cordova-windows).
+
+## Description
 
 This plugin is meant to ensure that console.log() is as useful as it can be.
 It adds additional function for iOS, Ubuntu, Windows Phone 8, and Windows. If
@@ -35,6 +48,9 @@ are not available until after the `deviceready` event.
     function onDeviceReady() {
         console.log("console.log works well");
     }
+
+:warning: Report issues on the [Apache Cordova issue tracker](https://issues.apache.org/jira/issues/?jql=project%20%3D%20CB%20AND%20status%20in%20%28Open%2C%20%22In%20Progress%22%2C%20Reopened%29%20AND%20resolution%20%3D%20Unresolved%20AND%20component%20%3D%20%22Plugin%20Console%22%20ORDER%20BY%20priority%20DESC%2C%20summary%20ASC%2C%20updatedDate%20DESC)
+
 
 ## Installation
 

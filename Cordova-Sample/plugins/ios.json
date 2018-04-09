@@ -1,37 +1,33 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {}
-  },
-  "installed_plugins": {
-    "com.acuant.plugin.AcuantMobileSDK": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
     },
-    "com.napolitano.cordova.plugin.intent": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+    "config_munge": {
+        "files": {}
     },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
+    "installed_plugins": {
+        "com.acuant.plugin.AcuantMobileSDK": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "com.napolitano.cordova.plugin.intent": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "sdgc-cordova-native-dialogs": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        }
     },
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-    },
-    "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-    },
-    "phonegap-plugin-barcodescanner": {
-      "CAMERA_USAGE_DESCRIPTION": " ",
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-    },
-    "sdgc-cordova-native-dialogs": {
-      "PACKAGE_NAME": "com.cssn.cssnsamplesdk"
-    }
-  },
-  "dependent_plugins": {}
+    "dependent_plugins": {}
 }

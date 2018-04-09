@@ -1,13 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="7" id="com.cssn.cssnsamplesdk" ios-CFBundleVersion="1.2.5" version="2.5" xmlns="http://www.w3.org/ns/widgets">
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <feature name="AcuantMobileSDK">
         <param name="android-package" value="com.acuant.plugin.AcuantMobileSDK" />
     </feature>
     <feature name="IntentPlugin">
         <param name="android-package" value="com.napolitano.cordova.plugin.intent.IntentPlugin" />
-    </feature>
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
     <feature name="NetworkStatus">
         <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
@@ -16,32 +13,24 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
-    </feature>
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <name>AcuantHybridSampleSDK</name>
+    <name>AcuantCordovaSampleApp</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
+    <author email="" href="">
+        Acuant Team
+    </author>
     <content src="index.html" />
     <access origin="*" />
-    <splash density="land-hdpi" src="www/img/splash/screen-land-hdpi.png" />
-    <splash density="land-ldpi" src="www/img/splash/screen-land-ldpi.png" />
-    <splash density="land-mdpi" src="www/img/splash/screen-land-mdpi.png" />
-    <splash density="land-xhdpi" src="www/img/splash/screen-land-xhdpi.png" />
-    <splash density="port-hdpi" src="www/img/splash/screen-port-hdpi.png" />
-    <splash density="port-ldpi" src="www/img/splash/screen-port-ldpi.png" />
-    <splash density="port-mdpi" src="www/img/splash/screen-port-mdpi.png" />
-    <splash density="port-xhdpi" src="www/img/splash/screen-port-xhdpi.png" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
     <allow-intent href="market:*" />
     <preference name="loglevel" value="DEBUG" />
-    <preference name="orientation" value="default" />
-    <preference name="webviewbounce" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="17" />
-    <preference name="android-targetSdkVersion" value="25" />
-    <preference name="android-compileSdkVersion" value="25" />
 </widget>

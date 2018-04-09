@@ -1,7 +1,35 @@
 {
-  "name": "cordova-plugin-console",
-  "version": "1.0.3",
-  "description": "Cordova Console Plugin",
+  "_from": "cordova-plugin-console",
+  "_id": "cordova-plugin-console@1.1.0",
+  "_inBundle": false,
+  "_integrity": "sha1-4vusECkBeeRMtyxf28QQpTHBzW0=",
+  "_location": "/cordova-plugin-console",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-console",
+    "name": "cordova-plugin-console",
+    "escapedName": "cordova-plugin-console",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-console/-/cordova-plugin-console-1.1.0.tgz",
+  "_shasum": "e2fbac10290179e44cb72c5fdbc410a531c1cd6d",
+  "_spec": "cordova-plugin-console",
+  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantCordovaMobileSDK/Cordova-sample/node_modules",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://issues.apache.org/jira/browse/CB"
+  },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-console",
     "platforms": [
@@ -13,10 +41,20 @@
       "windows"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/apache/cordova-plugin-console"
+  "deprecated": "This plugin has been deprecated since it is now included in the latest versions of cordova-ios",
+  "description": "Cordova Console Plugin",
+  "devDependencies": {
+    "jshint": "^2.6.0"
   },
+  "engines": {
+    "cordovaDependencies": {
+      ">=2.0.0": {
+        "cordova-ios": "<4.5.0",
+        "cordova-windows": "<=5.0.0"
+      }
+    }
+  },
+  "homepage": "https://github.com/apache/cordova-plugin-console#readme",
   "keywords": [
     "cordova",
     "console",
@@ -28,13 +66,15 @@
     "cordova-windows8",
     "cordova-windows"
   ],
-  "scripts": {
-    "test": "npm run jshint",
-    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests"
-  },
-  "author": "Apache Software Foundation",
   "license": "Apache-2.0",
-  "devDependencies": {
-    "jshint": "^2.6.0"
-  }
+  "name": "cordova-plugin-console",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apache/cordova-plugin-console.git"
+  },
+  "scripts": {
+    "jshint": "node node_modules/jshint/bin/jshint www && node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint tests",
+    "test": "npm run jshint"
+  },
+  "version": "1.1.0"
 }

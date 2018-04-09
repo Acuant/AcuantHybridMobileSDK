@@ -1,19 +1,19 @@
 {
-  "_from": "cordova-plugin-intent@^0.1.2",
+  "_from": "cordova-plugin-intent",
   "_id": "cordova-plugin-intent@0.1.2",
   "_inBundle": false,
   "_integrity": "sha1-gL/xv32q0ki6PommsMnhV6AaiF8=",
   "_location": "/cordova-plugin-intent",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "tag",
     "registry": true,
-    "raw": "cordova-plugin-intent@^0.1.2",
+    "raw": "cordova-plugin-intent",
     "name": "cordova-plugin-intent",
     "escapedName": "cordova-plugin-intent",
-    "rawSpec": "^0.1.2",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "^0.1.2"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +21,8 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-intent/-/cordova-plugin-intent-0.1.2.tgz",
   "_shasum": "80bff1bf7daad248ba3e89a6b0c9e157a01a885f",
-  "_spec": "cordova-plugin-intent@^0.1.2",
-  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantHybridMobileSDK/Cordova-Sample",
+  "_spec": "cordova-plugin-intent",
+  "_where": "/Users/tapasbehera/Desktop/Hybrid-GitHub/AcuantCordovaMobileSDK/Cordova-sample/node_modules",
   "author": {
     "name": "Axel Naolitano, Napolitano Business Solutions"
   },

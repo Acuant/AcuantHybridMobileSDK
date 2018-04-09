@@ -1,7 +1,6 @@
 package com.acuant.plugin;
 
 import android.app.Activity;
-import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +10,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
@@ -27,7 +25,6 @@ import com.acuant.mobilesdk.DriversLicenseCard;
 import com.acuant.mobilesdk.ErrorType;
 import com.acuant.mobilesdk.FacialData;
 import com.acuant.mobilesdk.FacialRecognitionListener;
-import com.acuant.mobilesdk.LicenseActivationDetails;
 import com.acuant.mobilesdk.LicenseDetails;
 import com.acuant.mobilesdk.MedicalCard;
 import com.acuant.mobilesdk.PassportCard;
@@ -43,8 +40,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener, CardCroppingListener, AcuantErrorListener,FacialRecognitionListener,AcuantTagReadingListener {
+public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener, CardCroppingListener, AcuantErrorListener, FacialRecognitionListener, AcuantTagReadingListener {
     
     private String key = "";
     private String cloudAddressString = "";
@@ -74,30 +72,30 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     private int facialInstructionLeft = 0;
     private int facialInstructionTop = 0;
-
-    private String facialSubInstructionString="Analyzing";
-    private String facialSubInstHexColor=null;
-    private int facialSubInstLeft=0;
-    private int facialSubInstTop=0;
+    
+    private String facialSubInstructionString = "Analyzing";
+    private String facialSubInstHexColor = null;
+    private int facialSubInstLeft = 0;
+    private int facialSubInstTop = 0;
     private String facialInstructionTextFontColor = "#ffffff";
     private int facialInstructionTextFontSize = 50;
-
+    
     private int facialTimeOut = 20;
     
     private int xFlashlight = 0;
     private int yFlashlight = 0;
     private int widthFlashlight = 0;
     private int heightFlashlight = 0;
-
+    
     NfcAdapter nfcAdapter;
     private String echip_docNumber = null;
     private String echip_dateOfBirth = null;
     private String echip_dateOfExpiry = null;
-
+    
     private Intent nfcIntent = null;
-
+    
     private enum Action {
-        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, setWidth, setCanCropBarcode,setCanCaptureOriginalImage, setCropBarcodeOnCancel,setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton,enableLocationAuthentication,showFacialInterface,setFacialInstructionText,setFacialInstructionLocation,setFacialInstructionTextStyle,setFacialRecognitionTimeout,processFacialImageValidation,setFacialSubInstructionString,setFacialSubInstructionColor,setFacialSubInstructionLocation,scanEChip,readEChip,isSDKValidated;
+        initAcuantMobileSDK, initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController, showManualCameraInterfaceInViewController, showBarcodeCameraInterfaceInViewController, dismissCardCaptureInterface, startCamera, stopCamera, pauseScanningBarcodeCamera, resumeScanningBarcodeCamera, setLicenseKey, setCloudAddress, setWidth, setCanCropBarcode, setCanCaptureOriginalImage, setCropBarcodeOnCancel, setCanShowMessage, setInitialMessage, setCapturingMessage, processCardImage, cameraPrefersStatusBarHidden, frameForWatermarkView, stringForWatermarkLabel, frameForHelpImageView, imageForHelpImageView, showBackButton, frameForBackButton, imageForBackButton, showiPadBrackets, showFlashlightButton, frameForFlashlightButton, imageForFlashlightButton, enableLocationAuthentication, showFacialInterface, setFacialInstructionText, setFacialInstructionLocation, setFacialInstructionTextStyle, setFacialRecognitionTimeout, processFacialImageValidation, setFacialSubInstructionString, setFacialSubInstructionColor, setFacialSubInstructionLocation, scanEChip, readEChip, isSDKValidated;
     }
     
     @Override
@@ -105,9 +103,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
         Action actionMethods;
         try {
             actionMethods = Action.valueOf(action);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-            JSONObject obj=new JSONObject();
+            JSONObject obj = new JSONObject();
             try {
                 obj.put("id", "execute");
                 obj.put("error", String.valueOf(ex));
@@ -119,20 +117,20 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
             return false;
         }
-        JSONObject obj=new JSONObject();
+        JSONObject obj = new JSONObject();
         
-        switch (actionMethods){
+        switch (actionMethods) {
             case initAcuantMobileSDK:
                 methodId = "initAcuantMobileSDK";
                 callbackId = callbackContext;
-                if (data.getString(0) != null){
+                if (data.getString(0) != null) {
                     key = data.getString(0);
-                }else{
+                } else {
                     key = "";
                 }
-                if (data.getString(1) != null && !data.getString(1).trim().equalsIgnoreCase("")){
+                if (data.getString(1) != null && !data.getString(1).trim().equalsIgnoreCase("")) {
                     cloudAddressString = data.getString(1);
-                }else{
+                } else {
                     cloudAddressString = "cssnwebservices.com";
                 }
                 
@@ -147,17 +145,17 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 methodId = "initAcuantMobileSDKAndShowCardCaptureInterfaceInViewController";
                 
                 callbackId = callbackContext;
-                if (data.getString(0) != null){
+                if (data.getString(0) != null) {
                     key = data.getString(0);
-                }else{
+                } else {
                     key = "";
                 }
                 
                 if (data.getInt(1) == 1) {
                     cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(1) == 2){
+                } else if (data.getInt(1) == 2) {
                     cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(1) == 3){
+                } else if (data.getInt(1) == 3) {
                     cardType = CardType.PASSPORT;
                 }
                 
@@ -165,7 +163,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 if (cardType == CardType.DRIVERS_LICENSE) {
                     cardRegion = data.getInt(2);
                     isBarcodeSide = data.getBoolean(3);
-                }else{
+                } else {
                     cardRegion = 0;
                     isBarcodeSide = false;
                 }
@@ -179,20 +177,19 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 
                 if (data.getInt(0) == 1) {
                     cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(0) == 2){
+                } else if (data.getInt(0) == 2) {
                     cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(0) == 3){
+                } else if (data.getInt(0) == 3) {
                     cardType = CardType.PASSPORT;
                 }
                 
                 if (cardType == CardType.DRIVERS_LICENSE) {
                     cardRegion = data.getInt(1);
                     isBarcodeSide = data.getBoolean(2);
-                }else{
+                } else {
                     cardRegion = 0;
                     isBarcodeSide = false;
                 }
-                
                 acuantAndroidMobileSDKController.showManualCameraInterface(cordova.getActivity(), cardType, cardRegion, isBarcodeSide);
                 break;
             case showBarcodeCameraInterfaceInViewController:
@@ -201,15 +198,15 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 
                 if (data.getInt(0) == 1) {
                     cardType = CardType.MEDICAL_INSURANCE;
-                }else if(data.getInt(0) == 2){
+                } else if (data.getInt(0) == 2) {
                     cardType = CardType.DRIVERS_LICENSE;
-                }else if(data.getInt(0) == 3){
+                } else if (data.getInt(0) == 3) {
                     cardType = CardType.PASSPORT;
                 }
                 
                 if (cardType == CardType.DRIVERS_LICENSE) {
                     cardRegion = data.getInt(1);
-                }else{
+                } else {
                     cardRegion = 0;
                 }
                 
@@ -218,9 +215,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case dismissCardCaptureInterface:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","dismissCardCaptureInterface");
-                    obj.put("error","No " + action + " Method");
-                    if(acuantAndroidMobileSDKController.getBarcodeCameraContext()!=null) {
+                    obj.put("id", "dismissCardCaptureInterface");
+                    obj.put("error", "No " + action + " Method");
+                    if (acuantAndroidMobileSDKController.getBarcodeCameraContext() != null) {
                         acuantAndroidMobileSDKController.finishScanningBarcodeCamera();
                     }
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
@@ -234,8 +231,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 methodId = "startCamera";
                 callbackId = callbackContext;
                 try {
-                    obj.put("id",methodId);
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", methodId);
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -247,8 +244,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 methodId = "stopCamera";
                 callbackId = callbackContext;
                 try {
-                    obj.put("id",methodId);
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", methodId);
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -269,9 +266,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case setLicenseKey:
                 methodId = "setLicenseKey";
                 callbackId = callbackContext;
-                if (data.getString(0) != null && data.getString(0).trim().length() > 0){
+                if (data.getString(0) != null && data.getString(0).trim().length() > 0) {
                     key = data.getString(0);
-                }else{
+                } else {
                     obj.put("id", methodId);
                     obj.put("data", false);
                     obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
@@ -281,7 +278,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                     callbackId.sendPluginResult(result);
                     break;
                 }
-                if (key.contains(" ")){
+                if (key.contains(" ")) {
                     obj.put("id", methodId);
                     obj.put("data", false);
                     obj.put("errorType", ErrorType.AcuantErrorOnActiveLicenseKey);
@@ -296,9 +293,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case setCloudAddress:
                 methodId = "setCloudAddress";
                 callbackId = callbackContext;
-                if (data.getString(0) != null){
+                if (data.getString(0) != null) {
                     cloudAddressString = data.getString(0);
-                }else{
+                } else {
                     cloudAddressString = "cssnwebservices.com";
                 }
                 acuantAndroidMobileSDKController.setCloudUrl(cloudAddressString);
@@ -307,7 +304,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 methodId = "setWidth";
                 callbackId = callbackContext;
                 int width = data.getInt(0);
-                if (width == 0){
+                if (width == 0) {
                     width = 637;
                 }
                 acuantAndroidMobileSDKController.setWidth(width);
@@ -375,7 +372,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 Drawable backImageDrawable = new BitmapDrawable(cordova.getActivity().getResources(), backImageDecodedByte);
                 
                 String stringData = data.getString(2);
-                if(stringData!=null && stringData.equalsIgnoreCase("null")){
+                if (stringData != null && stringData.equalsIgnoreCase("null")) {
                     stringData = null;
                 }
                 
@@ -390,7 +387,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 options.signDetec = data.getBoolean(10);
                 if (cardType == CardType.DRIVERS_LICENSE) {
                     options.iRegion = data.getInt(11);
-                }else{
+                } else {
                     options.iRegion = 0;
                 }
                 options.logTransaction = data.getBoolean(12);
@@ -420,8 +417,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case frameForHelpImageView:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","frameForHelpImageView");
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", "frameForHelpImageView");
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -432,7 +429,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case imageForHelpImageView:
                 callbackId = callbackContext;
                 String encodedImage = data.getString(0);
-                if (encodedImage.contains("data:image/png;base64,")){
+                if (encodedImage.contains("data:image/png;base64,")) {
                     encodedImage = encodedImage.replaceFirst("data:image/png;base64,", "");
                 }
                 byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
@@ -443,8 +440,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case showBackButton:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","showBackButton");
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", "showBackButton");
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -455,8 +452,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case frameForBackButton:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","frameForBackButton");
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", "frameForBackButton");
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -467,8 +464,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case imageForBackButton:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","imageForBackButton");
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", "imageForBackButton");
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -503,14 +500,14 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 methodId = "imageForFlashlightButton";
                 callbackId = callbackContext;
                 String encodedImageOn = data.getString(0);
-                if (encodedImageOn.contains("data:image/png;base64,")){
+                if (encodedImageOn.contains("data:image/png;base64,")) {
                     encodedImageOn = encodedImageOn.replaceFirst("data:image/png;base64,", "");
                 }
                 byte[] decodedStringOn = Base64.decode(encodedImageOn, Base64.DEFAULT);
                 Bitmap decodedByteOn = BitmapFactory.decodeByteArray(decodedStringOn, 0, decodedStringOn.length);
                 Drawable flashlightButtonImageDrawableOn = new BitmapDrawable(cordova.getActivity().getResources(), decodedByteOn);
                 String encodedImageOff = data.getString(1);
-                if (encodedImageOff.contains("data:image/png;base64,")){
+                if (encodedImageOff.contains("data:image/png;base64,")) {
                     encodedImageOff = encodedImageOff.replaceFirst("data:image/png;base64,", "");
                 }
                 byte[] decodedStringOff = Base64.decode(encodedImageOff, Base64.DEFAULT);
@@ -523,33 +520,33 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 callbackId = callbackContext;
                 acuantAndroidMobileSDKController.setFacialListener(this);
                 Paint subInstPaint = null;
-                if(facialSubInstHexColor!=null){
+                if (facialSubInstHexColor != null) {
                     subInstPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-                    Typeface currentTypeFace =   subInstPaint.getTypeface();
+                    Typeface currentTypeFace = subInstPaint.getTypeface();
                     Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
                     subInstPaint.setColor(Color.parseColor(facialSubInstHexColor));
                     subInstPaint.setTextSize(30);
                     subInstPaint.setTextAlign(Paint.Align.LEFT);
                     subInstPaint.setTypeface(bold);
                 }
-                if(facialInstrunctionText!=null){
+                if (facialInstrunctionText != null) {
                     Paint InstPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-                    Typeface currentTypeFace =   InstPaint.getTypeface();
+                    Typeface currentTypeFace = InstPaint.getTypeface();
                     Typeface bold = Typeface.create(currentTypeFace, Typeface.BOLD);
                     InstPaint.setColor(Color.parseColor(facialInstructionTextFontColor));
                     InstPaint.setTextSize(facialInstructionTextFontSize);
                     InstPaint.setTextAlign(Paint.Align.LEFT);
                     InstPaint.setTypeface(bold);
-                    acuantAndroidMobileSDKController.setInstructionText(facialInstrunctionText,facialInstructionLeft,facialInstructionTop,InstPaint);
+                    acuantAndroidMobileSDKController.setInstructionText(facialInstrunctionText, facialInstructionLeft, facialInstructionTop, InstPaint);
                 }
-                acuantAndroidMobileSDKController.setSubInstructionText(facialSubInstructionString,facialSubInstLeft,facialSubInstTop,subInstPaint);
+                acuantAndroidMobileSDKController.setSubInstructionText(facialSubInstructionString, facialSubInstLeft, facialSubInstTop, subInstPaint);
                 acuantAndroidMobileSDKController.showManualFacialCameraInterface(cordova.getActivity());
                 break;
             case setFacialInstructionText:
                 methodId = "setFacialInstructionText";
                 callbackId = callbackContext;
                 String facialInstruction = data.getString(0);
-                if(facialInstruction!=null) {
+                if (facialInstruction != null) {
                     facialInstrunctionText = facialInstruction;
                 }
                 break;
@@ -580,12 +577,12 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 String selfieImageEcodedString = data.getString(0);
                 byte[] selfieImageDecodedString = Base64.decode(selfieImageEcodedString, Base64.DEFAULT);
                 Bitmap selfieImageDecodedByte = BitmapFactory.decodeByteArray(selfieImageDecodedString, 0, selfieImageDecodedString.length);
-
+                
                 String faceImageEcodedString = data.getString(1);
                 byte[] faceImageDecodedString = Base64.decode(faceImageEcodedString, Base64.DEFAULT);
                 Bitmap faceImageDecodedByte = BitmapFactory.decodeByteArray(faceImageDecodedString, 0, faceImageDecodedString.length);
-
-
+                
+                
                 ProcessImageRequestOptions facialOptions = ProcessImageRequestOptions.getInstance();
                 facialOptions.logTransaction = data.getBoolean(2);
                 
@@ -600,66 +597,66 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             case setFacialSubInstructionColor:
                 methodId = "setFacialSubInstructionColor";
                 callbackId = callbackContext;
-                facialSubInstHexColor=data.getString(0);
+                facialSubInstHexColor = data.getString(0);
                 break;
             case setFacialSubInstructionLocation:
                 methodId = "setFacialSubInstructionLocation";
                 callbackId = callbackContext;
-                facialSubInstLeft=data.getInt(0);
-                facialSubInstTop= data.getInt(1);
+                facialSubInstLeft = data.getInt(0);
+                facialSubInstTop = data.getInt(1);
                 break;
                 
             case scanEChip:
                 methodId = "scanEChip";
-                if(nfcAdapter==null){
+                if (nfcAdapter == null) {
                     nfcAdapter = NfcAdapter.getDefaultAdapter(cordova.getActivity());
                 }
-
-                if(nfcAdapter==null){
+                
+                if (nfcAdapter == null) {
                     JSONObject errorObj = new JSONObject();
-                    errorObj.put("id","nfcError");
-                    errorObj.put("errorMessage","NFC is not available for this device");
-                    errorObj.put("errorType",ErrorType.AcuantErrorUnknown);
+                    errorObj.put("id", "nfcError");
+                    errorObj.put("errorMessage", "NFC is not available for this device");
+                    errorObj.put("errorType", ErrorType.AcuantErrorUnknown);
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
-                }else if(this.nfcAdapter!=null && !this.nfcAdapter.isEnabled()){
+                } else if (this.nfcAdapter != null && !this.nfcAdapter.isEnabled()) {
                     JSONObject errorObj = new JSONObject();
-                    errorObj.put("id","nfcError");
-                    errorObj.put("errorType",ErrorType.AcuantErrorUnknown);
-                    errorObj.put("errorMessage","In order to use scan eChip, the NFC sensor must be turned on.");
+                    errorObj.put("id", "nfcError");
+                    errorObj.put("errorType", ErrorType.AcuantErrorUnknown);
+                    errorObj.put("errorMessage", "In order to use scan eChip, the NFC sensor must be turned on.");
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
-                }else {
-                    acuantAndroidMobileSDKController.listenNFC(cordova.getActivity(),nfcAdapter);
+                } else {
+                    acuantAndroidMobileSDKController.listenNFC(cordova.getActivity(), nfcAdapter);
                     JSONObject errorObj = new JSONObject();
-                    errorObj.put("id","nfcReady");
+                    errorObj.put("id", "nfcReady");
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
                 }
                 break;
-
+                
             case readEChip:
                 methodId = "readEChip";
-                if(nfcAdapter==null){
+                if (nfcAdapter == null) {
                     JSONObject errorObj = new JSONObject();
-                    errorObj.put("id","nfcError");
-                    errorObj.put("errorMessage","NFC is not available for this device");
+                    errorObj.put("id", "nfcError");
+                    errorObj.put("errorMessage", "NFC is not available for this device");
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
-                }else if(this.nfcAdapter!=null && !this.nfcAdapter.isEnabled()){
+                } else if (this.nfcAdapter != null && !this.nfcAdapter.isEnabled()) {
                     JSONObject errorObj = new JSONObject();
-                    errorObj.put("id","nfcError");
-                    errorObj.put("errorMessage","In order to use scan eChip, the NFC sensor must be turned on.");
+                    errorObj.put("id", "nfcError");
+                    errorObj.put("errorMessage", "In order to use scan eChip, the NFC sensor must be turned on.");
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, errorObj);
                     pluginResult.setKeepCallback(true);
                     callbackId.sendPluginResult(pluginResult);
-                }else {
+                } else {
                     nfcIntent.setAction("android.nfc.action.TECH_DISCOVERED");
-                    Intent intent  = nfcIntent;
+                    Intent intent = nfcIntent;
                     echip_docNumber = data.getString(1);
                     echip_dateOfBirth = data.getString(2);
                     echip_dateOfExpiry = data.getString(3);
@@ -669,7 +666,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 break;
             case isSDKValidated:
                 try {
-                    obj.put("id","isSDKValidated");
+                    obj.put("id", "isSDKValidated");
                     obj.put("data", sdkValidated);
                     PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                     result.setKeepCallback(true);
@@ -681,8 +678,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             default:
                 callbackId = callbackContext;
                 try {
-                    obj.put("id","default");
-                    obj.put("error","No " + action + " Method");
+                    obj.put("id", "default");
+                    obj.put("error", "No " + action + " Method");
                     PluginResult result = new PluginResult(PluginResult.Status.INVALID_ACTION, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -696,16 +693,16 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void onFacialRecognitionTimedOut(final Bitmap bitmap) {
-
-        JSONObject obj=new JSONObject();
+        
+        JSONObject obj = new JSONObject();
         try {
             obj.put("id", "onFacialRecognitionTimedOut");
-            if(bitmap!=null) {
+            if (bitmap != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                obj.put("selfieImageData",encoded);
+                obj.put("selfieImageData", encoded);
             }
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
             pluginResult.setKeepCallback(true);
@@ -718,15 +715,15 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void onFacialRecognitionCompleted(final Bitmap bitmap) {
-        JSONObject obj=new JSONObject();
+        JSONObject obj = new JSONObject();
         try {
             obj.put("id", "onFacialRecognitionCompleted");
-            if(bitmap!=null) {
+            if (bitmap != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                obj.put("selfieImageData",encoded);
+                obj.put("selfieImageData", encoded);
             }
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
             pluginResult.setKeepCallback(true);
@@ -737,8 +734,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     }
     
     @Override
-    public void onFacialRecognitionCanceled(){
-        JSONObject obj=new JSONObject();
+    public void onFacialRecognitionCanceled() {
+        JSONObject obj = new JSONObject();
         try {
             obj.put("id", "onFacialRecognitionCanceled");
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
@@ -751,8 +748,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     
     @Override
-    public void onCancelCapture(Bitmap croppedImage,Bitmap originalImage){
-        JSONObject obj=new JSONObject();
+    public void onCancelCapture(Bitmap croppedImage, HashMap<String, Object> imageMetrics, Bitmap originalImage) {
+        JSONObject obj = new JSONObject();
         try {
             obj.put("id", "didCancelToCaptureData");
             if (croppedImage != null) {
@@ -769,22 +766,40 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 obj.put("originalImageData", encoded);
             }
+            if (imageMetrics != null && imageMetrics.get("HAS_GLARE") != null) {
+                boolean hasGlare = Boolean.parseBoolean(imageMetrics.get("HAS_GLARE").toString());
+                obj.put("HAS_GLARE", hasGlare);
+            }
+            if (imageMetrics != null && imageMetrics.get("GLARE_GRADE") != null) {
+                float glareGrade = Float.parseFloat(imageMetrics.get("GLARE_GRADE").toString());
+                obj.put("GLARE_GRADE", glareGrade);
+            }
+            
+            if (imageMetrics != null && imageMetrics.get("IS_SHARP") != null) {
+                boolean isSHarp = Boolean.parseBoolean(imageMetrics.get("IS_SHARP").toString());
+                obj.put("IS_SHARP", isSHarp);
+            }
+            if (imageMetrics != null && imageMetrics.get("SHARPNESS_GRADE") != null) {
+                float sharpnessGrade = Float.parseFloat(imageMetrics.get("SHARPNESS_GRADE").toString());
+                obj.put("SHARPNESS_GRADE", sharpnessGrade);
+            }
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
             pluginResult.setKeepCallback(true);
             callbackId.sendPluginResult(pluginResult);
-        }catch (JSONException e) {
+        }catch(JSONException e){
             e.printStackTrace();
         }
+        
     }
     
     @Override
     public void didFailWithError(int code, String message) {
-        JSONObject obj=new JSONObject();
+        JSONObject obj = new JSONObject();
         try {
-            obj.put("id","didFailWithError");
+            obj.put("id", "didFailWithError");
             obj.put("data", false);
-            obj.put("errorType",code);
-            obj.put("errorMessage",message);
+            obj.put("errorType", code);
+            obj.put("errorMessage", message);
             PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj);
             result.setKeepCallback(true);
             callbackId.sendPluginResult(result);
@@ -800,11 +815,11 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             @Override
             public void run() {
                 try {
-                    JSONObject obj=new JSONObject();
+                    JSONObject obj = new JSONObject();
                     if (card == null || card.isEmpty()) {
-                        obj.put("id","didFailWithError");
-                        obj.put("errorType",ErrorType.AcuantErrorUnableToProcess);
-                        obj.put("errorMessage","No data found for this license card!");
+                        obj.put("id", "didFailWithError");
+                        obj.put("errorType", ErrorType.AcuantErrorUnableToProcess);
+                        obj.put("errorMessage", "No data found for this license card!");
                         sendCardData(PluginResult.Status.INVALID_ACTION, obj, handler);
                     } else {
                         obj.put("id", "didFinishProcessingCardWithResult");
@@ -840,10 +855,10 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                     }
                 } catch (Exception e) {
                     try {
-                        JSONObject obj=new JSONObject();
-                        obj.put("id","didFailWithError");
-                        obj.put("ErrorType",ErrorType.AcuantErrorUnknown);
-                        obj.put("errorMessage","Sorry! Internal error has occurred, please contact us!");
+                        JSONObject obj = new JSONObject();
+                        obj.put("id", "didFailWithError");
+                        obj.put("ErrorType", ErrorType.AcuantErrorUnknown);
+                        obj.put("errorMessage", "Sorry! Internal error has occurred, please contact us!");
                         sendCardData(PluginResult.Status.INVALID_ACTION, obj, handler);
                     } catch (JSONException ex) {
                         e.printStackTrace();
@@ -853,7 +868,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
         }).start();
     }
     
-    private void sendCardData(final PluginResult.Status statusCallback, final JSONObject objCallback, Handler handler){
+    private void sendCardData(final PluginResult.Status statusCallback, final JSONObject objCallback, Handler handler) {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -866,7 +881,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void validateLicenseKeyCompleted(LicenseDetails details) {
-        JSONObject obj=new JSONObject();
+        JSONObject obj = new JSONObject();
         try {
             if (details != null && details.isLicenseKeyActivated()) {
                 sdkValidated = true;
@@ -878,9 +893,9 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                 result.setKeepCallback(true);
                 callbackId.sendPluginResult(result);
-            }else {
+            } else {
                 sdkValidated = false;
-                obj.put("id","didFailWithError");
+                obj.put("id", "didFailWithError");
                 obj.put("data", false);
                 obj.put("errorType", ErrorType.AcuantErrorInvalidLicenseKey);
                 obj.put("errorMessage", details.getResponseMessageAuthorization());
@@ -892,7 +907,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void onCardImageCaptured() {
         cordova.getThreadPool().execute(new Runnable() {
@@ -930,8 +945,8 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     }
     
     @Override
-    public void onCardCroppingFinish(final Bitmap bitmap,int detectedType) {
-
+    public void onCardCroppingFinish(final Bitmap bitmap,int detectedType,final HashMap<String,Object>imageMetrics) {
+        
         if (bitmap != null){
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -944,6 +959,24 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                         byte[] byteArray = byteArrayOutputStream.toByteArray();
                         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                         obj.put("data", encoded);
+                        
+                        if(imageMetrics!=null && imageMetrics.get("HAS_GLARE")!=null) {
+                            boolean hasGlare = Boolean.parseBoolean(imageMetrics.get("HAS_GLARE").toString());
+                            obj.put("HAS_GLARE", hasGlare);
+                        }
+                        if(imageMetrics!=null && imageMetrics.get("GLARE_GRADE")!=null) {
+                            float glareGrade = Float.parseFloat(imageMetrics.get("GLARE_GRADE").toString());
+                            obj.put("GLARE_GRADE", glareGrade);
+                        }
+                        
+                        if(imageMetrics!=null && imageMetrics.get("IS_SHARP")!=null){
+                            boolean isSHarp = Boolean.parseBoolean(imageMetrics.get("IS_SHARP").toString());
+                            obj.put("IS_SHARP", isSHarp);
+                        }
+                        if(imageMetrics!=null && imageMetrics.get("SHARPNESS_GRADE")!=null){
+                            float sharpnessGrade = Float.parseFloat(imageMetrics.get("SHARPNESS_GRADE").toString());
+                            obj.put("SHARPNESS_GRADE", sharpnessGrade);
+                        }
                         PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                         result.setKeepCallback(true);
                         callbackId.sendPluginResult(result);
@@ -974,7 +1007,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     }
     
     @Override
-    public void onCardCroppingFinish(final Bitmap bitmap, final boolean scanBackSide,int detectedType) {
+    public void onCardCroppingFinish(final Bitmap bitmap, final boolean scanBackSide,int detectedType,final HashMap<String,Object>imageMetrics) {
         if (bitmap != null){
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -992,6 +1025,23 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                         obj.put("data", encoded);
                         obj.put("scanBackSide", scanBackSide);
+                        if(imageMetrics!=null && imageMetrics.get("HAS_GLARE")!=null) {
+                            boolean hasGlare = Boolean.parseBoolean(imageMetrics.get("HAS_GLARE").toString());
+                            obj.put("HAS_GLARE", hasGlare);
+                        }
+                        if(imageMetrics!=null && imageMetrics.get("GLARE_GRADE")!=null) {
+                            float glareGrade = Float.parseFloat(imageMetrics.get("GLARE_GRADE").toString());
+                            obj.put("GLARE_GRADE", glareGrade);
+                        }
+                        
+                        if(imageMetrics!=null && imageMetrics.get("IS_SHARP")!=null){
+                            boolean isSHarp = Boolean.parseBoolean(imageMetrics.get("IS_SHARP").toString());
+                            obj.put("IS_SHARP", isSHarp);
+                        }
+                        if(imageMetrics!=null && imageMetrics.get("SHARPNESS_GRADE")!=null){
+                            float sharpnessGrade = Float.parseFloat(imageMetrics.get("SHARPNESS_GRADE").toString());
+                            obj.put("SHARPNESS_GRADE", sharpnessGrade);
+                        }
                         PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                         result.setKeepCallback(true);
                         callbackId.sendPluginResult(result);
@@ -1025,13 +1075,13 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void onOriginalCapture(final Bitmap bitmap) {
-        if (bitmap != null){
+        if (bitmap != null) {
             
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        JSONObject obj=new JSONObject();
+                        JSONObject obj = new JSONObject();
                         obj.put("id", "didCaptureOriginalImage");
                         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -1047,13 +1097,13 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 }
             });
             
-        }else {
+        } else {
             
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        JSONObject obj=new JSONObject();
+                        JSONObject obj = new JSONObject();
                         obj.put("id", "didFailWithError");
                         obj.put("errorType", 8);
                         obj.put("errorMessage", "Unable to detect the card. Please try again.");
@@ -1073,7 +1123,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     
     @Override
     public void onPDF417Finish(String result) {
-        JSONObject obj=new JSONObject();
+        JSONObject obj = new JSONObject();
         try {
             obj.put("id", "didCaptureData");
             obj.put("data", result);
@@ -1086,7 +1136,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     }
     
     @Override
-    public void onBarcodeTimeOut(Bitmap croppedImage,Bitmap originalImage) {
+    public void onBarcodeTimeOut(Bitmap croppedImage,HashMap<String,Object>imageMetrics,Bitmap originalImage) {
         JSONObject obj=new JSONObject();
         try {
             obj.put("id", "barcodeScanTimeOut");
@@ -1104,6 +1154,24 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 obj.put("originalData",encoded);
+            }
+            
+            if(imageMetrics!=null && imageMetrics.get("HAS_GLARE")!=null) {
+                boolean hasGlare = Boolean.parseBoolean(imageMetrics.get("HAS_GLARE").toString());
+                obj.put("HAS_GLARE", hasGlare);
+            }
+            if(imageMetrics!=null && imageMetrics.get("GLARE_GRADE")!=null) {
+                float glareGrade = Float.parseFloat(imageMetrics.get("GLARE_GRADE").toString());
+                obj.put("GLARE_GRADE", glareGrade);
+            }
+            
+            if(imageMetrics!=null && imageMetrics.get("IS_SHARP")!=null){
+                boolean isSHarp = Boolean.parseBoolean(imageMetrics.get("IS_SHARP").toString());
+                obj.put("IS_SHARP", isSHarp);
+            }
+            if(imageMetrics!=null && imageMetrics.get("SHARPNESS_GRADE")!=null){
+                float sharpnessGrade = Float.parseFloat(imageMetrics.get("SHARPNESS_GRADE").toString());
+                obj.put("SHARPNESS_GRADE", sharpnessGrade);
             }
             
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, obj);
@@ -1184,18 +1252,18 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             dlCard.put("templateType", sResult.getTemplateType());
             try {
                 dlCard.put("isBarcodeRead", sResult.getIsBarcodeRead());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 dlCard.put("isBarcodeRead", false);
             }
             try {
                 dlCard.put("isIDVerified", sResult.getIsIDVerified());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 dlCard.put("isIDVerified", false);
             }
             try {
                 dlCard.put("isOcrRead", sResult.getIsOcrRead());
-            }catch(NullPointerException e){
-                dlCard.put("isOcrRead",false);
+            } catch (NullPointerException e) {
+                dlCard.put("isOcrRead", false);
             }
             dlCard.put("authenticationResult", sResult.getAuthenticationResult());
             dlCard.put("authenticationObject", sResult.getAuthenticationObject());
@@ -1203,7 +1271,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             authResultList = sResult.getAuthenticationResultSummaryList();
             String authResults = "";
             int count = 0;
-            if(authResultList!=null && authResultList.size()>0) {
+            if (authResultList != null && authResultList.size() > 0) {
                 for (String result : authResultList) {
                     if (count == 0) {
                         authResults = result;
@@ -1222,13 +1290,13 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             dlCard.put("isAddressCorrected", sResult.isAddressCorrected());
             dlCard.put("isAddressVerified", sResult.isAddressVerified());
             
-            dlCard.put("DeviceCity",sdkController.getDeviceCity());
-            dlCard.put("DeviceArea",sdkController.getDeviceArea());
-            dlCard.put("DeviceState",sdkController.getDeviceState());
-            dlCard.put("DeviceCountry",sdkController.getDeviceCountryName());
-            dlCard.put("DeviceCountryCode",sdkController.getDeviceCountryCode());
-            dlCard.put("DeviceZipcode",sdkController.getDeviceZipCode());
-            dlCard.put("DeviceStreetAddress",sdkController.getDeviceAddress());
+            dlCard.put("DeviceCity", sdkController.getDeviceCity());
+            dlCard.put("DeviceArea", sdkController.getDeviceArea());
+            dlCard.put("DeviceState", sdkController.getDeviceState());
+            dlCard.put("DeviceCountry", sdkController.getDeviceCountryName());
+            dlCard.put("DeviceCountryCode", sdkController.getDeviceCountryCode());
+            dlCard.put("DeviceZipcode", sdkController.getDeviceZipCode());
+            dlCard.put("DeviceStreetAddress", sdkController.getDeviceAddress());
             
             
             Bitmap faceImageBitmap = sResult.getFaceImage();
@@ -1271,7 +1339,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
      * @return a JSON's object from the sResult
      */
     private static JSONObject MICardWithCard(MedicalCard sResult) {
-        try{
+        try {
             JSONObject miCard = new JSONObject();
             miCard.put("copayEr", sResult.getCopayEr());
             miCard.put("copayOv", sResult.getCopayOv());
@@ -1339,7 +1407,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
      * @return a JSON's object from the sResult
      */
     private static JSONObject PCardWithCard(PassportCard sResult) {
-        try{
+        try {
             JSONObject pCard = new JSONObject();
             pCard.put("address", sResult.getAddress2());
             pCard.put("address2", sResult.getAddress3());
@@ -1368,7 +1436,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             authResultList = sResult.getAuthenticationResultSummaryList();
             String authResults = "";
             int count = 0;
-            if(authResultList!=null && authResultList.size()>0) {
+            if (authResultList != null && authResultList.size() > 0) {
                 for (String result : authResultList) {
                     if (count == 0) {
                         authResults = result;
@@ -1384,13 +1452,13 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             pCard.put("idLocationStateTestResult", sResult.idLocationStateTestResult);
             pCard.put("idLocationZipcodeTestResult", sResult.idLocationZipcodeTestResult);
             
-            pCard.put("DeviceCity",sdkController.getDeviceCity());
-            pCard.put("DeviceArea",sdkController.getDeviceArea());
-            pCard.put("DeviceState",sdkController.getDeviceState());
-            pCard.put("DeviceCountry",sdkController.getDeviceCountryName());
-            pCard.put("DeviceCountryCode",sdkController.getDeviceCountryCode());
-            pCard.put("DeviceZipcode",sdkController.getDeviceZipCode());
-            pCard.put("DeviceStreetAddress",sdkController.getDeviceAddress());
+            pCard.put("DeviceCity", sdkController.getDeviceCity());
+            pCard.put("DeviceArea", sdkController.getDeviceArea());
+            pCard.put("DeviceState", sdkController.getDeviceState());
+            pCard.put("DeviceCountry", sdkController.getDeviceCountryName());
+            pCard.put("DeviceCountryCode", sdkController.getDeviceCountryCode());
+            pCard.put("DeviceZipcode", sdkController.getDeviceZipCode());
+            pCard.put("DeviceStreetAddress", sdkController.getDeviceAddress());
             
             
             Bitmap faceImageBitmap = sResult.getFaceImage();
@@ -1420,44 +1488,44 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             return null;
         }
     }
-
+    
     private static JSONObject FacialDataWithCard(FacialData sResult) {
-        try{
+        try {
             JSONObject facialData = new JSONObject();
-            facialData.put("FaceLivelinessDetection",sResult.faceLivelinessDetection);
-            facialData.put("FacialMatch",sResult.facialMatch);
-            facialData.put("FacialMatchConfidenceRating",sResult.facialMatchConfidenceRating);
-            facialData.put("TransactionId",sResult.transactionId);
+            facialData.put("FaceLivelinessDetection", sResult.faceLivelinessDetection);
+            facialData.put("FacialMatch", sResult.facialMatch);
+            facialData.put("FacialMatchConfidenceRating", sResult.facialMatchConfidenceRating);
+            facialData.put("TransactionId", sResult.transactionId);
             return facialData;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
     }
-
+    
     private static JSONObject EChipDataWithCard(AcuantNFCCardDetails cardDetails) {
-        try{
+        try {
             JSONObject nfcData = new JSONObject();
-            nfcData.put("PrimaryIdentifier",cardDetails.getPrimaryIdentifier());
-            nfcData.put("SecondaryIdentifier",cardDetails.getSecondaryIdentifier());
-            nfcData.put("Gender",cardDetails.getGender());
-            nfcData.put("DateOfBirth",cardDetails.getDateOfBirth());
-            nfcData.put("Nationality",cardDetails.getNationality());
-            nfcData.put("DateOfExpiry",cardDetails.getDateOfExpiry());
-            nfcData.put("DocumentCode",cardDetails.getDocumentCode());
-            nfcData.put("DocumentType",cardDetails.getDocumentType());
-            nfcData.put("IssuingState",cardDetails.getIssuingState());
-            nfcData.put("DocumentNumber",cardDetails.getDocumentNumber());
-            nfcData.put("PersonalNumber",cardDetails.getPersonalNumber());
-            nfcData.put("OptionalData1",cardDetails.getOptionalData1());
-            nfcData.put("OptionalData2",cardDetails.getOptionalData2());
-            nfcData.put("SupportedAuths",cardDetails.supportedMethodsString());
-            nfcData.put("UnsupportedAuths",cardDetails.notSupportedMethodsString());
-            nfcData.put("DocumentSignerValidity",cardDetails.getDocSignerValidity());
-            nfcData.put("BACAuthenticated",cardDetails.bacAunthenticated);
-            nfcData.put("AuthenticDataGroupHashes",cardDetails.authenticDataGroupHashes);
-            nfcData.put("AuthenticDocSignature",cardDetails.authenticDocSignature);
-            nfcData.put("AAAuthenticated",cardDetails.aaAunthenticated);
+            nfcData.put("PrimaryIdentifier", cardDetails.getPrimaryIdentifier());
+            nfcData.put("SecondaryIdentifier", cardDetails.getSecondaryIdentifier());
+            nfcData.put("Gender", cardDetails.getGender());
+            nfcData.put("DateOfBirth", cardDetails.getDateOfBirth());
+            nfcData.put("Nationality", cardDetails.getNationality());
+            nfcData.put("DateOfExpiry", cardDetails.getDateOfExpiry());
+            nfcData.put("DocumentCode", cardDetails.getDocumentCode());
+            nfcData.put("DocumentType", cardDetails.getDocumentType());
+            nfcData.put("IssuingState", cardDetails.getIssuingState());
+            nfcData.put("DocumentNumber", cardDetails.getDocumentNumber());
+            nfcData.put("PersonalNumber", cardDetails.getPersonalNumber());
+            nfcData.put("OptionalData1", cardDetails.getOptionalData1());
+            nfcData.put("OptionalData2", cardDetails.getOptionalData2());
+            nfcData.put("SupportedAuths", cardDetails.supportedMethodsString());
+            nfcData.put("UnsupportedAuths", cardDetails.notSupportedMethodsString());
+            nfcData.put("DocumentSignerValidity", cardDetails.getDocSignerValidity());
+            nfcData.put("BACAuthenticated", cardDetails.bacAunthenticated);
+            nfcData.put("AuthenticDataGroupHashes", cardDetails.authenticDataGroupHashes);
+            nfcData.put("AuthenticDocSignature", cardDetails.authenticDocSignature);
+            nfcData.put("AAAuthenticated", cardDetails.aaAunthenticated);
             return nfcData;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1466,12 +1534,12 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
     }
     
     @Override
-    public void tagReadSucceeded(final AcuantNFCCardDetails cardDetails, final Bitmap face_image, final Bitmap sign_image){
+    public void tagReadSucceeded(final AcuantNFCCardDetails cardDetails, final Bitmap face_image, final Bitmap sign_image) {
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    JSONObject obj=new JSONObject();
+                    JSONObject obj = new JSONObject();
                     obj.put("id", "tagReadSucceeded");
                     if (face_image != null) {
                         ByteArrayOutputStream faceImageByteArrayOutputStream = new ByteArrayOutputStream();
@@ -1486,7 +1554,7 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
                         obj.put("signImage", Base64.encodeToString(signImageByte, Base64.DEFAULT));
                     }
                     JSONObject dataObject = EChipDataWithCard(cardDetails);
-                    obj.put("EChipData",dataObject);
+                    obj.put("EChipData", dataObject);
                     PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                     result.setKeepCallback(true);
                     callbackId.sendPluginResult(result);
@@ -1496,13 +1564,14 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
         });
     }
+    
     @Override
-    public void tagReadFailed(final String tag_read_error_message){
+    public void tagReadFailed(final String tag_read_error_message) {
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    JSONObject obj=new JSONObject();
+                    JSONObject obj = new JSONObject();
                     obj.put("id", "tagReadFailed");
                     obj.put("errorType", ErrorType.AcuantErrorUnknown);
                     obj.put("errorMessage", tag_read_error_message);
@@ -1515,11 +1584,12 @@ public class AcuantMobileSDK extends CordovaPlugin implements WebServiceListener
             }
         });
     }
-
+    
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(nfcIntent);
         nfcIntent = intent;
     }
-
+    
 }
+

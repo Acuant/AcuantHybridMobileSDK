@@ -28,7 +28,7 @@ var isSmallScreen = (screen.width < 767 || (isAndroid && deviceWidth < 450));
 var isUnknownMobile = (isWebkit && isSmallScreen);
 var isMobile = (isIOS || isAndroid || isUnknownMobile);
 var isTablet = (isIPad || (isMobile && !isSmallScreen));
-var licenseKey = "XXXXXXXXXXXXX";
+var licenseKey = "71F86FD1E789";
 var isBarcodeSide;
 var isFrontSide;
 var debbug = false;

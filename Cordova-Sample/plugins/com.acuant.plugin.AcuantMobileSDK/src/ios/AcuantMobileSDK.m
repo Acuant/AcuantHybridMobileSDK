@@ -737,7 +737,7 @@ Use this method to check if the SDK is already validated with the license key
  Called to inform the delegate that a card image was captured
  @param cardImage the card image
  */
-- (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide andCardType:(AcuantCardType)cardType{
+- (void)didCaptureCropImage:(UIImage *)cardImage scanBackSide:(BOOL)scanBackSide andCardType:(AcuantCardType)cardType withImageMetrics:(NSDictionary*)imageMetrics{
     CDVPluginResult* result;
     if ((_region == AcuantCardRegionUnitedStates || _region == AcuantCardRegionCanada) && _isBackSide){
         _methodId = @"cropBarcode";
@@ -749,6 +749,20 @@ Use this method to check if the SDK is already validated with the license key
         [resultDictionary setObject:_methodId forKey:@"id"];
         NSData *data = UIImagePNGRepresentation(cardImage);
         NSString *encodedString = [data base64EncodedStringWithOptions:0];
+        
+        if(imageMetrics != nil){
+            BOOL isSharp = [[imageMetrics objectForKey:@"IS_SHARP"] boolValue];
+            float sharpnessGrade = [[imageMetrics objectForKey:@"SHARPNESS_GRADE"] floatValue];
+            
+            BOOL hasGlare = [[imageMetrics objectForKey:@"HAS_GLARE"] boolValue];
+            float glareGrade = [[imageMetrics objectForKey:@"GLARE_GRADE"] floatValue];
+            
+            [resultDictionary setObject:@(isSharp) forKey:@"IS_SHARP"];
+            [resultDictionary setObject:@(sharpnessGrade) forKey:@"SHARPNESS_GRADE"];
+            [resultDictionary setObject:@(hasGlare) forKey:@"HAS_GLARE"];
+            [resultDictionary setObject:@(glareGrade) forKey:@"GLARE_GRADE"];
+        }
+        
         [resultDictionary setObject:encodedString forKey:@"data"];
         [resultDictionary setObject:[NSNumber numberWithBool:scanBackSide] forKey:@"scanBackSide"];
         result =  [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -767,10 +781,24 @@ Use this method to check if the SDK is already validated with the license key
     }
 }
 
-- (void)didCancelToCaptureData:(UIImage*)croppedImage andOriginalImage:(UIImage*)originalImage{
+- (void)didCancelToCaptureData:(UIImage*)croppedImage withImageMetrics:(NSDictionary*)imageMetrics andOriginalImage:(UIImage*)originalImage{
     _methodId = @"didCancelToCaptureData";
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
     [resultDictionary setObject:_methodId forKey:@"id"];
+    
+    if(imageMetrics != nil){
+        BOOL isSharp = [[imageMetrics objectForKey:@"IS_SHARP"] boolValue];
+        float sharpnessGrade = [[imageMetrics objectForKey:@"SHARPNESS_GRADE"] floatValue];
+    
+        BOOL hasGlare = [[imageMetrics objectForKey:@"HAS_GLARE"] boolValue];
+        float glareGrade = [[imageMetrics objectForKey:@"GLARE_GRADE"] floatValue];
+    
+        [resultDictionary setObject:@(isSharp) forKey:@"IS_SHARP"];
+        [resultDictionary setObject:@(sharpnessGrade) forKey:@"SHARPNESS_GRADE"];
+        [resultDictionary setObject:@(hasGlare) forKey:@"HAS_GLARE"];
+        [resultDictionary setObject:@(glareGrade) forKey:@"GLARE_GRADE"];
+    }
+    
     if(croppedImage!=nil){
         NSData *data = UIImagePNGRepresentation(croppedImage);
         NSString *encodedString = [data base64EncodedStringWithOptions:0];
@@ -828,8 +856,21 @@ Use this method to check if the SDK is already validated with the license key
     [self.commandDelegate sendPluginResult:result callbackId:_callbackId];
 }
 
--(void)barcodeScanTimeOut:(UIImage*)croppedImage andOriginalImage:(UIImage*)originalImage{
+-(void)barcodeScanTimeOut:(UIImage*)croppedImage withImageMetrics:(NSDictionary*)imageMetrics andOriginalImage:(UIImage*)originalImage{
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionaryWithObject:@"barcodeScanTimeOut" forKey:@"id"];
+    
+    if(imageMetrics != nil){
+        BOOL isSharp = [[imageMetrics objectForKey:@"IS_SHARP"] boolValue];
+        float sharpnessGrade = [[imageMetrics objectForKey:@"SHARPNESS_GRADE"] floatValue];
+        
+        BOOL hasGlare = [[imageMetrics objectForKey:@"HAS_GLARE"] boolValue];
+        float glareGrade = [[imageMetrics objectForKey:@"GLARE_GRADE"] floatValue];
+        
+        [resultDictionary setObject:@(isSharp) forKey:@"IS_SHARP"];
+        [resultDictionary setObject:@(sharpnessGrade) forKey:@"SHARPNESS_GRADE"];
+        [resultDictionary setObject:@(hasGlare) forKey:@"HAS_GLARE"];
+        [resultDictionary setObject:@(glareGrade) forKey:@"GLARE_GRADE"];
+    }
     
     if(croppedImage!=nil){
         NSData *croppedImagedata = UIImagePNGRepresentation(croppedImage);
@@ -1039,7 +1080,7 @@ Use this method to check if the SDK is already validated with the license key
         [instStr addAttribute:NSForegroundColorAttributeName value:fontColor range:NSMakeRange(0, instStr.length)];
     }
     [AcuantFacialRecognitionViewController
-     presentFacialCaptureInterfaceWithDelegate:self withSDK:_instance inViewController:rootViewController withCancelButton:YES withWaterMark:_watermarkLabel withBlinkMessage:instStr inRect:_facialMessageFrame];
+     presentFacialCaptureInterfaceWithDelegate:self withSDK:_instance inViewController:rootViewController withCancelButton:YES withCancelButtonRect:CGRectZero withWaterMark:_watermarkLabel withBlinkMessage:instStr inRect:_facialMessageFrame];
     
 }
 -(void)setFacialInstructionText:(CDVInvokedUrlCommand*)command{

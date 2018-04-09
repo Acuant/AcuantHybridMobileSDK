@@ -21,10 +21,8 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -32,22 +30,20 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
+        mavenCentral();
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.1.0'
+    gradleVersion = '2.14.1'
 }
 
 // Configuration properties. Set these via environment variables, build-extras.gradle, or gradle.properties.
@@ -92,8 +88,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "com.acuant.plugin.AcuantMobileSDK/cssnsamplesdk-build.gradle"
-apply from: "phonegap-plugin-barcodescanner/cssnsamplesdk-barcodescanner.gradle"
+apply from: "com.acuant.plugin.AcuantMobileSDK/hellocordova-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -182,8 +177,8 @@ android {
       abortOnError false;
     }
 
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion cdvCompileSdkVersion
+    buildToolsVersion cdvBuildToolsVersion
 
     if (Boolean.valueOf(cdvBuildMultipleApks)) {
         productFlavors {
@@ -251,9 +246,10 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: '*.jar', dir: 'libs')
+    compile fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
-    implementation project(path: 'CordovaLib')
+    debugCompile(project(path: "CordovaLib", configuration: "debug"))
+    releaseCompile(project(path: "CordovaLib", configuration: "release"))
     // SUB-PROJECT DEPENDENCIES END
 }
 
@@ -271,7 +267,7 @@ def promptForReleaseKeyPassword() {
 
 gradle.taskGraph.whenReady { taskGraph ->
     taskGraph.getAllTasks().each() { task ->
-        if (['validateReleaseSigning', 'validateSigningRelease', 'validateSigningArmv7Release', 'validateSigningX86Release'].contains(task.name)) {
+        if (task.name == 'validateReleaseSigning' || task.name == 'validateSigningRelease') {
             promptForReleaseKeyPassword()
         }
     }

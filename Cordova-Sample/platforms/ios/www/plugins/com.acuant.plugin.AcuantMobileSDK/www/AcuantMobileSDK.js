@@ -1,5 +1,6 @@
 cordova.define("com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK", function(require, exports, module) {
 /*global cordova, module*/
+    var agent = navigator.userAgent;
     var isWindows = (cordova.platformId.localeCompare("windows") == 0);
     var isAndroid = (agent.indexOf("Android") > 0);
     var isIOS = (agent.indexOf("iPhone") > 0 || agent.indexOf("iPod") > 0 || agent.indexOf("iPad") > 0);
