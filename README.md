@@ -462,7 +462,9 @@ Use the following method to get the glare and sharpness data for an image:
 			}
 		}
 
-These parameters specify the sharpness and glare threshold of a cropped image. An image with a sharpness grade of 0.4f (Android : 0.3f) or above is considered a sharp image. In general, a glare grade of 1 means no glare and 0 means there is a high chance of having a glare in the captured image. A glare grade of 0.92f (Android : 0.88f) and above means there is no glare. Users may set the threshold based on their requirements. 
+These parameters specify the sharpness and glare threshold of a cropped image. An image with a sharpness grade of 0.4f for iOS and 0.3f for Android or above is considered a sharp image. 
+
+A glare grade of 0.92f for iOS and 0.88f for Android and above means there is no glare. Users may set the threshold based on their requirements. 
 
 ###Getting the barcode data from the success callback
 
