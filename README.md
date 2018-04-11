@@ -4,7 +4,7 @@
 Acuant Hybrid Mobile SDK Programmer's Guide
 ----------
 
-**Last updated 4/13/2018**
+**Last updated 4/11/2018**
 
 Copyright <sup>©</sup> 2003-2018 Acuant Inc. All rights reserved.
 
