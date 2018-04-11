@@ -1,24 +1,39 @@
 ![alt tag](https://github.com/Acuant/AcuantHybridMobileSDK/blob/master/Logo.png)
 
 
-Acuant Hybrid SDK API
+Acuant Hybrid Mobile SDK Programmer's Guide
 ----------
 
-**Last updated on – 11/29/2017**
+**Last updated 4/13/2018**
 
-Copyright <sup>©</sup> 2003-2017 Acuant Inc. All rights reserved.
+Copyright <sup>©</sup> 2003-2018 Acuant Inc. All rights reserved.
 
-This document contains proprietary and confidential technology, information, and creative works owned by Acuant and its respective licensors, if any. Any use, copying, publication, distribution, display, modification, or transmission of such technology in whole or in part in any form or by any means without the prior express written permission of Acuant is strictly prohibited. Except where expressly provided by Acuant in writing, possession of this technology or information shall not be construed to confer any license or rights under any Acuant intellectual property rights, whether by estoppel, implication, or otherwise.
+This document contains proprietary and confidential 
+information and creative works owned by Acuant and its respective
+licensors, if any. Any use, copying, publication, distribution, display,
+modification, or transmission of such technology in whole or in part in
+any form or by any means without the prior express written permission of
+Acuant is strictly prohibited. Except where expressly provided by Acuant
+in writing, possession of this information shall not be
+construed to confer any license or rights under any Acuant intellectual
+property rights, whether by estoppel, implication, or otherwise.
 
-AssureID and <em>i-D</em>entify are trademarks of Acuant Inc.
+AssureID and *i-D*entify are trademarks of Acuant Inc. Other Acuant product or service names or logos referenced this document are either trademarks or registered trademarks of Acuant.
 
-Other Acuant product or service names or logos referenced this document are either trademarks or registered trademarks of Acuant.
+All 3M trademarks are trademarks of 3M Company.
 
 Windows<sup>®</sup> is a registered trademark of Microsoft Corporation.
 
-Certain product, service, or company designations for companies other than Acuant may be mentioned in this document for identification purposes only. Such designations are often claimed as trademarks or service marks. In all instances where Acuant is aware of a claim, the designation appears in initial capital or all capital letters. However, you should contact the appropriate companies for more complete information regarding such designations and their registration status.
+Certain product, service, or company designations for companies other
+than Acuant may be mentioned in this document for identification
+purposes only. Such designations are often claimed as trademarks or
+service marks. In all instances where Acuant is aware of a claim, the
+designation appears in initial capital or all capital letters. However,
+you should contact the appropriate companies for more complete
+information regarding such designations and their registration status.
 
-<p><strong>November 2017</strong></p>
+**April 2018**
+
 <p>Acuant Inc.</p>
 <p>6080 Center Drive, Suite 850</p>
 <p>Los Angeles, CA 90045</p>
@@ -33,11 +48,11 @@ Certain product, service, or company designations for companies other than Acuan
 
 <p>The Acuant Mobile SDK Plug-in is a Cordova Plug-in designed to simplify your development efforts. The image processing takes place within Acuant Web Services. This document contains a detailed description of all functions that developers need to integrate with the Acuant Hybrid Mobile SDK. The Acuant Hybrid Mobile SDK requires a valid license key. Contact sales@acuantcorp.com to obtain a license key.</p>
 
-**Note** The plug-in will *not* modify the Status bar of the app.
+**Note** The plug-in will *not* modify the Status bar of the application.
 
 ## Supported Hybrid Frameworks
 
-The Acuant Hybrid Mobile SDK supports following hybrid frameworks:
+The Hybrid Mobile SDK supports following hybrid frameworks:
 
 - Sencha
 - Phonegap
@@ -47,22 +62,27 @@ The Acuant Hybrid Mobile SDK supports following hybrid frameworks:
 
 ## Revision History
 
-**Acuant Hybrid MobileSDK version 2.6**
+**Acuant Hybrid Mobile SDK version 2.7**
 
-- Remove activate license key API
+- Added the glare and sharpness information to the **didCaptureCropImage** success callback.
+- Added support for rotation of UI messages while the camera is rotated in landscape mode by 180 degrees. 
+
+
+**Acuant Hybrid Mobile SDK version 2.6**
+
+- Removed activate license key API
 - Added the *isSDKValidated* API to check whether the SDK controller was validated.
 
-**Acuant Hybrid MobileSDK version 2.5**
+**Acuant Hybrid Mobile SDK version 2.5**
 
-	
-- Removed the parameter imageSource from the API processCardImage.
-- Added the parameter logTransaction to the API processCardImage. If logging is enabled on the license key and logTransaction is set to true then transaction response is saved on the Acuant cloud for future retrieval. 
-- Added the parameter imageSetting to the API processCardImage. The default value for imageSetting is -1. Please set this value to -1 always unless any special instruction is provided.
+- Removed the parameter imageSource from the API **processCardImage**.
+- Added the parameter **logTransaction** to the API **processCardImage**. If logging is enabled on the license key and logTransaction is set to true then transaction response is saved on the Acuant cloud for future retrieval. 
+- Added the parameter **imageSetting** to the API **processCardImage**. The default value for **imageSetting** is -1. Please set this value to -1 always unless any special instruction is provided.
 - Added the e-Passport chip reading feature for Android.
-- Removed "IsFacialEnabled" from the Facial Match Response.
-- Fixed the bug in setFacialInstructionTextStyle for Android
+- Removed "**IsFacialEnabled**" from the Facial Match Response.
+- Fixed the bug in **setFacialInstructionTextStyle** for Android
 - Line breaks can be added in Facial Instruction text by adding '\n'.
-- When the image capture process starts after user taps on the camera screen, the event can be caputred as below :
+- When the image capture process starts after user taps the camera screen, the event can be captured as follows:
 
 		var success = function (data) {
 			if(data.id=='onCardImageCaptured')
@@ -127,7 +147,7 @@ After you clone the repository, execute the following command to make sure all f
 	
 ## Common Errors
 
-If git-lfs is not set up, then GitHub won't download large files. If the following build error occurs while building the iOS app, that means some of the files are missing. 
+If git-lfs is not set up, then GitHub won't download large files. If the following build error occurs while building the iOS app, it indicates that some of the files are missing. 
 
 	ld: warning: ignoring file ../com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.framework/AcuantMobileSDK, file was built for unsupported file format ( 0x76 0x65 0x72 0x73 0x69 0x6F 0x6E 0x20 0x68 0x74 0x74 0x70 0x73 0x3A 0x2F 0x2F ) which is not the architecture being linked (armv7): ../com.acuant.plugin.AcuantMobileSDK/AcuantMobileSDK.framework/AcuantMobileSDK
 	Undefined symbols for architecture armv7:
@@ -202,7 +222,7 @@ Use one of the following methods to validate the license key and create an SDK i
 
 In the below call, license key is validated, the instance is created
 with the specified cloud address if you are hosting Acuant web services
-in your own data center. By default, iOS MobileSDK communicates with the
+in your own data center. By default, the hybrid Mobile SDK communicates with the
 Acuant data center.
 
 	AcuantMobileSDK.initAcuantMobileSDK(successCallbalck, failureCallback, licenseKey, "cloud.myAddress.com");
@@ -429,8 +449,22 @@ The original image returned is in base-64 format.
     
  **Note** By default, the capture of original image is disabled. See the following example to enable capturing the original image.
  
+###Getting the glare and sharpness data from the success callback
 
-#####Getting the barcode data from the success callback
+Use the following method to get the glare and sharpness data for an image:
+
+	var success = function(data) {
+		if (data.id == 'didCaptureCropImage') { 
+			var hasGlare = data.HAS_GLARE;
+			var glareGrade = data.GLARE_GRADE;
+			var isSharpImage = data.IS_SHARP; 
+			var sharpnessGrade = data.SHARPNESS_GRADE;
+			}
+		}
+
+These parameters specify the sharpness and glare threshold of a cropped image. An image with a sharpness grade of 0.4f (Android : 0.3f) or above is considered a sharp image. In general, a glare grade of 1 means no glare and 0 means there is a high chance of having a glare in the captured image. A glare grade of 0.92f (Android : 0.88f) and above means there is no glare. Users may set the threshold based on their requirements. 
+
+###Getting the barcode data from the success callback
 
 Use the following method to retrieve the cropped image captured by all card capture interfaces:
 
@@ -445,6 +479,7 @@ Use the following method to retrieve the cropped image captured by all card capt
      }
     }
     
+
 
 # Card Processing methods 
 

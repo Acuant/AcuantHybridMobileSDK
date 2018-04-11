@@ -28,7 +28,7 @@ var isSmallScreen = (screen.width < 767 || (isAndroid && deviceWidth < 450));
 var isUnknownMobile = (isWebkit && isSmallScreen);
 var isMobile = (isIOS || isAndroid || isUnknownMobile);
 var isTablet = (isIPad || (isMobile && !isSmallScreen));
-var licenseKey = "71F86FD1E789";
+var licenseKey = "XXXXXXXXXXXX";
 var isBarcodeSide;
 var isFrontSide;
 var debbug = false;
@@ -106,11 +106,11 @@ var checkConnection = function () {
 };
 
 /**
- * Convert an image 
+ * Convert an image
  * to a base64 url
- * @param  {String}   url         
- * @param  {Function} callback    
- * @param  {String}   [outputFormat=image/png]           
+ * @param  {String}   url
+ * @param  {Function} callback
+ * @param  {String}   [outputFormat=image/png]
  */
 var convertImgToBase64URL = function (url, callback, outputFormat) {
     log('convertImgToBase64URL');
@@ -204,7 +204,7 @@ var loadResultScreen = function () {
     		 $("#eChipDocNum").val(cardResult.passportNumber);
     		 $("#eChipDOB").val(cardResult.dateOfBirth4);
     		 $("#eChipDOE").val(cardResult.expirationDate4);
-    		 
+
     		 $("#div-button-eChip").show();
     	}
         frontCardImageResult = cardResult.passportImage;
@@ -229,7 +229,7 @@ var loadResultScreen = function () {
         if(cardResult.idLocationZipcodeTestResult!=2){
             resultString = resultString + "</br>idLocationZipcodeTestResult -  " + cardResult.idLocationZipcodeTestResult;
         }
-        
+
         resultString = resultString + "</br>Device City -  " + cardResult.DeviceCity;
         resultString = resultString + "</br>Device Area -  " + cardResult.DeviceArea;
         resultString = resultString + "</br>Device State -  " + cardResult.DeviceState;
@@ -243,8 +243,8 @@ var loadResultScreen = function () {
         	resultString = resultString + "</br>TransactionId -  " + facialResult.TransactionId;
         	resultString = resultString + "</br>FaceLivelinessDetection -  " + facialResult.FaceLivelinessDetection;
         }
-        
-    } 
+
+    }
     else if (cardType == 2) {
         frontCardImageResult = cardResult.licenceImage;
         backCardImageResult = cardResult.licenceImageTwo;
@@ -256,11 +256,11 @@ var loadResultScreen = function () {
         }
         resultString = resultString + "</br>Document Verification Confidence Rating -  " + cardResult.documentVerificationRating;
         if(cardResult.authenticationResult!=null && cardResult.authenticationResult.length>0){
-        
+
             resultString = resultString + "</br>Authentication Result -  " + cardResult.authenticationResult;
         }
         if(cardResult.authenticationResultSummaryList!=null && cardResult.authenticationResultSummaryList.length>0){
-        
+
             resultString = resultString + "</br>Authentication Result Summary -  " + cardResult.authenticationResultSummaryList;
         }
         if(cardResult.idLocationCityTestResult!=2){
@@ -273,10 +273,10 @@ var loadResultScreen = function () {
             resultString = resultString + "</br>idLocationStateTestResult -  " + cardResult.idLocationStateTestResult;
         }
         if(cardResult.idLocationZipcodeTestResult!=2){
-          
+
             resultString = resultString + "</br>idLocationZipcodeTestResult -  " + cardResult.idLocationZipcodeTestResult;
         }
-        
+
         resultString = resultString + "</br>Device City -  " + cardResult.DeviceCity;
         resultString = resultString + "</br>Device Area -  " + cardResult.DeviceArea;
         resultString = resultString + "</br>Device State -  " + cardResult.DeviceState;
@@ -284,7 +284,7 @@ var loadResultScreen = function () {
         resultString = resultString + "</br>Device Country Code -  " + cardResult.DeviceCountryCode;
         resultString = resultString + "</br>Device Zipcode -  " + cardResult.DeviceZipcode;
         resultString = resultString + "</br>Device Street Address -  " + cardResult.DeviceStreetAddress;
-        
+
         if(isFacialAllowed){
         	resultString = resultString + "</br>FacialMatch -  " + facialResult.FacialMatch;
         	resultString = resultString + "</br>FacialMatchConfidenceRating -  " + facialResult.FacialMatchConfidenceRating;
@@ -324,15 +324,15 @@ var loadResultScreen = function () {
 };
 
 function loadEChipData(data){
-	
+
 	$("#EChipFaceImage").attr('src', "data:image/png;base64," + data.faceImage);
-    
+
     var eChipData = data.EChipData;
-    
+
     var table = document.getElementById("nfcDataTable");
     clearTable(table);
-	
-    
+
+
     addEChipResultRow(table,0,"Primary Identifier",eChipData.PrimaryIdentifier);
     addEChipResultRow(table,1,"Secondary Identifier",eChipData.SecondaryIdentifier);
     addEChipResultRow(table,2,"Gender",eChipData.Gender);
@@ -352,7 +352,7 @@ function loadEChipData(data){
     addEChipResultRow(table,16,"Authentic Data Groups",eChipData.AuthenticDataGroupHashes);
     addEChipResultRow(table,17,"Authentic Document Signature",eChipData.AuthenticDocSignature);
     addEChipResultRow(table,18,"Active Authentication",eChipData.AAAuthenticated);
-                  
+
 	$("#page2").toggleClass("hdn");
     $("#page4").toggleClass("hdn");
 }
@@ -364,11 +364,11 @@ function clearTable(table){
 			table.deleteRow(0);
 		}
 	}catch(e){
-		
+
 	}
 }
 function addEChipResultRow(table,index,key,value){
-	
+
 	// Create an empty <tr> element and add it to the 1st position of the table:
 	var row = table.insertRow(index);
 
@@ -529,9 +529,9 @@ var success = function (data) {
             $("#progress_modal").toggleClass("hdn");
             $('#progress_modal').nsProgress('dismiss');
             AcuantMobileSDK.dismissCardCaptureInterface();
-        	
+
         }
-        
+
         if(data.id=='didCancelToCaptureData'){
         	$("#progress_modal").toggleClass("hdn");
             $('#progress_modal').nsProgress('dismiss');
@@ -554,13 +554,13 @@ var success = function (data) {
                     $("#back-image").removeClass("bordered");
                 }
         }
-        
-        
+
+
         if(data.id=='onFacialRecognitionCanceled'){
         	AcuantMobileSDK.dismissCardCaptureInterface();
             loadResultScreen();
         }
-        
+
         if(data.id=='onFacialRecognitionTimedOut'){
         	AcuantMobileSDK.dismissCardCaptureInterface();
             selfieImageData = data.selfieImageData;
@@ -569,9 +569,9 @@ var success = function (data) {
             waitfor(dataCaptureStatus, true, 1, 0, 'waiting for data capture to finish.', function() {
     			processFacialMatch();
 			});
-            
+
         }
-        
+
         if(data.id=='onFacialRecognitionCompleted'){
         	AcuantMobileSDK.dismissCardCaptureInterface();
             selfieImageData = data.selfieImageData;
@@ -584,7 +584,7 @@ var success = function (data) {
         if(data.id=='onCardImageCaptured'){
         	log("success: " + JSON.stringify(data));
     	}
-    
+
     }
 };
 var failure = function (data) {
@@ -736,11 +736,11 @@ function readEChipAction(Intent) {
 	var dateOfBirth = $("#eChipDOB").val();
 	var dateOfExpiry = $("#eChipDOE").val();
 	dateOfBirth = echipFormat(dateOfBirth);
-	dateOfExpiry = echipFormat(dateOfExpiry); 
+	dateOfExpiry = echipFormat(dateOfExpiry);
 	if(documentNumber && documentNumber.length>0 && dateOfBirth && dateOfBirth.length===6 && dateOfExpiry && dateOfExpiry.length===6){
 		$('html,body').scrollTop(0);
 		$("#progress_modal").toggleClass("hdn");
-        $("#progress_modal").nsProgress('showWithStatusAndMaskType', "Reading chip...", 'clear'); 
+        $("#progress_modal").nsProgress('showWithStatusAndMaskType', "Reading chip...", 'clear');
 		AcuantMobileSDK.readEChip(success, failure,Intent,documentNumber,dateOfBirth,dateOfExpiry);
 	}else{
 		navigator.notification.alert(
@@ -789,7 +789,7 @@ var processFacialMatch = function () {
     	loadResultScreen();
     }else{
     	$("#progress_modal").toggleClass("hdn");
-        $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear'); 
+        $('#progress_modal').nsProgress('showWithStatusAndMaskType', 'Capturing Data...', 'clear');
     	AcuantMobileSDK.processFacialImageValidation(success, failure, selfieImageData,faceImageResult,true);
     }
 };
@@ -868,7 +868,7 @@ function handleIntent(Intent){
 
 //**********************************************************************
 // function waitfor - Wait until a condition is met
-//        
+//
 // Needed parameters:
 //    test: function that returns a value
 //    expectedValue: the value of the test function we are waiting for
@@ -927,7 +927,7 @@ var app = {
             window.shouldRotateToOrientation = function (degrees) {
                 return true;
             }
-            
+
             if(isAndroid){
             	window.plugins.intent.getCordovaIntent(function (Intent) {
         				console.log(Intent);
