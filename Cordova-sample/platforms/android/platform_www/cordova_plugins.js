@@ -1,14 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-        "clobbers": [
-            "AcuantMobileSDK"
-        ]
-    },
-    {
         "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
         "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
         "pluginId": "com.napolitano.cordova.plugin.intent",
@@ -48,18 +40,26 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+        "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+        "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+        "clobbers": [
+            "AcuantMobileSDK"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.acuant.plugin.AcuantMobileSDK": "2.7.0",
     "com.napolitano.cordova.plugin.intent": "0.1.2",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-console": "1.1.0",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-whitelist": "1.3.3",
-    "sdgc-cordova-native-dialogs": "1.0.0"
+    "sdgc-cordova-native-dialogs": "1.0.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.8.0"
 };
 // BOTTOM OF METADATA
 });

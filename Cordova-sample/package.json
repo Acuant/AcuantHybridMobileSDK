@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "com.acuant.plugin.AcuantMobileSDK": "../cordova-plugin-AcuantHybridSDK",
+        "com.acuant.plugin.acuantmobilesdk": "file:../cordova-plugin-AcuantHybridSDK",
         "com.napolitano.cordova.plugin.intent": "~0.1.2",
         "cordova-android": "~6.2.3",
         "cordova-ios": "^4.4.0",

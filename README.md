@@ -4,7 +4,7 @@
 Acuant Hybrid Mobile SDK Programmer's Guide
 ----------
 
-**Last updated 4/11/2018**
+**Last updated 07/08/2019**
 
 Copyright <sup>©</sup> 2003-2018 Acuant Inc. All rights reserved.
 
@@ -32,7 +32,7 @@ designation appears in initial capital or all capital letters. However,
 you should contact the appropriate companies for more complete
 information regarding such designations and their registration status.
 
-**April 2018**
+**July 2019**
 
 <p>Acuant Inc.</p>
 <p>6080 Center Drive, Suite 850</p>
@@ -60,43 +60,10 @@ The Hybrid Mobile SDK supports following hybrid frameworks:
 - ionic
 - Mobile Angular UI
 
-## Revision History
-
-**Acuant Hybrid Mobile SDK version 2.7**
-
-- Added the glare and sharpness information to the **didCaptureCropImage** success callback.
-- Added support for rotation of UI messages while the camera is rotated in landscape mode by 180 degrees. 
-
-
-**Acuant Hybrid Mobile SDK version 2.6**
-
-- Removed activate license key API
-- Added the *isSDKValidated* API to check whether the SDK controller was validated.
-
-**Acuant Hybrid Mobile SDK version 2.5**
-
-- Removed the parameter imageSource from the API **processCardImage**.
-- Added the parameter **logTransaction** to the API **processCardImage**. If logging is enabled on the license key and logTransaction is set to true then transaction response is saved on the Acuant cloud for future retrieval. 
-- Added the parameter **imageSetting** to the API **processCardImage**. The default value for **imageSetting** is -1. Please set this value to -1 always unless any special instruction is provided.
-- Added the e-Passport chip reading feature for Android.
-- Removed "**IsFacialEnabled**" from the Facial Match Response.
-- Fixed the bug in **setFacialInstructionTextStyle** for Android
-- Line breaks can be added in Facial Instruction text by adding '\n'.
-- When the image capture process starts after user taps the camera screen, the event can be captured as follows:
-
-		var success = function (data) {
-			if(data.id=='onCardImageCaptured')
-			{ 
-				// Custom code here
-			}
-		};
-
-
 ## Operating system and device requirements
 
 **Operating System:**  
 
--   Windows 10
 -	iOS 8.0 or later is required.
 -   AndroidSDK Version 17 or later.
 
@@ -181,8 +148,6 @@ If the following error occurs when publishing the app, then the XCode build sett
 
 		cordova plugin add ../cordova-plugin-AcuantHybridSDK --nofetch
 
-	**Note** Make sure the **zcard.dll** file is present in the *<Project folder>***\platforms\windows\plugins\com.acuant.plugin.AcuantMobileSDK** folder. Otherwise, you can copy it from the cordova-plugin-AcuantHybridSDK plug-in folder.*
-
 1. Make sure the following Cordova plug-ins are installed:
 	- **cordova-plugin-compat**
 	- **cordova-plugin-console**
@@ -202,10 +167,6 @@ If the following error occurs when publishing the app, then the XCode build sett
 - Add the **cordova-plugin-intent** 
 See [https://github.com/napolitano/cordova-plugin-intent](https://github.com/napolitano/cordova-plugin-intent) )
 
-
-**Windows**
-
-- Add the **cordova-plugin-camera** for the Windows platform.
 
 
 ## Initialize and create the SDK instance

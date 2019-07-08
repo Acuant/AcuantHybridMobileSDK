@@ -1,58 +1,58 @@
 {
-    "com.acuant.plugin.AcuantMobileSDK": {
-        "source": {
-            "type": "local",
-            "path": "../cordova-plugin-AcuantHybridSDK"
-        },
-        "is_top_level": true,
-        "variables": {}
+  "com.acuant.plugin.AcuantMobileSDK": {
+    "source": {
+      "type": "local",
+      "path": "/Users/jpatena/Downloads/AcuantHybridMobileSDK-master/Cordova-sample/node_modules/com.acuant.plugin.acuantmobilesdk"
     },
-    "cordova-plugin-compat": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-compat@1.2.0"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-compat": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-compat@1.2.0"
     },
-    "cordova-plugin-console": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-console"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-console": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-console"
     },
-    "sdgc-cordova-native-dialogs": {
-        "source": {
-            "type": "registry",
-            "id": "sdgc-cordova-native-dialogs"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "sdgc-cordova-native-dialogs": {
+    "source": {
+      "type": "registry",
+      "id": "sdgc-cordova-native-dialogs"
     },
-    "cordova-plugin-network-information": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-network-information"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-network-information": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-network-information"
     },
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
-        },
-        "is_top_level": true,
-        "variables": {}
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1"
     },
-    "com.napolitano.cordova.plugin.intent": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-intent"
-        },
-        "is_top_level": true,
-        "variables": {}
-    }
+    "is_top_level": true,
+    "variables": {}
+  },
+  "com.napolitano.cordova.plugin.intent": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-intent"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
 }

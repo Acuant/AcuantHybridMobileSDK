@@ -1,6 +1,6 @@
 {
   "name": "com.acuant.plugin.acuantmobilesdk",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "Acuant Hybrid Mobile SDK",
   "main": "index.js",
   "scripts": {

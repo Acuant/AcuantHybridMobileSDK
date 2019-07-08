@@ -1,198 +1,198 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
-    },
-    "config_munge": {
-        "files": {
-            "res/xml/config.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"IntentPlugin\"><param name=\"android-package\" value=\"com.napolitano.cordova.plugin.intent.IntentPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {
+      "res/xml/config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"IntentPlugin\"><param name=\"android-package\" value=\"com.napolitano.cordova.plugin.intent.IntentPlugin\" /></feature>",
+              "count": 1
             },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/manifest": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.NFC\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-feature android:name=\"android.hardware.camera.autofocus\" android:required=\"false\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-feature android:name=\"android.hardware.camera.flash\" android:required=\"false\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/manifest/application": [
-                        {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2CardDetectManual\"></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.CameraCardDetectManual\"></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.PDF417.CameraPDF417\"></activity>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2FacialRecognitionManual\" />",
-                            "count": 1
-                        }
-                    ],
-                    "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 1
-                        }
-                    ]
-                }
+            {
+              "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"AcuantMobileSDK\"><param name=\"android-package\" value=\"com.acuant.plugin.AcuantMobileSDK\" /></feature>",
+              "count": 1
             }
+          ]
         }
-    },
-    "installed_plugins": {
-        "com.acuant.plugin.AcuantMobileSDK": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "com.napolitano.cordova.plugin.intent": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-network-information": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
-        },
-        "sdgc-cordova-native-dialogs": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+      },
+      "AndroidManifest.xml": {
+        "parents": {
+          "/manifest": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.NFC\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.FLASHLIGHT\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"true\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.camera.autofocus\" android:required=\"false\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-feature android:name=\"android.hardware.camera.flash\" android:required=\"false\" />",
+              "count": 1
+            }
+          ],
+          "/manifest/application": [
+            {
+              "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2CardDetectManual\"></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.CameraCardDetectManual\"></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.PDF417.CameraPDF417\"></activity>",
+              "count": 1
+            },
+            {
+              "xml": "<activity android:name=\"com.acuant.mobilesdk.detect.Camera2FacialRecognitionManual\" />",
+              "count": 1
+            }
+          ],
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            }
+          ]
         }
-    },
-    "dependent_plugins": {},
-    "modules": [
-        {
-            "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
-            "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
-            "pluginId": "com.acuant.plugin.AcuantMobileSDK",
-            "clobbers": [
-                "AcuantMobileSDK"
-            ]
-        },
-        {
-            "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
-            "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
-            "pluginId": "com.napolitano.cordova.plugin.intent",
-            "clobbers": [
-                "IntentPlugin"
-            ]
-        },
-        {
-            "id": "cordova-plugin-network-information.network",
-            "file": "plugins/cordova-plugin-network-information/www/network.js",
-            "pluginId": "cordova-plugin-network-information",
-            "clobbers": [
-                "navigator.connection",
-                "navigator.network.connection"
-            ]
-        },
-        {
-            "id": "cordova-plugin-network-information.Connection",
-            "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-            "pluginId": "cordova-plugin-network-information",
-            "clobbers": [
-                "Connection"
-            ]
-        },
-        {
-            "id": "sdgc-cordova-native-dialogs.notification",
-            "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
-            "pluginId": "sdgc-cordova-native-dialogs",
-            "merges": [
-                "navigator.notification"
-            ]
-        },
-        {
-            "id": "sdgc-cordova-native-dialogs.notification_android",
-            "file": "plugins/sdgc-cordova-native-dialogs/www/android/notification.js",
-            "pluginId": "sdgc-cordova-native-dialogs",
-            "merges": [
-                "navigator.notification"
-            ]
-        }
-    ],
-    "plugin_metadata": {
-        "com.acuant.plugin.AcuantMobileSDK": "2.7.0",
-        "com.napolitano.cordova.plugin.intent": "0.1.2",
-        "cordova-plugin-compat": "1.2.0",
-        "cordova-plugin-console": "1.1.0",
-        "cordova-plugin-network-information": "2.0.1",
-        "cordova-plugin-whitelist": "1.3.3",
-        "sdgc-cordova-native-dialogs": "1.0.0"
+      }
     }
+  },
+  "installed_plugins": {
+    "com.napolitano.cordova.plugin.intent": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-console": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "sdgc-cordova-native-dialogs": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "com.acuant.plugin.AcuantMobileSDK": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "com.napolitano.cordova.plugin.intent.IntentPlugin",
+      "file": "plugins/com.napolitano.cordova.plugin.intent/www/android/IntentPlugin.js",
+      "pluginId": "com.napolitano.cordova.plugin.intent",
+      "clobbers": [
+        "IntentPlugin"
+      ]
+    },
+    {
+      "id": "cordova-plugin-network-information.network",
+      "file": "plugins/cordova-plugin-network-information/www/network.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "navigator.connection",
+        "navigator.network.connection"
+      ]
+    },
+    {
+      "id": "cordova-plugin-network-information.Connection",
+      "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+      "pluginId": "cordova-plugin-network-information",
+      "clobbers": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "sdgc-cordova-native-dialogs.notification",
+      "file": "plugins/sdgc-cordova-native-dialogs/www/notification.js",
+      "pluginId": "sdgc-cordova-native-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
+    },
+    {
+      "id": "sdgc-cordova-native-dialogs.notification_android",
+      "file": "plugins/sdgc-cordova-native-dialogs/www/android/notification.js",
+      "pluginId": "sdgc-cordova-native-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
+    },
+    {
+      "id": "com.acuant.plugin.AcuantMobileSDK.AcuantMobileSDK",
+      "file": "plugins/com.acuant.plugin.AcuantMobileSDK/www/AcuantMobileSDK.js",
+      "pluginId": "com.acuant.plugin.AcuantMobileSDK",
+      "clobbers": [
+        "AcuantMobileSDK"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "com.napolitano.cordova.plugin.intent": "0.1.2",
+    "cordova-plugin-compat": "1.2.0",
+    "cordova-plugin-console": "1.1.0",
+    "cordova-plugin-network-information": "2.0.1",
+    "cordova-plugin-whitelist": "1.3.3",
+    "sdgc-cordova-native-dialogs": "1.0.0",
+    "com.acuant.plugin.AcuantMobileSDK": "2.8.0"
+  }
 }
