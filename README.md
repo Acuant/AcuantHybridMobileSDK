@@ -1,46 +1,10 @@
 ![alt tag](https://github.com/Acuant/AcuantHybridMobileSDK/blob/master/Logo.png)
 
 
-Acuant Hybrid Mobile SDK Programmer's Guide
+Acuant Hybrid SDK v2.8
 ----------
 
-**Last updated 07/08/2019**
-
-Copyright <sup>©</sup> 2003-2018 Acuant Inc. All rights reserved.
-
-This document contains proprietary and confidential 
-information and creative works owned by Acuant and its respective
-licensors, if any. Any use, copying, publication, distribution, display,
-modification, or transmission of such technology in whole or in part in
-any form or by any means without the prior express written permission of
-Acuant is strictly prohibited. Except where expressly provided by Acuant
-in writing, possession of this information shall not be
-construed to confer any license or rights under any Acuant intellectual
-property rights, whether by estoppel, implication, or otherwise.
-
-AssureID and *i-D*entify are trademarks of Acuant Inc. Other Acuant product or service names or logos referenced this document are either trademarks or registered trademarks of Acuant.
-
-All 3M trademarks are trademarks of 3M Company.
-
-Windows<sup>®</sup> is a registered trademark of Microsoft Corporation.
-
-Certain product, service, or company designations for companies other
-than Acuant may be mentioned in this document for identification
-purposes only. Such designations are often claimed as trademarks or
-service marks. In all instances where Acuant is aware of a claim, the
-designation appears in initial capital or all capital letters. However,
-you should contact the appropriate companies for more complete
-information regarding such designations and their registration status.
-
-**July 2019**
-
-<p>Acuant Inc.</p>
-<p>6080 Center Drive, Suite 850</p>
-<p>Los Angeles, CA 90045</p>
-<p></p>
-
-----------
-
+**June 2019**
 
 # Introduction
 
@@ -48,7 +12,7 @@ information regarding such designations and their registration status.
 
 <p>The Acuant Mobile SDK Plug-in is a Cordova Plug-in designed to simplify your development efforts. The image processing takes place within Acuant Web Services. This document contains a detailed description of all functions that developers need to integrate with the Acuant Hybrid Mobile SDK. The Acuant Hybrid Mobile SDK requires a valid license key. Contact sales@acuantcorp.com to obtain a license key.</p>
 
-**Note** The plug-in will *not* modify the Status bar of the application.
+**Note** The plug-in will *not* modify the status bar of the application.
 
 ## Supported Hybrid Frameworks
 
@@ -59,6 +23,7 @@ The Hybrid Mobile SDK supports following hybrid frameworks:
 - Intel XDK
 - ionic
 - Mobile Angular UI
+
 
 ## Operating system and device requirements
 
@@ -148,6 +113,7 @@ If the following error occurs when publishing the app, then the XCode build sett
 
 		cordova plugin add ../cordova-plugin-AcuantHybridSDK --nofetch
 
+
 1. Make sure the following Cordova plug-ins are installed:
 	- **cordova-plugin-compat**
 	- **cordova-plugin-console**
@@ -166,8 +132,6 @@ If the following error occurs when publishing the app, then the XCode build sett
 
 - Add the **cordova-plugin-intent** 
 See [https://github.com/napolitano/cordova-plugin-intent](https://github.com/napolitano/cordova-plugin-intent) )
-
-
 
 ## Initialize and create the SDK instance
 
@@ -822,3 +786,39 @@ Error occurred when camera was opened.
 **AcuantNoneError = 200**
 
 Privacy settings are preventing access to the camera.
+
+----------
+
+Copyright © 2003-2019 Acuant Inc. All rights reserved.
+
+This document contains proprietary and confidential 
+information and creative works owned by Acuant and its respective
+licensors, if any. Any use, copying, publication, distribution, display,
+modification, or transmission of such technology in whole or in part in
+any form or by any means without the prior express written permission of
+Acuant is strictly prohibited. Except where expressly provided by Acuant
+in writing, possession of this information shall not be
+construed to confer any license or rights under any Acuant intellectual
+property rights, whether by estoppel, implication, or otherwise.
+
+AssureID and *i-D*entify are trademarks of Acuant Inc. Other Acuant product or service names or logos referenced this document are either trademarks or registered trademarks of Acuant.
+
+All 3M trademarks are trademarks of Gemalto Inc.
+
+Certain product, service, or company designations for companies other
+than Acuant may be mentioned in this document for identification
+purposes only. Such designations are often claimed as trademarks or
+service marks. In all instances where Acuant is aware of a claim, the
+designation appears in initial capital or all capital letters. However,
+you should contact the appropriate companies for more complete
+information regarding such designations and their registration status.
+
+**June 2019**
+
+<p>Acuant Inc.</p>
+<p>6080 Center Drive, Suite 850</p>
+<p>Los Angeles, CA 90045</p>
+<p></p>
+
+----------
+
