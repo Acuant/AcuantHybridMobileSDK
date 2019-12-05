@@ -1,12 +1,14 @@
 ![alt tag](https://github.com/Acuant/AcuantHybridMobileSDK/blob/master/Logo.png)
 
 
-Acuant Hybrid SDK v2.8
+Acuant Hybrid SDK v2.8 [DEPRECATED]
 ----------
 
 **June 2019**
 
 # Introduction
+
+**THIS SDK HAS BEEN DEPRECATED**
 
 <p>Acuant Web Services supports data extraction from driver’s licenses, state IDs, other government issued IDs, custom IDs, driver’s licenses, barcodes, passports, and medical insurance cards. It also supports document authentication and facial recognition to verify and authenticate the identity.
 
